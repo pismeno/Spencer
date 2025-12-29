@@ -78,10 +78,10 @@
         
         <div id="content">
             <div class="preferences-wrapper">
-                
+
                 <div class="pref-top-section">
                     <div class="profile-circle"></div>
-                    
+
                     <div class="name-card">
                         <div class="input-group">
                             <label>First Name</label>

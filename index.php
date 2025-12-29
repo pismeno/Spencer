@@ -15,7 +15,7 @@
         <div id="logo">
             <h1>Spencer</h1>
         </div>
-        
+
         <div class="mobile-header-std">
             <h1>Spencer</h1>
             <div class="mobile-header-icons">
@@ -74,14 +74,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="content">
             <div class="home-container">
                 <div class="events-row">
                     <div class="event-card">
                         <div class="event-title">Title...</div>
                         <div class="event-image-placeholder">
-                            <img src="assets/file.svg" alt="placeholder"> 
+                            <img src="assets/file.svg" alt="placeholder">
                         </div>
                         <div class="event-footer">
                             <img src="assets/clock.svg" alt="time">
