@@ -6,6 +6,9 @@ git * text=auto eol=lf
 *.md diff=markdown
 *.php diff=php
 
+*.php linguist-language=php
+*.ts linguist-language=TypeScript
+
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
