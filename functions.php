@@ -1,4 +1,4 @@
-_<_php
+<?php
 function getPDOType($type){
         if ($type == "s") {
             return PDO::PARAM_STR;
