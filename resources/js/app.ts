@@ -1,15 +1,24 @@
 import axios from 'axios';
 
-// This helps Axios work with Laravel's CSRF protection
-window.axios = axios;
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+/**
+ * A typed Axios instance for the app.
+ * - Avoids polluting the global `window` object (better for tree-shaking & typing).
+ * - Export `http` for use across your TypeScript modules.
+ * - If you need the legacy `window.axios` (for vendor scripts), you can opt-in by setting ATTACH_AXIOS_TO_WINDOW = true.
+ */
 
-// Example Axios call in TypeScript
-const fetchData = async (): Promise<void> => {
-    try {
-        const response = await axios.get('/api/user');
-        console.log(response.data);
-    } catch (error) {
-        console.error('Error fetching data', error);
+const http = axios.create({
+    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+});
+
+// Attach CSRF token if present (Laravel default meta tag)
+const token = document.head?.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+if (token) {
+    http.defaults.headers.common['X-CSRF-TOKEN'] = token;
+}
+
+declare global {
+    interface Window {
+        axios?: ReturnType<typeof axios.create>;
     }
 }
