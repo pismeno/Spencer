@@ -1,10 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
 
 Route::get('/', function () {
-    return view('test');
+    return view('index');
 });
 
-Route::post('/submit', [TestController::class, 'test']);
+Route::get('/event', function () {
+    return view('event');
+});
+
+Route::get('/group', function () {
+    return view('group');
+});
+
+Route::get('/notifications', function () {
+    return view('notifications');
+});
+
+Route::get('/settings', function () {
+    return view('settings');
+});
