@@ -208,7 +208,7 @@ input:checked + .slider:before { transform: translateX(22px); }
 .form-row-split { display:flex; gap:1rem; }
 .form-row-split .form-group { flex:1; }
 
-.save-btn, .save-btn--legacy { width:100%; background:var(--primary); color:white; border:none; padding:0.6rem; border-radius:20px; font-weight:bold; cursor:pointer; }
+.save-btn, .save-btn--legacy { width:100%; background:var(--primary); color:white; border:none; padding:0.6rem; border-radius:10px; font-weight:bold; cursor:pointer; }
 .save-btn:hover { background:#165716; }
 
 .search-pill { position:relative; display:block; }
