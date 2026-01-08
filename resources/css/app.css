@@ -237,6 +237,8 @@ input:checked + .slider:before { transform: translateX(22px); }
 .icon-cross { color:#999; font-size:1rem; cursor:pointer; }
 .icon-cross.active { color:var(--danger); }
 .icon-clock { color:#999; font-size:1rem; cursor:pointer; }
+.height-md { height:400px; }
+.vertical-align { display:flex; align-items:center; }
 
 /* Responsive overrides */
 @media (max-width: 1024px) {
