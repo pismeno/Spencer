@@ -2,15 +2,37 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property int $user_id
+ * @property string $email
+ * @property string $password_hash
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * * @method static \Illuminate\Database\Eloquent\Builder|static query()
+ * @method static \Illuminate\Database\Eloquent\Builder|static create(array $attributes = [])
+ */
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    /** @use HasFactory<UserFactory> */
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'my_custom_users_table';
+
+    /**
+     * The primary key of user in the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +40,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'email',
-        'password',
+        'password_hash',
     ];
 
     /**
@@ -29,20 +50,29 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password_hash',
     ];
+
+    /**
+     * This tells Laravel's Auth system to use 'password_hash'
+     * instead of the default 'password' column.
+     */
+    public function getAuthPassword(): string
+    {
+        return $this->password_hash;
+    }
 
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'user_id' => 'integer',
+            'created_at' => 'datetime',
+            'password_hash' => 'hashed',
         ];
     }
 }

@@ -23,7 +23,7 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="hesl0" class="input" required>
                     <label for="password_repeat">Repeat password</label>
-                    <input type="password" name="password-repeat" id="password_repeat" placeholder="hesl0" class="input" required>
+                    <input type="password" name="password_confirmation" id="password_repeat" placeholder="hesl0" class="input" required>
                     <button class="save-btn">Submit</button>
                 </form>
                 <p id="errorlogger"></p>

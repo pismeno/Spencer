@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
 
 Route::get('/event', function () {
     return view('event');
@@ -22,6 +23,8 @@ Route::get('/settings', function () {
     return view('settings');
 });
 
+
+// AUTHENTICATION ROUTES
 Route::get('/register', function () {
     return view('auth/register');
 });
@@ -29,3 +32,5 @@ Route::get('/register', function () {
 Route::get('/login', function () {
     return view('auth/login');
 });
+
+Route::post('/register', [AuthController::class, 'register']);
