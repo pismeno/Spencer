@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    /**
+     * Registers new user and logs them in.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function register(Request $request): RedirectResponse
     {
         $data = $request->validate([
@@ -31,12 +38,61 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
         Auth::login($user);
-        return redirect()->route('home');
+        return redirect()->intended('/');
+    }
+
+    /**
+     * Responds to login requests, if valid credentials are passed in $request, it logs the user in.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws ValidationException when the provided credentials do not match any registered account.
+     */
+    public function login(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => [
+                'required',
+                'email',
+            ],
+            'password' => [
+                'required',
+            ],
+        ]);
+
+        $attempt = Auth::attempt([
+            'email' => $data['email'],
+            'password' => $data['password'],
+        ]);
+
+        if ($attempt) {
+            $request->session()->regenerate();
+            return redirect()->intended('/');
+        }
+
+        throw ValidationException::withMessages([
+            'email' => 'No account matches these credentials.',
+        ]);
+    }
+
+    /**
+     * Logs out the currently authenticated user.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

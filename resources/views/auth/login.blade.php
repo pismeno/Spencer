@@ -16,12 +16,18 @@
         <div class="centerer card">
             <div id="login-box">
                 <h2>Login</h2>
-                <form class="flex-column gap-md" id="register">
+                <form class="flex-column gap-md" id="register" method="POST" action="/login">
                     @csrf
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" class="input" required>
+                    <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" value="{{ old('email') }}" class="input">
+
+                    {{-- No matching account message will appear where $message is when no account in DB matches input --}}
+                    @error('email')
+                    <p class="error-text">{{ $message }}</p>
+                    @enderror
+
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="hesl0" class="input" required>
+                    <input type="password" name="password" id="password" placeholder="hesl0" class="input">
                     <button class="save-btn">Submit</button>
                 </form>
                 <p id="errorlogger"></p>

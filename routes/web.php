@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-})->name('home');
+});
 
 Route::get('/event', function () {
     return view('event');
@@ -34,3 +34,4 @@ Route::get('/login', function () {
 });
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);

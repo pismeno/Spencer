@@ -16,14 +16,14 @@
         <div class="centerer card">
             <div id="register-box">
                 <h2>Register</h2>
-                <form class="flex-column gap-md" id="register">
+                <form class="flex-column gap-md" id="register" method="POST" action="/register">
                     @csrf
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" class="input" required>
+                    <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" class="input">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="hesl0" class="input" required>
+                    <input type="password" name="password" id="password" placeholder="hesl0" class="input">
                     <label for="password_repeat">Repeat password</label>
-                    <input type="password" name="password_confirmation" id="password_repeat" placeholder="hesl0" class="input" required>
+                    <input type="password" name="password_confirmation" id="password_repeat" placeholder="hesl0" class="input">
                     <button class="save-btn">Submit</button>
                 </form>
                 <p id="errorlogger"></p>

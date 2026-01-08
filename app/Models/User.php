@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $user_id
  * @property string $email
- * @property string $password_hash
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * * @method static \Illuminate\Database\Eloquent\Builder|static query()
- * @method static \Illuminate\Database\Eloquent\Builder|static create(array $attributes = [])
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * * @method static Builder|static query()
+ * @method static Builder|static create(array $attributes = [])
  */
 class User extends Authenticatable
 {
@@ -25,14 +26,21 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'my_custom_users_table';
+    protected $table = 'user';
 
     /**
-     * The primary key of user in the table.
+     * The primary key of the user in the table.
      *
      * @var string
      */
     protected $primaryKey = 'user_id';
+
+    /**
+     * Indicates if the model should be timestamped. Now disabled as the table does not have required columns.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -41,7 +49,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email',
-        'password_hash',
+        'password',
     ];
 
     /**
@@ -50,17 +58,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password_hash',
+        'password',
     ];
-
-    /**
-     * This tells Laravel's Auth system to use 'password_hash'
-     * instead of the default 'password' column.
-     */
-    public function getAuthPassword(): string
-    {
-        return $this->password_hash;
-    }
 
     /**
      * Get the attributes that should be cast.
@@ -72,7 +71,7 @@ class User extends Authenticatable
         return [
             'user_id' => 'integer',
             'created_at' => 'datetime',
-            'password_hash' => 'hashed',
+            'password' => 'hashed',
         ];
     }
 }
