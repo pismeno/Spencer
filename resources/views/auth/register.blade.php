@@ -17,6 +17,7 @@
             <div id="register-box">
                 <h2>Register</h2>
                 <form class="flex-column gap-md" id="register">
+                    @csrf
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" class="input" required>
                     <label for="password">Password</label>
