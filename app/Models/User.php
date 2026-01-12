@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
@@ -73,5 +74,11 @@ class User extends Authenticatable
             'created_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Memberships this user holds
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(Membership::class);
     }
 }
