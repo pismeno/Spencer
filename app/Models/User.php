@@ -62,11 +62,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string>
-     */
     protected function casts(): array
     {
         return [
@@ -76,7 +71,11 @@ class User extends Authenticatable
         ];
     }
 
-    // Memberships this user holds
+    /**
+     * Get the memberships in groups of this user.
+     *
+     * @return HasMany
+     */
     public function memberships(): HasMany
     {
         return $this->hasMany(Membership::class);
