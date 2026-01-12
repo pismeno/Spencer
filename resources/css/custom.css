@@ -1,0 +1,181 @@
+:root {
+    --primary: #1D6F1D;
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+body {
+    font-family: 'Stack Sans Text', sans-serif;
+}
+
+h1 {
+    color: var(--primary);
+}
+
+h2, h4 {
+    font-family: 'Trispace', sans-serif;
+}
+
+.btn-custom {
+    background-color: var(--primary);
+    color: white;
+    transition: filter 0.2s;
+}
+
+.btn-custom:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.shadow-right {
+    box-shadow: 4px 0 10px -2px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767.98px) {
+    #sidebar-open {
+        width: 100% !important;
+        height: 4.5rem !important;
+        top: auto !important;
+        bottom: 0 !important;
+        flex-direction: row !important;
+        justify-content: space-around !important;
+        padding: 0.5rem !important;
+        border-top: 1px solid #dee2e6;
+        border-end: none !important;
+        z-index: 1030;
+    }
+
+    #sidebar-open span, #buttons-bottom {
+        display: none !important;
+    }
+}
+
+.btn-custom {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #165716;
+    color: white;
+}
+
+@media (max-width: 991.98px) {
+    #attendance-panel {
+        display: none;
+    }
+
+    #attendance-panel.show-mobile-modal {
+        display: block;
+        position: fixed;
+        top: 15%;
+        left: 5%;
+        width: 90%;
+        height: 70%;
+        z-index: 2000;
+        overflow-y: auto;
+    }
+}
+
+.group-pill-hover {
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent !important;
+}
+
+.group-pill-hover:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary) !important;
+    background-color: #fff;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.modal-backdrop.show {
+    opacity: 0.8;
+    background-color: #fff;
+}
+
+.btn-custom {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    filter: brightness(90%);
+    color: white;
+}
+
+.notification-item {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+    border: 1px solid transparent !important;
+}
+
+.notification-item:hover {
+    transform: translateX(5px);
+    background-color: #ffffff;
+    border-color: var(--primary) !important;
+}
+
+#content {
+    background-color: #f8fafc;
+    min-height: calc(100vh - 5rem);
+}
+
+.text-primary, .bg-primary-subtle {
+    color: var(--primary) !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+.btn-outline-primary {
+    color: #666;
+    border-color: transparent;
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+.event-card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.event-card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+header.navbar {
+    height: 5rem;
+}
+
+nav.fixed-bottom a:hover img, nav.fixed-bottom a:focus img {
+    filter: invert(32%) sepia(18%) saturate(1900%) hue-rotate(85deg) brightness(95%) contrast(89%);
+}
+
+nav.fixed-bottom a:hover .small {
+    color: var(--primary) !important;
+}
+aside.sticky-top {
+    top: 5rem !important;
+    height: calc(100vh - 5rem) !important;
+    overflow-y: auto;
+}
+
+header.navbar {
+    height: 5rem;
+    z-index: 1030;
+}
+
+aside {
+    z-index: 1020;
+}

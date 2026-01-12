@@ -4,175 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Spencer - Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/custom.css'])
 </head>
-<body>
-    <x-header />
-    <main>
-        <x-sidebar />
-
-        <div id="content">
-            <div class="event-page-layout">
-                <div class="event-left-column">
-                    <div class="event-details-card">
-                        <h2>Event</h2>
-                        <div class="form-group">
-                            <label>Title</label>
-                            <input type="text" placeholder="">
+<body class="bg-light">
+<x-header />
+<main class="d-flex">
+    <aside class="col-md-3 col-lg-2 d-none d-md-block bg-white sticky-top p-0">
+        <x-sidebar/>
+    </aside>
+    <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
+        <div class="container-xl">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
+                        <h2 class="h3 fw-bold mb-4 text-secondary">Event</h2>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Title</label>
+                            <input type="text" class="form-control rounded-3" placeholder="Enter event title">
                         </div>
-
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea placeholder=""></textarea>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Description</label>
+                            <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event"></textarea>
                         </div>
-
-                        <div class="form-row-split">
-                            <div class="form-group">
-                                <label>Deadline</label>
-                                <input type="date">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Deadline</label>
+                                <input type="date" class="form-control rounded-3">
                             </div>
-
-                            <div class="form-group">
-                                <label>Upload thumbnail</label>
-                                <input type="file">
+                            <div class="col-md-6">
+                                <label class="form-label small text-muted">Upload thumbnail</label>
+                                <input type="file" class="form-control rounded-3">
                             </div>
                         </div>
-
-                        <div class="image-upload-area">
-                            <img src="{{ Vite::asset('resources/svg/file.svg') }}" alt="placeholder">
+                        <div class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-4">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="{{ Vite::asset('resources/svg/file.svg') }}"
+                                     alt="placeholder"
+                                     class="h-50 w-auto opacity-50">
+                            </div>
                         </div>
-
-                        <button class="save-btn">Save Changes</button>
+                        <button class="btn btn-custom w-100 py-2 fw-bold shadow-sm">Save Changes</button>
                     </div>
 
-                    <div class="search-pill full-width">
-                        <input type="text" placeholder="Search for a person or a group">
-                        <span class="search-icon-right"><img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="search"></span>
+                    <div class="position-relative mb-4">
+                        <input type="text" class="form-control rounded-pill py-3 px-4 shadow-sm border-0" placeholder="Search for a person or a group">
+                        <span class="position-absolute end-0 top-50 translate-middle-y me-4">
+                            <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="search" class="h-auto w-auto opacity-50">
+                        </span>
                     </div>
 
-                    <div class="members-list-container">
-                        <div class="member-row">
-                            <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                            <div class="member-info">
-                                <span class="role creator">Creator</span>
-                                <span class="name">John Doe</span>
-                                <span class="email">- john.doe@gmail.com</span>
+                    <div class="d-flex flex-column gap-2">
+                        @foreach(range(1, 4) as $index)
+                            <div class="card border-0 shadow-sm rounded-pill px-3 py-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle overflow-hidden border border-secondary-subtle me-3 flex-shrink-0" style="width: 35px; height: 35px;">
+                                        <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="user">
+                                    </div>
+                                    <div class="d-flex flex-wrap align-items-center flex-grow-1 gap-2 small">
+                                        <span class="fw-bold {{ $index == 1 ? 'text-primary' : 'text-success' }}">
+                                            {{ $index == 1 ? 'Creator' : 'Member' }}
+                                        </span>
+                                        <span class="fw-bold text-dark">John Doe</span>
+                                        <span class="text-muted">- john.doe@gmail.com</span>
+                                    </div>
+                                    <div class="text-danger px-2" role="button">✕</div>
+                                </div>
                             </div>
-                            <div class="remove-x">✕</div>
+                        @endforeach
+                    </div>
+
+                    <div class="d-flex gap-3 mt-4">
+                        <button class="btn btn-success flex-grow-1 rounded-pill py-2 fw-bold shadow-sm">I'm Interested</button>
+                        <button class="btn btn-danger flex-grow-1 rounded-pill py-2 fw-bold shadow-sm">Not Interested</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" id="attendance-panel">
+                    <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                        <h2 class="h4 text-center fw-bold mb-4 text-secondary">Attendance</h2>
+
+                        <div class="mb-4">
+                            <span class="d-block small text-muted mb-3">Interested</span>
+                            @foreach(range(1, 3) as $i)
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2 flex-shrink-0" style="width: 24px; height: 24px;">
+                                        <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="user">
+                                    </div>
+                                    <span class="small fw-medium flex-grow-1">John Doe</span>
+                                    <div class="d-flex gap-2">
+                                        <img src="{{ Vite::asset('resources/svg/check.svg') }}" class="opacity-100" alt="yes" role="button">
+                                        <img src="{{ Vite::asset('resources/svg/x.svg') }}" class="opacity-25" alt="no" role="button">
+                                        <img src="{{ Vite::asset('resources/svg/clock.svg') }}" class="opacity-25" alt="clock" role="button">
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
-                        <div class="member-row">
-                            <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                            <div class="member-info">
-                                <span class="role member">Member</span>
-                                <span class="name">John Doe</span>
-                                <span class="email">- john.doe@gmail.com</span>
-                            </div>
-                            <div class="remove-x">✕</div>
-                        </div>
-
-                        <div class="member-row">
-                            <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                            <div class="member-info">
-                                <select class="role-dropdown">
-                                    <option value="member">Member</option>
-                                    <option value="cashier">Cashier</option>
-                                </select>
-                                <span class="name">John Doe</span>
-                                <span class="email">- john.doe@gmail.com</span>
-                            </div>
-                            <div class="remove-x">✕</div>
-                        </div>
-
-                        <div class="member-row">
-                            <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                            <div class="member-info">
-                                <span class="role member">Member</span>
-                                <span class="name">John Doe</span>
-                                <span class="email">- john.doe@gmail.com</span>
-                            </div>
-                            <div class="remove-x">✕</div>
-                        </div>
-
-                        <div class="interest-buttons">
-                            <button class="btn-interested">I'm Interested</button>
-                            <button class="btn-not-interested">Not Interested</button>
+                        <div>
+                            <span class="d-block small text-muted mb-3">Not Interested</span>
+                            @foreach(range(1, 3) as $i)
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2 flex-shrink-0" style="width: 24px; height: 24px;">
+                                        <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="user">
+                                    </div>
+                                    <span class="small fw-medium">John Doe</span>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
 
-                <div class="event-right-column" id="attendance-panel">
-                    <div class="attendance-card">
-                        <h2>Attendance</h2>
-
-                        <div class="attendance-section">
-                            <span class="section-label">Interested</span>
-                            <div class="attendance-row">
-                                <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                                <span>John Doe</span>
-                                <div class="icon-group">
-                                    <span class="icon-check active"><img src="{{ Vite::asset('resources/svg/check.svg') }}" alt="yes"></span>
-                                    <span class="icon-cross"><img src="{{ Vite::asset('resources/svg/x.svg') }}" alt="no"></span>
-                                    <span class="icon-clock"><img src="{{ Vite::asset('resources/svg/clock.svg') }}" alt="clock"></span>
-                                </div>
-                            </div>
-                             <div class="attendance-row">
-                                <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                                <span>John Doe</span>
-                                <div class="icon-group">
-                                    <span class="icon-check active"><img src="{{ Vite::asset('resources/svg/check.svg') }}" alt="yes"></span>
-                                    <span class="icon-cross"><img src="{{ Vite::asset('resources/svg/x.svg') }}" alt="no"></span>
-                                    <span class="icon-clock"><img src="{{ Vite::asset('resources/svg/clock.svg') }}" alt="clock"></span>
-                                </div>
-                            </div>
-                             <div class="attendance-row">
-                                <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                                <span>John Doe</span>
-                                <div class="icon-group">
-                                    <span class="icon-check active"><img src="{{ Vite::asset('resources/svg/check.svg') }}" alt="yes"></span>
-                                    <span class="icon-cross"><img src="{{ Vite::asset('resources/svg/x.svg') }}" alt="no"></span>
-                                    <span class="icon-clock"><img src="{{ Vite::asset('resources/svg/clock.svg') }}" alt="clock"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="attendance-section">
-                            <span class="section-label">Not Interested</span>
-                             <div class="attendance-row">
-                                <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                                <span>John Doe</span>
-                            </div>
-                             <div class="attendance-row">
-                                <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                                <span>John Doe</span>
-                            </div>
-                             <div class="attendance-row">
-                                <div class="avatar"><img src="{{ Vite::asset('resources/svg/user.svg') }}" alt="user"></div>
-                                <span>John Doe</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </div>
-    </main>
-    <script>
-        $(document).ready(function() {
-            $('#mobile-event-title-trigger').click(function() {
-                $('#attendance-panel').toggleClass('show-mobile-modal');
-            });
-            $(document).click(function(event) {
-                if(!$(event.target).closest('#attendance-panel').length &&
-                   !$(event.target).closest('#mobile-event-title-trigger').length &&
-                   $('#attendance-panel').hasClass('show-mobile-modal')) {
-                    $('#attendance-panel').removeClass('show-mobile-modal');
-                }
-            });
-        });
-    </script>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

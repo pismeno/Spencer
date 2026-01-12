@@ -1,47 +1,39 @@
-<div id="sidebar-open">
-    <div id="buttons-top">
-        {{-- Home Link --}}
-        <a href="/" class="side-menu">
-            <div class="">
-                <img src="{{ Vite::asset('resources/svg/home.svg') }}" alt="Home">
-                <span>Home</span>
-            </div>
+<div id="sidebar-open" class="bg-white d-flex flex-column p-3 h-100 shadow-right">
+    <div class="d-flex flex-column gap-2">
+        <a href="/" class="text-decoration-none d-flex align-items-center p-2 rounded">
+            <img src="{{ Vite::asset('resources/svg/home.svg') }}" alt="Home">
+            <span class="ms-3 text-secondary fw-medium">Home</span>
         </a>
 
-        {{-- Create Event Link --}}
-        <a href="/event" class="side-menu">
-            <div class="">
-                <img src="{{ Vite::asset('resources/svg/plus-circle.svg') }}" alt="Create">
-                <span>Create Event</span>
-            </div>
+        <a href="/event" class="text-decoration-none d-flex align-items-center p-2 rounded">
+            <img src="{{ Vite::asset('resources/svg/plus-circle.svg') }}" alt="Create">
+            <span class="ms-3 text-secondary fw-medium">Create Event</span>
         </a>
 
-        {{-- Groups Link --}}
-        <a href="/group" class="side-menu">
-            <div class="">
-                <img src="{{ Vite::asset('resources/svg/users.svg') }}" alt="Groups">
-                <span>Groups</span>
-            </div>
+        <a href="/group" class="text-decoration-none d-flex align-items-center p-2 rounded">
+            <img src="{{ Vite::asset('resources/svg/users.svg') }}" alt="Groups">
+            <span class="ms-3 text-secondary fw-medium">Groups</span>
         </a>
 
-        {{-- Settings Link --}}
-        <a href="/settings" class="side-menu">
-            <div class="">
-                <img src="{{ Vite::asset('resources/svg/settings.svg') }}" alt="Settings">
-                <span>Preferences</span>
-            </div>
+        <a href="/settings" class="text-decoration-none d-flex align-items-center p-2 rounded">
+            <img src="{{ Vite::asset('resources/svg/settings.svg') }}" alt="Settings">
+            <span class="ms-3 text-secondary fw-medium">Preferences</span>
         </a>
     </div>
 
-    <div id="buttons-bottom">
-        <div style="cursor: pointer;" onclick="toggleSidebar()">
+    <div class="mt-auto d-flex flex-column gap-2 border-top pt-3">
+        <div class="d-flex align-items-center p-2 rounded cursor-pointer" onclick="toggleSidebar()">
             <img src="{{ Vite::asset('resources/svg/arrow-left.svg') }}" alt="Collapse">
-            <span>Collapse menu</span>
+            <span class="ms-3 text-secondary fw-medium">Collapse menu</span>
         </div>
 
-        <div>
-            <img src="{{ Vite::asset('resources/svg/log-out.svg') }}" alt="">
-            <span>Logout</span>
-        </div>
+        <form action="/logout" method="POST" class="m-0">
+            @csrf
+            <button type="submit" class="btn border-0 d-flex align-items-center p-2 w-100 text-start shadow-none">
+                <img src="{{ Vite::asset('resources/svg/log-out.svg') }}" alt="Logout">
+                <span class="ms-3 text-secondary fw-medium">Logout</span>
+            </button>
+        </form>
     </div>
 </div>
+

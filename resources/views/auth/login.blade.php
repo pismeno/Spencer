@@ -4,37 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&family=Trispace:wght@100..800&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/js/register.ts'])
+    @vite(['resources/css/custom.css'])
 </head>
-<body>
+<body class="bg-light">
 <x-basic-header/>
-<main>
-    <div class="content vertical-align">
-        <div class="centerer card">
+<main class="container">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-sm p-4">
             <div id="login-box">
-                <h2>Login</h2>
-                <form class="flex-column gap-md" id="register" method="POST" action="/login">
+                <h2 class="text-center mb-4">Login</h2>
+                <form id="login-form" method="POST" action="/login" class="d-flex flex-column gap-3">
                     @csrf
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" value="{{ old('email') }}" class="input">
+                    <div>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" placeholder="tomik.bobik@centrum.cz" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror">
+                        {{-- Laravel Error Message --}}
+                        @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
 
-                    {{-- No matching account message will appear where $message is when no account in DB matches input --}}
-                    @error('email')
-                    <p class="error-text">{{ $message }}</p>
-                    @enderror
+                    <div>
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" name="password" id="password" placeholder="hesl0" class="form-control">
+                    </div>
 
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="hesl0" class="input">
-                    <button class="save-btn">Submit</button>
+                    <button type="submit" class="btn btn-custom w-100 mt-2">Submit</button>
                 </form>
-                <p id="errorlogger"></p>
-                <a href="/register" class="no-style centerer"><h4>Don't have one? </h4></a>
+
+                <p id="errorlogger" class="text-danger small mt-2"></p>
+
+                <div class="text-center mt-3">
+                    <a href="/register" class="text-decoration-none">
+                        <h4 class="h6 text-muted">Don't have an account? Register</h4>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
