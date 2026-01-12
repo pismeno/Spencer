@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,4 +36,9 @@ Route::get('/login', function () {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+// GROUPS ROUTES
+
+Route::post('/group/create', [GroupController::class, 'store'])->middleware('auth');
+Route::post('/group/edit', [GroupController::class, 'update'])->middleware('auth');
