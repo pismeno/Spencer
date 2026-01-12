@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -26,9 +27,17 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:128'],
+            'description' => ['nullable', 'string'],
+        ]);
+
+        Group::create($data);
+
+        // Placeholder response
+        return back();
     }
 
     /**
@@ -50,9 +59,17 @@ class GroupController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Group $group)
+    public function update(Request $request, Group $group): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:128'],
+            'description' => ['nullable', 'string'],
+        ]);
+
+        $group->update($data);
+
+        // Placeholder response
+        return back();
     }
 
     /**
