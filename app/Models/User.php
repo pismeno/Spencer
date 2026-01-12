@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
@@ -61,11 +62,6 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string>
-     */
     protected function casts(): array
     {
         return [
@@ -75,6 +71,13 @@ class User extends Authenticatable
         ];
     }
 
-    //test
-    //test22222222222222222222222222
+    /**
+     * Get the memberships in groups of this user.
+     *
+     * @return HasMany
+     */
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(Membership::class);
+    }
 }
