@@ -1,4 +1,4 @@
-<div id="sidebar-open" class="bg-white d-flex flex-column p-3 h-100 shadow-right">
+<div id="sidebar-open" class="bg-white d-flex flex-column p-3 h-100 shadow-lg">
     <div class="d-flex flex-column gap-2">
         <a href="/" class="text-decoration-none d-flex align-items-center p-2 rounded">
             <img src="{{ Vite::asset('resources/svg/home.svg') }}" alt="Home">

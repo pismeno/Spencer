@@ -31,21 +31,25 @@
                             <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event"></textarea>
                         </div>
                         <div class="row g-3 mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label small text-muted">Deadline</label>
                                 <input type="date" class="form-control rounded-3">
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Upload thumbnail</label>
-                                <input type="file" class="form-control rounded-3">
+                            <div class="col-md-4">
+                                <label class="form-label small text-muted">From</label>
+                                <input type="date" class="form-control rounded-3">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-muted">To</label>
+                                <input type="date" class="form-control rounded-3">
                             </div>
                         </div>
-                        <div class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-4">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <img src="{{ Vite::asset('resources/svg/file.svg') }}"
-                                     alt="placeholder"
-                                     class="h-50 w-auto opacity-50">
-                            </div>
+                        <div class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-4 position-relative">
+                            <label for="event-image-upload" class="d-flex flex-column justify-content-center align-items-center w-100 h-100" style="cursor: pointer;">
+                                <img src="{{ Vite::asset('resources/svg/file.svg') }}" alt="Upload" class="opacity-50 mb-2" style="width: 80px; height: auto;">
+                                <span class="small text-muted fw-bold">Click to upload event image</span>
+                                <input type="file" id="event-image-upload" class="d-none">
+                            </label>
                         </div>
                         <button class="btn btn-custom w-100 py-2 fw-bold shadow-sm">Save Changes</button>
                     </div>
