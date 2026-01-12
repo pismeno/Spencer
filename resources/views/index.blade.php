@@ -17,7 +17,7 @@
         <aside class="col-md-3 col-lg-2 d-none d-md-block bg-white sticky-top p-0">
             <x-sidebar/>
         </aside>
-        <div id="content" class="col-12 col-md-9 col-lg-10 p-3 p-md-5 overflow-auto vh-100 pb-5 mb-5 mb-md-0">
+        <div id="content" class="col-12 col-md-9 col-lg-10 p-md-3 overflow-auto mb-md-0">
             <div class="container-fluid">
                 <div class="row g-4" id="events-grid">
                     @foreach(range(1, 6) as $index)
