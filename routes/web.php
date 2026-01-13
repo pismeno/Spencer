@@ -39,6 +39,10 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 // GROUPS ROUTES
+Route::get('/group/create', [GroupController::class, 'create'])
+    ->middleware('auth')->name('group.create');
 
-Route::post('/group/create', [GroupController::class, 'store'])->middleware('auth');
-Route::post('/group/edit', [GroupController::class, 'update'])->middleware('auth');
+Route::post('/group/create', [GroupController::class, 'store'])
+    ->middleware('auth')->name('group.store');
+Route::post('/group/edit', [GroupController::class, 'update'])
+    ->middleware('auth');
