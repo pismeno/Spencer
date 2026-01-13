@@ -26,10 +26,6 @@ h2, h4 {
     color: var(--white);
 }
 
-.shadow-right {
-    box-shadow: 4px 0 10px -2px rgba(0, 0, 0, 0.1);
-}
-
 @media (max-width: 767.98px) {
     #sidebar-open {
         width: 100% !important;
@@ -49,17 +45,6 @@ h2, h4 {
     }
 }
 
-.btn-custom {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-}
-
-.btn-custom:hover {
-    background-color: #165716;
-    color: white;
-}
-
 @media (max-width: 991.98px) {
     #attendance-panel {
         display: none;
@@ -77,35 +62,9 @@ h2, h4 {
     }
 }
 
-.group-pill-hover {
-    transition: all 0.2s ease-in-out;
-    border: 1px solid transparent !important;
-}
-
-.group-pill-hover:hover {
-    transform: translateY(-3px);
-    border-color: var(--primary) !important;
-    background-color: #fff;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
 .modal-backdrop.show {
     opacity: 0.8;
     background-color: #fff;
-}
-
-.btn-custom {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-}
-
-.btn-custom:hover {
-    filter: brightness(90%);
-    color: white;
 }
 
 .notification-item {
@@ -165,6 +124,7 @@ nav.fixed-bottom a:hover img, nav.fixed-bottom a:focus img {
 nav.fixed-bottom a:hover .small {
     color: var(--primary) !important;
 }
+
 aside.sticky-top {
     top: 5rem !important;
     height: calc(100vh - 5rem) !important;
