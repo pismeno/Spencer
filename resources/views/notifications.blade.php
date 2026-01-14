@@ -14,7 +14,7 @@
 <x-header />
 
 <main class="d-flex">
-    <aside class="col-md-3 col-lg-2 d-none d-md-block bg-white sticky-top p-0">
+    <aside class="col-md-3 col-lg-2 bg-white sticky-top p-0">
         <x-sidebar/>
     </aside>
 
@@ -28,7 +28,7 @@
                             <div class="card border-0 shadow-sm rounded-pill p-2 px-3">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3">
-                                        <div class="ratio ratio-1x1 bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center" style="width: 40px;">
+                                        <div class="ratio ratio-1x1 bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <img src="{{ Vite::asset('resources/svg/bell.svg') }}" alt="notif" class="h-50 w-auto opacity-75">
                                             </div>

@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&family=Trispace:wght@100..800&display=swap" rel="stylesheet">
     @vite(['resources/js/register.ts'])
     @vite(['resources/css/custom.css'])
-
 </head>
 <body class="bg-light">
 <x-basic-header/>
