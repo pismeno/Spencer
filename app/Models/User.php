@@ -45,8 +45,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'user_id' => 'integer',
-            'created_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
