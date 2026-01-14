@@ -8,6 +8,7 @@ use App\Models\Membership;
 use App\Models\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class GroupController extends Controller
@@ -31,7 +32,7 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGroupRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         return DB::transaction(function () use ($request) {
             $data = $request->validated();
