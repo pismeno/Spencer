@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Membership extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
-        'description',
+        'user_id',
+        'role_id',
+        'group_id'
     ];
 
     protected function casts(): array
