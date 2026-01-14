@@ -14,32 +14,6 @@ use Illuminate\Support\Carbon;
  */
 class Group extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'group';
-
-    /**
-     * The primary key of the user in the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'group_id';
-
-    /**
-     * Indicates if the model should be timestamped. Now disabled as the table does not have required columns.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'description',
