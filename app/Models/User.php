@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * * @method static Builder|static query()
  * @method static Builder|static create(array $attributes = [])
+ * @method static whereLike(string $string, string $string1)
  */
 class User extends Authenticatable
 {
