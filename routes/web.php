@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,3 +47,9 @@ Route::post('/group/create', [GroupController::class, 'store'])
     ->middleware('auth')->name('group.store');
 Route::post('/group/edit', [GroupController::class, 'update'])
     ->middleware('auth');
+
+// EVENT ROUTES
+Route::get('/event/create', [EventController::class, 'create'])
+    ->middleware('auth')->name('event.create');
+Route::post('/event/create', [EventController::class, 'store'])
+    ->middleware('auth')->name('event.store');
