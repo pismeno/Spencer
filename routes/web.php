@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,3 +54,5 @@ Route::get('/event/create', [EventController::class, 'create'])
     ->middleware('auth')->name('event.create');
 Route::post('/event/create', [EventController::class, 'store'])
     ->middleware('auth')->name('event.store');
+
+Route::post('/listusers', [UserController::class, 'index']);

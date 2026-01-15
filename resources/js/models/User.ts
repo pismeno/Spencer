@@ -1,4 +1,4 @@
-interface User {
+export interface User {
     id: number;
     email: string;
     avatar_url: string | null;
