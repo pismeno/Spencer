@@ -19,7 +19,7 @@ class EventController extends Controller
     {
         //
     }
-    // temp comment
+    // temp comment2
     /**
      * Show the form for creating a new resource.
      */
