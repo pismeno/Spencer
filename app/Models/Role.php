@@ -11,9 +11,4 @@ class Role extends ReadOnlyModel
     {
         return $this->hasMany(Membership::class, 'role_id', 'id');
     }
-
-    public static function fromEnum(Roles $enumEntry): Role
-    {
-        return self::where('name', $enumEntry->value)->firstOrFail();
-    }
 }

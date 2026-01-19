@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Roles;
 use App\Models\Group;
 use App\Models\Membership;
 use App\Models\Role;
@@ -35,7 +34,12 @@ class GroupController extends Controller
     public function store(Request $request): RedirectResponse
     {
         return DB::transaction(function () use ($request) {
-            $data = $request->validated();
+            $data = $request->validate([
+                'name' => ['required', 'string', 'max:128'],
+                'description' => ['nullable', 'string'],
+                'users_ids' => ['nullable', 'array'],
+                'users_ids.*' => ['integer', 'exists:users,id'],
+            ]);
 
             // Create the group
             $group = Group::create($data);
@@ -47,19 +51,18 @@ class GroupController extends Controller
             $memberships[] = [
                 'group_id' => $group->id,
                 'user_id'  => auth()->id(),
-                'role_id'  => Role::fromEnum(Roles::OWNER)->id,
+                'role_id'  => Role::orderByDesc('value')->first()->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
 
             // Add the Members
             if (!empty($data['users_ids'])) {
-                $memberRoleId = Role::fromEnum(Roles::MEMBER)->id;
                 foreach ($data['users_ids'] as $userId) {
                     $memberships[] = [
                         'group_id' => $group->id,
                         'user_id'  => $userId,
-                        'role_id'  => $memberRoleId,
+                        'role_id'  => Role::orderBy('value')->first()->id,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];

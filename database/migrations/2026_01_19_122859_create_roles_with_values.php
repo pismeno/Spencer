@@ -11,8 +11,14 @@ return new class extends Migration
     public function up(): void
     {
         DB::table('roles')->insert([
-            ['name' => 'owner'],
-            ['name' => 'member'],
+            [
+                'name' => 'owner',
+                'value' => 100,
+            ],
+            [
+                'name' => 'member',
+                'value' => 0,
+            ],
         ]);
     }
 

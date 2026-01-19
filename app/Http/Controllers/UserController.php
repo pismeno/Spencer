@@ -12,7 +12,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $request->validate([
             'email' => ['nullable', 'string', 'min:2'],
