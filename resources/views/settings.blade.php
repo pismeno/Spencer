@@ -69,13 +69,13 @@
                                     <span class="fw-medium text-dark">Theme Level</span>
                                     <div class="btn-group btn-group-sm rounded-pill overflow-hidden border" role="group">
                                         <input type="radio" class="btn-check" name="level" id="l1" checked>
-                                        <label class="btn btn-outline-primary border-0 px-3" for="l1">1</label>
+                                        <label class="btn btn-primary border-0 px-3" for="l1">1</label>
 
                                         <input type="radio" class="btn-check" name="level" id="l2">
-                                        <label class="btn btn-outline-primary border-0 px-3" for="l2">2</label>
+                                        <label class="btn btn-primary border-0 px-3" for="l2">2</label>
 
                                         <input type="radio" class="btn-check" name="level" id="l3">
-                                        <label class="btn btn-outline-primary border-0 px-3" for="l3">3</label>
+                                        <label class="btn btn-primary border-0 px-3" for="l3">3</label>
                                     </div>
                                 </div>
                             </div>

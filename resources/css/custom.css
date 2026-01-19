@@ -15,16 +15,28 @@ body {
     --bs-btn-focus-shadow-rgb: 29, 111, 29;
 }
 
+:root, [data-bs-theme=light] {
+    --bs-primary: #1D6F1D;
+    --bs-primary-rgb: 29, 111, 29;
+}
+
 textarea {
     field-sizing: content;
     max-height: 500px;
     resize: none;
 }
 
-:root, [data-bs-theme=light] {
-    --bs-primary: #1D6F1D;
-    --bs-primary-rgb: 29, 111, 29;
+.form-check-input:checked {
+    background-color: #1D6F1D;
+    border-color: #1D6F1D;
 }
+
+.form-check-input:focus {
+    border-color: #1D6F1D;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(29, 111, 29, 0.25);
+}
+
 @media (max-width: 767.98px) {
     aside {
         display: contents;
