@@ -51,7 +51,7 @@
                                 <input type="file" id="event-image-upload" class="d-none">
                             </label>
                         </div>
-                        <button class="btn btn-custom w-100 py-2 fw-bold shadow-sm">Save Changes</button>
+                        <button class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Save Changes</button>
                     </div>
 
                     <div class="position-relative mb-4">
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="d-flex gap-3 mt-4">
-                        <button class="btn btn-success flex-grow-1 rounded-pill py-2 fw-bold shadow-sm">I'm Interested</button>
+                        <button class="btn btn-primary flex-grow-1 rounded-pill py-2 fw-bold shadow-sm">I'm Interested</button>
                         <button class="btn btn-danger flex-grow-1 rounded-pill py-2 fw-bold shadow-sm">Not Interested</button>
                     </div>
                 </div>

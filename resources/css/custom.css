@@ -1,12 +1,30 @@
-:root {
-    --primary: #1D6F1D;
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
 body {
     font-family: 'Stack Sans Text', sans-serif;
 }
 
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #1D6F1D;
+    --bs-btn-border-color: #1D6F1D;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #165616;
+    --bs-btn-hover-border-color: #144d14;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #144d14;
+    --bs-btn-active-border-color: #124412;
+    --bs-btn-focus-shadow-rgb: 29, 111, 29;
+}
+
+textarea {
+    field-sizing: content;
+    max-height: 500px;
+    resize: none;
+}
+
+:root, [data-bs-theme=light] {
+    --bs-primary: #1D6F1D;
+    --bs-primary-rgb: 29, 111, 29;
+}
 @media (max-width: 767.98px) {
     aside {
         display: contents;

@@ -36,7 +36,7 @@
                         <input type="password" name="password" id="password" placeholder="hesl0" class="form-control">
                     </div>
 
-                    <button type="submit" class="btn btn-custom w-100 mt-2">Submit</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-2">Submit</button>
                 </form>
 
                 <p id="errorlogger" class="text-danger small mt-2"></p>

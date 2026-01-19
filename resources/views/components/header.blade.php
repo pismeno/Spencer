@@ -1,10 +1,10 @@
 <header class="navbar navbar-light bg-white shadow position-sticky top-0 z-1">
     <div class="container-fluid">
         <div class="d-none d-md-flex" id="logo">
-            <h1 class="mb-0 fw-bold">Spencer</h1>
+            <h1 class="mb-0 fw-bold text-primary">Spencer</h1>
         </div>
         <div class="d-flex d-md-none w-100 justify-content-between align-items-center h-100">
-            <h1 class="mb-0 fw-bold">Spencer</h1>
+            <h1 class="mb-0 fw-bold text-primary">Spencer</h1>
             <div class="d-flex align-items-center gap-3" id="mobile-header-icons">
                 <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="Search" class="icon-custom">
 

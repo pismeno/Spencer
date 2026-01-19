@@ -19,7 +19,7 @@
     <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
         <div class="container-fluid">
             <div class="d-flex justify-content-center justify-content-md-start mb-5">
-                <button class="btn btn-custom btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0" data-bs-toggle="modal" data-bs-target="#groupModal">
+                <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0" data-bs-toggle="modal" data-bs-target="#groupModal">
                     <span class="fs-4 lh-1 text-white">+</span>
                     <span>Create New Group</span>
                 </button>
@@ -80,7 +80,7 @@
             </div>
             <div class="modal-footer border-0 pt-0">
                 <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-custom rounded-pill px-4 fw-bold">Save Group</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold">Save Group</button>
             </div>
         </div>
     </div>
