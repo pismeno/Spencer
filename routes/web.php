@@ -52,7 +52,12 @@ Route::post('/group/edit', [GroupController::class, 'update'])
 // EVENT ROUTES
 Route::get('/event/create', [EventController::class, 'create'])
     ->middleware('auth')->name('event.create');
+
 Route::post('/event/create', [EventController::class, 'store'])
     ->middleware('auth')->name('event.store');
-
+Route::post('/event/edit', [EventController::class, 'update'])
+    ->middleware('auth')->name('event.update');
+// List events
+Route::get('/listevents', [EventController::class, 'list'])->name('event.list');
+// List users
 Route::post('/listusers', [UserController::class, 'index']);

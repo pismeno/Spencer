@@ -3,23 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function list(Request $request): JsonResponse
     {
-        //
+        $request->validate([
+            'title' => ['nullable', 'string', 'min:2']
+        ]);
+        $requester = auth()->user();
+
+        if (!$request->filled('title')) {
+            return response()->json($this->relatedEvents($requester));
+        }
+
+        $events = Event::whereLike('title', '%' . $request->title . '%')
+            ->get();
+        
+        return response()->json($events);
     }
-    // temp comment2
+    public function relatedEvents(Authenticatable $user)
+    {
+        return Event::where('group_id', $user->current_group_id)->get();
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -73,9 +88,19 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Event $event): RedirectResponse
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:256'],
+            'description' => ['required', 'string'],
+            'deadline' => ['nullable', 'date'],
+            'starts_at' => ['required', 'date'],
+            'ends_at' => ['required', 'date']
+        ]);
+        $event->update($data);
+
+        // Placeholder response
+        return back();
     }
 
     /**
