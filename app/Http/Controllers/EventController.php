@@ -1,0 +1,113 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Event;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+class EventController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function list(Request $request): JsonResponse
+    {
+        $request->validate([
+            'title' => ['nullable', 'string', 'min:2']
+        ]);
+        $requester = auth()->user();
+
+        if (!$request->filled('title')) {
+            return response()->json($this->relatedEvents($requester));
+        }
+
+        $events = Event::whereLike('title', '%' . $request->title . '%')
+            ->get();
+        
+        return response()->json($events);
+    }
+    public function relatedEvents(Authenticatable $user)
+    {
+        return Event::where('group_id', $user->current_group_id)->get();
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+         return view('test/createevent');
+    }
+
+    /**
+     * Store a newly created resource in storage.       
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:256'],
+            'description' => ['required', 'string'],
+            'deadline' => ['nullable', 'date'],
+            'starts_at' => ['required', 'date'],
+            'ends_at' => ['required', 'date'],
+            'group_id' => ['required', 'integer']
+        ]);
+
+        $event = Event::create([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'deadline' => $data['deadline'],
+            'starts_at' => $data['starts_at'],
+            'ends_at' => $data['ends_at'],
+            'group_id' => $data['group_id']
+        ]);
+
+        return back(); // zatim nic
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Event $event)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Event $event)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Event $event): RedirectResponse
+    {
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:256'],
+            'description' => ['required', 'string'],
+            'deadline' => ['nullable', 'date'],
+            'starts_at' => ['required', 'date'],
+            'ends_at' => ['required', 'date']
+        ]);
+        $event->update($data);
+
+        // Placeholder response
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Event $event)
+    {
+        //
+    }
+}
