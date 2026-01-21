@@ -60,4 +60,4 @@ Route::post('/event/edit', [EventController::class, 'update'])
 // List events
 Route::get('/listevents', [EventController::class, 'list'])->name('event.list');
 // List users
-Route::post('/listusers', [UserController::class, 'index']);
+Route::post('/listusers', [UserController::class, 'list'])->name('user.list');
