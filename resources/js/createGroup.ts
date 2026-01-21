@@ -1,4 +1,4 @@
-import api from '@/api';
+import api from '@/bootstrap';
 import type { User } from '@/models/User';
 
 const searchUsersByEmail = async (partialEmail: string): Promise<User[]> => {

@@ -1,12 +1,18 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+const api = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+    withCredentials: true,
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
 });
 
 const token = document.head?.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 if (token) {
-    axiosInstance.defaults.headers.common['X-CSRF-TOKEN'] = token;
+    api.defaults.headers.common['X-CSRF-TOKEN'] = token;
 }
 
-export default axiosInstance;
+export default api;
