@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,3 +62,11 @@ Route::post('/event/edit', [EventController::class, 'update'])
 Route::get('/listevents', [EventController::class, 'list'])->name('event.list');
 // List users
 Route::post('/listusers', [UserController::class, 'list'])->name('user.list');
+
+// NOTIFICATION ROUTES
+// Mark one notification as read
+Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])
+    ->name('notifications.read')->middleware('auth');
+// Mark all notifications as read
+Route::post('/notifications/readall', [NotificationController::class, 'readAll'])
+    ->name('notifications.readAll')->middleware('auth');
