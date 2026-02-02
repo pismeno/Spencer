@@ -13,9 +13,7 @@
 <body class="bg-light">
 <x-header />
 <main class="d-flex">
-    <aside class="col-md-3 col-lg-2 bg-white sticky-top p-0">
-        <x-sidebar/>
-    </aside>
+    <x-sidebar/>
     <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
         <div class="container-xl">
             <div class="row g-4 justify-content-center">
@@ -26,11 +24,11 @@
                             <label class="form-label small text-muted">Title</label>
                             <input id="input-title" type="text" class="form-control rounded-3" placeholder="Enter event title">
                         </div>
-                        
+
                         <div id="description-div" class="mb-3">
                             <label class="form-label small text-muted">Description</label>
                             <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event" id="input-description"></textarea>
-                        </div>  
+                        </div>
                         <div class="row g-3 mb-4">
                             <div id="deadline-div" class="col-md-4">
                                 <label class="form-label small text-muted">Deadline</label>
