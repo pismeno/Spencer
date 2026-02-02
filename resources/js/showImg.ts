@@ -40,8 +40,13 @@ const setupImageInput = () => {
                     imgPreview.src = uploadImg;
                     imgPreview.classList.remove("d-none");   
                     if (!document.getElementById("remove-thumbnail-btn")) {
+                        const createDivTextRemoveThumbnailMessageContainer = document.createElement("div") as HTMLDivElement;
                         const createRemoveThumbnailMessage = document.createElement("span") as HTMLSpanElement;
-                        createRemoveThumbnailMessage.classList.add("text-end", "mt-2", "fs-6", "text-danger", "mb-3", "cursor-pointer", "hover-underline"); 
+
+                        createDivTextRemoveThumbnailMessageContainer.id="remove-thumbnail-text-container";
+                        createDivTextRemoveThumbnailMessageContainer.classList.add("d-flex", "w-100", "justify-content-end");
+
+                        createRemoveThumbnailMessage.classList.add ("mt-2", "fs-6", "text-danger", "mb-3", "cursor-pointer", "hover-underline"); 
                         createRemoveThumbnailMessage.id = "remove-thumbnail-btn";
                         createRemoveThumbnailMessage.textContent = "Remove Thubnail";
                         createRemoveThumbnailMessage.addEventListener("click", () =>{
@@ -51,9 +56,10 @@ const setupImageInput = () => {
                             URL.revokeObjectURL(uploadImg);
                             target.value="";
                         })
+                        createDivTextRemoveThumbnailMessageContainer.append(createRemoveThumbnailMessage);
                         const previewDiv = document.querySelector("#img-preview-div") as HTMLDivElement;
                         if (previewDiv) {
-                            previewDiv.insertAdjacentElement("afterend", createRemoveThumbnailMessage);
+                            previewDiv.insertAdjacentElement("afterend", createDivTextRemoveThumbnailMessageContainer);
                         }
                         
                     }
