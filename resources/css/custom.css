@@ -72,3 +72,6 @@ header.navbar {
 #main-sidebar.collapsed #collapse-icon {
     transform: rotate(180deg);
 }
+.cursor-pointer{
+    cursor: pointer;
+}

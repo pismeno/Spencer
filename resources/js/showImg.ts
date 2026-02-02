@@ -41,7 +41,7 @@ const setupImageInput = () => {
                     imgPreview.classList.remove("d-none");   
                     if (!document.getElementById("remove-thumbnail-btn")) {
                         const createRemoveThumbnailMessage = document.createElement("span") as HTMLSpanElement;
-                        createRemoveThumbnailMessage.classList.add("d-block", "text-end", "mt-2", "fs-6", "text-danger", "mb-3", "cursor-pointer", "hover-underline"); 
+                        createRemoveThumbnailMessage.classList.add("text-end", "mt-2", "fs-6", "text-danger", "mb-3", "cursor-pointer", "hover-underline"); 
                         createRemoveThumbnailMessage.id = "remove-thumbnail-btn";
                         createRemoveThumbnailMessage.textContent = "Remove Thubnail";
                         createRemoveThumbnailMessage.addEventListener("click", () =>{
