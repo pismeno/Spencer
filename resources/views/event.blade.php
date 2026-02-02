@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
-    @vite(['resources/css/custom.css', 'resources/js/showImg.ts', 'resources/js/showImg.ts'])
+    @vite(['resources/css/custom.css', 'resources/js/showImg.ts', 'resources/js/createEvent.ts'])
 </head>
 <body class="bg-light">
 <x-header />
@@ -25,39 +25,24 @@
                         <div id="title-div" class="mb-3">
                             <label class="form-label small text-muted">Title</label>
                             <input id="input-title" type="text" class="form-control rounded-3" placeholder="Enter event title">
-                            <div id="title-error-message" class="error-message">
-                                <small style="color: red;">Input nebyl nalezen</small>
-                            </div>
                         </div>
                         
                         <div id="description-div" class="mb-3">
                             <label class="form-label small text-muted">Description</label>
                             <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event" id="input-description"></textarea>
-                            <div id="description-error-message" class="error-message">
-                                <small style="color: red;">Description nebyl nalezen</small>
-                            </div>
                         </div>  
                         <div class="row g-3 mb-4">
                             <div id="deadline-div" class="col-md-4">
                                 <label class="form-label small text-muted">Deadline</label>
                                 <input type="date" class="form-control rounded-3" id="input-deadline">
-                                <div id="deadline-error-message" class="error-message">
-                                    <small style="color: red;">Deadline nebyl nalezen</small>
-                                </div>
                             </div>
                             <div id="from-div" class="col-md-4">
                                 <label class="form-label small text-muted">From</label>
-                                <input type="date" class="form-control rounded-3 border border-danger text-danger">
-                                <div id="date-error-message" class="error-message text-danger">
-                                    <small>Toto datum nebylo nalezeno</small>
-                                </div>
+                                <input type="date" class="form-control rounded-3 border">
                             </div>
                             <div id="to-div" class="col-md-4">
                                 <label class="form-label small text-muted">To</label>
-                                <input type="date" class="form-control rounded-3" style="border: 1px solid red; color:red;">
-                                <div id="to-error-message" class="error-message">
-                                    <small style="color: red;">Input nebyl nalezen</small>
-                                </div>
+                                <input type="date" class="form-control rounded-3">
                             </div>
                         </div>
                         <div id="img-preview-div" class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-2 position-relative">
