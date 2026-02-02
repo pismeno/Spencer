@@ -1,5 +1,7 @@
 body {
     font-family: 'Stack Sans Text', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .btn-primary {
@@ -58,4 +60,8 @@ header.navbar {
 }
 .hover-underline:hover{
     text-decoration: underline;
+}
+.auth-container {
+    height: calc(100vh - 5rem);
+    overflow: hidden;
 }
