@@ -11,40 +11,34 @@
     @vite(['resources/css/custom.css'])
 </head>
 <body class="bg-light">
-
 <x-header/>
+<main class="d-flex">
+    <x-sidebar/>
+    <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
+        <div class="container-fluid">
+            <div class="row g-4">
+                @foreach(range(1, 6) as $index)
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+                            <div class="card-header bg-white border-0 py-3 px-4">
+                                <h5 class="mb-0 text-dark fw-bold text-truncate">Event Title {{ $index }}</h5>
+                            </div>
 
-<main class="container-fluid p-0">
-    <div class="row g-0">
-        <aside class="col-md-3 col-lg-2 bg-white sticky-top p-0">
-            <x-sidebar/>
-        </aside>
-        <div class="col-12 col-md-9 col-lg-10 p-3 overflow-auto">
-            <div class="container-fluid py-4 py-md-0">
-                <div class="row g-4 mb-5 mb-md-0">
-                    @foreach(range(1, 6) as $index)
-                        <div class="col-12 col-md-6 col-xl-4">
-                            <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
-                                <div class="card-header bg-white border-0 py-3 px-4">
-                                    <h5 class="mb-0 text-dark fw-bold text-truncate">Event Title {{ $index }}</h5>
+                            <div class="card-body bg-light d-flex align-items-center justify-content-center ratio ratio-16x9">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img src="{{ Vite::asset('resources/svg/file.svg') }}" alt="placeholder" class="h-25 w-auto opacity-25">
                                 </div>
+                            </div>
 
-                                <div class="card-body bg-light d-flex align-items-center justify-content-center ratio ratio-16x9">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="{{ Vite::asset('resources/svg/file.svg') }}" alt="placeholder" class="h-25 w-auto opacity-25">
-                                    </div>
-                                </div>
-
-                                <div class="card-footer bg-white border-0 py-3 px-4 mt-auto">
-                                    <div class="d-flex align-items-center gap-2 text-muted small">
-                                        <img src="{{ Vite::asset('resources/svg/clock.svg') }}" alt="time" class="h-auto w-auto opacity-75">
-                                        <span>Deadline: 4th January 2026</span>
-                                    </div>
+                            <div class="card-footer bg-white border-0 py-3 px-4 mt-auto">
+                                <div class="d-flex align-items-center gap-2 text-muted small">
+                                    <img src="{{ Vite::asset('resources/svg/clock.svg') }}" alt="time" class="h-auto w-auto opacity-75">
+                                    <span>Deadline: 4th January 2026</span>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

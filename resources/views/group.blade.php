@@ -13,9 +13,7 @@
 <body class="bg-light">
 <x-header />
 <main class="d-flex">
-    <aside class="col-md-3 col-lg-2 bg-white sticky-top p-0">
-        <x-sidebar/>
-    </aside>
+    <x-sidebar/>
     <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
         <div class="container-fluid">
             <div class="d-flex justify-content-center justify-content-md-start mb-5">

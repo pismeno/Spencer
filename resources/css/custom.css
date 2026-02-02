@@ -39,18 +39,6 @@ textarea {
     box-shadow: 0 0 0 0.25rem rgba(29, 111, 29, 0.25);
 }
 
-@media (max-width: 767.98px) {
-    aside {
-        display: contents;
-    }
-}
-
-aside.sticky-top {
-    top: 5rem !important;
-    height: calc(100vh - 5rem) !important;
-    overflow-y: auto;
-}
-
 header.navbar {
     height: 5rem;
 }
@@ -58,4 +46,29 @@ header.navbar {
 .auth-container {
     height: calc(100vh - 5rem);
     overflow: hidden;
+}
+
+#main-sidebar {
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+    height: calc(100vh - 5rem);
+    position: sticky;
+    top: 5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+#main-sidebar.collapsed {
+    width: 80px;
+    min-width: 80px;
+}
+
+#main-sidebar.collapsed .sidebar-text {
+    display: none;
+}
+
+#main-sidebar.collapsed #collapse-icon {
+    transform: rotate(180deg);
 }
