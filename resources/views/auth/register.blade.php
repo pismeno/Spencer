@@ -8,12 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&family=Trispace:wght@100..800&display=swap" rel="stylesheet">
-    @vite(['resources/js/auth.ts'])
-    @vite(['resources/css/custom.css'])
+    @vite(['resources/js/auth.ts', 'resources/css/custom.css'])
 </head>
 <body class="bg-light">
 <x-basic-header/>
-<main class="container">
+<main class="auth-container">
     <div class="d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow-sm p-4">
             <div id="register-box">
@@ -35,10 +34,10 @@
                     <button type="submit" id="submit-btn" class="btn btn-secondary w-100 mt-2" disabled>Submit</button>
 
                     <ul id="password-requirements" class="list-unstyled small mt-1">
-                        <li id="req-length" class="text-danger">● Minimálně 8 znaků</li>
-                        <li id="req-upper" class="text-danger">● Alespoň jedno velké písmeno</li>
-                        <li id="req-number" class="text-danger">● Alespoň jedno číslo</li>
-                        <li id="req-match" class="text-danger">● Hesla se shodují</li>
+                        <li id="req-length" class="text-danger">Minimálně 8 znaků</li>
+                        <li id="req-upper" class="text-danger">Alespoň jedno velké písmeno</li>
+                        <li id="req-number" class="text-danger">Alespoň jedno číslo</li>
+                        <li id="req-match" class="text-danger">Hesla se shodují</li>
                     </ul>
                 </form>
 
