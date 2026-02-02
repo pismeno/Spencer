@@ -1,4 +1,4 @@
-<header class="navbar navbar-light bg-white shadow position-sticky top-0 z-1">
+<header class="navbar navbar-light bg-white shadow position-sticky top-0 z-3">
     <div class="container-fluid">
         <div class="d-none d-md-flex" id="logo">
             <h1 class="mb-0 fw-bold text-primary">Spencer</h1>

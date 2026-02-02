@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {setupImageInput} from "./showImg";
 
 /**
  * A typed Axios instance for the app.
@@ -22,3 +23,6 @@ declare global {
         axios?: ReturnType<typeof axios.create>;
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    setupImageInput();
+})
