@@ -15,18 +15,22 @@ submitBtn.addEventListener("click", async (e)=>{
     if (!title?.value.trim()) {
         console.error("title je povinny");
         title?.focus();
+        return;
     }
     if (!deadline?.value) {
         console.error("deadline je povinny");
         deadline?.focus();
+        return;
     }
     if (!from?.value) {
         console.error("Event musí někdy začít");
         from?.focus();
+        return;
     }
     if (!to?.value) {
         console.error("Event musi nekdy koncit");
         to?.focus();
+        return;
     }
     const formData = new FormData();
     formData.append("title", title.value.trim());
@@ -36,8 +40,6 @@ submitBtn.addEventListener("click", async (e)=>{
     formData.append("to", to.value);
     if (img.files && img.files?.[0]) {
         formData.append("img", img.files?.[0])
-    } else{
-        formData.append("img", "");
     }
     try{
         submitBtn.disabled=true;

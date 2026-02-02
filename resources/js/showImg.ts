@@ -16,7 +16,7 @@ const isValidImage = (file:File):Promise<boolean> => {
 });
 }
 
-export const setupImageInput = () => {
+const setupImageInput = () => {
     let urlImage:string | null = null
     const input = document.getElementById("event-image-upload") as HTMLInputElement;
     if (!input) {
@@ -67,3 +67,4 @@ export const setupImageInput = () => {
         }
     })
 }
+setupImageInput();
