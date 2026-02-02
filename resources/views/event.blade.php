@@ -13,43 +13,47 @@
 <body class="bg-light">
 <x-header />
 <main class="d-flex">
-    <x-sidebar/>
+    <aside class="col-md-3 col-lg-2 bg-white sticky-top p-0">
+        <x-sidebar/>
+    </aside>
     <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
         <div class="container-xl">
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 <div class="col-lg-8">
                     <div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
                         <h2 class="h3 fw-bold mb-4 text-secondary">Event</h2>
-                        <div class="mb-3">
+                        <div id="title-div" class="mb-3">
                             <label class="form-label small text-muted">Title</label>
-                            <input type="text" class="form-control rounded-3" placeholder="Enter event title">
+                            <input id="input-title" type="text" class="form-control rounded-3" placeholder="Enter event title">
                         </div>
-                        <div class="mb-3">
+                        
+                        <div id="description-div" class="mb-3">
                             <label class="form-label small text-muted">Description</label>
-                            <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event"></textarea>
-                        </div>
+                            <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event" id="input-description"></textarea>
+                        </div>  
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4">
+                            <div id="deadline-div" class="col-md-4">
                                 <label class="form-label small text-muted">Deadline</label>
-                                <input type="date" class="form-control rounded-3">
+                                <input type="date" class="form-control rounded-3" id="input-deadline">
                             </div>
-                            <div class="col-md-4">
+                            <div id="from-div" class="col-md-4">
                                 <label class="form-label small text-muted">From</label>
-                                <input type="date" class="form-control rounded-3">
+                                <input type="date" class="form-control rounded-3 border">
                             </div>
-                            <div class="col-md-4">
+                            <div id="to-div" class="col-md-4">
                                 <label class="form-label small text-muted">To</label>
                                 <input type="date" class="form-control rounded-3">
                             </div>
                         </div>
-                        <div class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-4 position-relative">
+                        <div id="img-preview-div" class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-2 position-relative">
+                            <img id="img-preview" class="w-100 h-100 d-none top-0 start-0, rounded-4 z-1" style="object-fit: cover; pointer-events: none" alt="img-preview">
                             <label for="event-image-upload" class="d-flex flex-column justify-content-center align-items-center w-100 h-100" style="cursor: pointer;">
-                                <img src="{{ Vite::asset('resources/svg/file.svg') }}" alt="Upload" class="opacity-50 mb-2" style="width: 80px; height: auto;">
+                                <img id="input-img" src="{{ Vite::asset('resources/svg/file.svg') }}" alt="Upload" class="opacity-50 mb-2" style="width: 80px; height: auto;">
                                 <span class="small text-muted fw-bold">Click to upload event image</span>
-                                <input type="file" id="event-image-upload" class="d-none">
+                                <input type="file" id="event-image-upload" class="d-none" accept="image/png image/jpg image/webp image/jpeg">
                             </label>
                         </div>
-                        <button class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Save Changes</button>
+                        <button id="save-changes" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Save Changes</button>
                     </div>
 
                     <div class="position-relative mb-4">
@@ -85,7 +89,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4" id="attendance-panel">
+                <!-- <div class="col-lg-4" id="attendance-panel">
                     <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
                         <h2 class="h4 text-center fw-bold mb-4 text-secondary">Attendance</h2>
 
@@ -120,7 +124,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
         </div>
     </div>
 </main>
