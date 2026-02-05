@@ -19,8 +19,7 @@ export interface Event {
 
 export interface User {
     id: number;
-    name: string;
-    description: string | null;
+    email: string;
     created_at: Date;
     updated_at: Date;
 }

@@ -15,7 +15,7 @@ class UserController extends Controller
     public function list(Request $request): JsonResponse
     {
         $request->validate([
-            'email' => ['nullable', 'string', 'min:2'],
+            'email' => ['nullable', 'string', 'min:1'],
         ]);
 
         $requester = auth()->user();

@@ -20,7 +20,7 @@
                 @foreach(range(1, 6) as $index)
                     <div class="col-12 col-md-6 col-xl-4">
                         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                            <div class="card-header bg-white border-0 py-2 px-3">
+                            <div class="card-header bg-white border-0 py-1 px-1">
                                 <h5 class="mb-0 text-dark fw-bold text-truncate">Event Title {{ $index }}</h5>
                             </div>
 

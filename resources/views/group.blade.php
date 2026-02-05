@@ -48,7 +48,7 @@
 
             <div class="modal-body">
                 <div class="position-relative mb-4">
-                    <input type="text" class="form-control rounded-pill border-secondary-subtle px-4 py-2" placeholder="Search for a person">
+                    <input type="text" id="searchInput" class="form-control rounded-pill border-secondary-subtle px-4 py-2" placeholder="Search for a person">
                     <span class="position-absolute end-0 top-50 translate-middle-y me-3">
                         <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="" class="opacity-50" width="20" height="20">
                     </span>
