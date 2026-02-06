@@ -13,9 +13,9 @@ const searchAndLog = async (searchQuery: string) => {
             return(modal.innerHTML = "No one matches");
         }
 
-        let html = '<ul>';
+        let html = '<ul class="list-group">';
         users.forEach(user => {
-            html += `<li>${user.email}</li>`;
+            html += `<li class="list-group-item">${user.email}</li>`;
         });
         html += '</ul>';
         modal.innerHTML = html;

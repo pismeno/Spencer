@@ -40,7 +40,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow-lg p-3">
             <div class="modal-header border-0 pb-0">
-                <h2 class="h4 fw-bold mb-0 text-dark opacity-75" id="groupModalLabel">Group 1</h2>
+                <h2 class="h4 fw-bold mb-0 text-dark opacity-75" id="groupModalLabel"><input type="text" placeholder="Name of group"></h2>
                 <button type="button" class="btn p-0 ms-auto shadow-none">
                     <img src="{{ Vite::asset('resources/svg/edit.svg') }}" alt="Edit" class="opacity-50" width="20" height="20">
                 </button>
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    @foreach(range(1, 3) as $i)
+                    <!--@foreach(range(1, 3) as $i)
                         <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm">
                             <div class="d-flex align-items-center">
                                 <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
@@ -79,7 +79,7 @@
                                 <div class="text-danger small fw-bold px-1" role="button">✕</div>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach-->
                 </div>
             </div>
             <div class="modal-footer border-0 pt-0">
