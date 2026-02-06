@@ -1,14 +1,13 @@
-<aside id="main-sidebar" class="bg-white d-flex flex-column p-3 z-2">
+<aside id="main-sidebar" class="bg-white d-none d-md-flex flex-column p-3 z-2 h-100">
     @vite(['resources/js/sidebar.ts'])
 
-    <div class="d-flex flex-column gap-2">
+    <div class="d-md-flex flex-column gap-2">
         <a href="/" class="text-decoration-none d-flex align-items-center p-2 rounded hover-bg">
             <img src="{{ Vite::asset('resources/svg/home.svg') }}" alt="Home" width="24" height="24">
             <span class="ms-3 text-secondary fw-medium sidebar-text">Home</span>
         </a>
 
-        <!-- Event s rozbalovacím podmenu -->
-        <div class="event-submenu-wrapper">
+        <div class="event-submenu-wrapper bg-hover">
             <button type="button" 
                     class="btn border-0 d-flex align-items-center p-2 w-100 shadow-none hover-bg text-start bg-transparent"
                     onclick="toggleEventSubmenu()"
@@ -48,19 +47,18 @@
         </a>
     </div>
 
-    <div class="mt-auto d-flex flex-column gap-2 border-top pt-3">
+    <div class="mt-auto d-flex flex-column gap-2 pt-3">
+        <div class="d-flex align-items-center p-2 rounded cursor-pointer" onclick="toggleSidebar()">
+            <img src="{{ Vite::asset('resources/svg/arrow-left.svg') }}" alt="Collapse">
+            <span class="ms-3 text-secondary fw-medium">Collapse menu</span>
+        </div>
         <form action="/logout" method="POST" class="m-0">
             @csrf
-            <button type="submit" class="btn border-0 d-flex align-items-center p-2 w-100 shadow-none hover-bg text-start">
-                <img src="{{ Vite::asset('resources/svg/log-out.svg') }}" alt="Logout" width="24" height="24">
-                <span class="ms-3 text-secondary fw-medium sidebar-text">Logout</span>
+            <button type="submit" class="btn border-0 d-flex align-items-center p-2">
+                <img src="{{ Vite::asset('resources/svg/log-out.svg') }}" alt="Logout">
+                <span class="ms-3 text-secondary fw-medium">Logout</span>
             </button>
         </form>
-
-        <div class="d-flex align-items-center p-2 rounded hover-bg cursor-pointer" onclick="toggleSidebar()">
-            <img src="{{ Vite::asset('resources/svg/arrow-left.svg') }}" id="collapse-icon" alt="Collapse" width="24" height="24">
-            <span class="ms-3 text-secondary fw-medium sidebar-text">Collapse</span>
-        </div>
     </div>
 </aside>
 

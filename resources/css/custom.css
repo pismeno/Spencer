@@ -65,3 +65,6 @@ header.navbar {
     height: calc(100vh - 5rem);
     overflow: hidden;
 }
+.hover-bg:hover{
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
