@@ -53,24 +53,30 @@
                         <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="" class="opacity-50" width="20" height="20">
                     </span>
                 </div>
-
+                <div id="userBulletList" class="d-flex flex=column gap-2 mb-4"></div>
                 <div class="d-flex flex-column gap-2 mb-4">
+                    <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
+                                <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="">
+                            </div>
+                            <div class="small flex-grow-1">
+                                <span class="fw-bold text-primary me-1">Creator</span>
+                                <span class="text-muted d-none d-sm-inline"><strong>- {{ auth()->user()->email }}</strong></span>
+                            </div>
+                        </div>
+                    </div>
                     @foreach(range(1, 3) as $i)
                         <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm">
                             <div class="d-flex align-items-center">
-                                <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2" style="width: 30px; height: 30px;">
+                                <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
                                     <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="">
                                 </div>
                                 <div class="small flex-grow-1">
-                                    <span class="fw-bold {{ $i == 1 ? 'text-primary' : 'text-success' }} me-1">
-                                        {{ $i == 1 ? 'Creator' : 'Member' }}
-                                    </span>
-                                    <span class="text-dark fw-medium">John Doe</span>
+                                    <span class="fw-bold text-success me-1">Member</span>
                                     <span class="text-muted d-none d-sm-inline">- john.doe@gmail.com</span>
                                 </div>
-                                @if($i > 1)
-                                    <div class="text-danger small fw-bold px-1" role="button">✕</div>
-                                @endif
+                                <div class="text-danger small fw-bold px-1" role="button">✕</div>
                             </div>
                         </div>
                     @endforeach
