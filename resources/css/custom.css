@@ -78,3 +78,7 @@ header.navbar {
 .hover-underline:hover{
     text-decoration: underline;
 }
+
+.profile-pic{
+    height: 25px;
+}

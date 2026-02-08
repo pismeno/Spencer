@@ -15,9 +15,11 @@ class GroupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        $groups = auth()->user()->groups()->with('users')->get();
+
+        return view('group', compact('groups'));
     }
 
     /**
@@ -31,87 +33,71 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         return DB::transaction(function () use ($request) {
             $data = $request->validate([
                 'name' => ['required', 'string', 'max:128'],
                 'description' => ['nullable', 'string'],
                 'users_ids' => ['nullable', 'array'],
-                'users_ids.*' => ['integer', 'exists:users,id'],
             ]);
 
-            // Create the group
-            $group = Group::create($data);
+            $group = Group::create([
+                'name' => $data['name'],
+                'description' => $data['description']
+            ]);
 
-            // Prepare memberships
-            $memberships = [];
-
-            // Add the Owner
-            $memberships[] = [
-                'group_id' => $group->id,
-                'user_id'  => auth()->id(),
-                'role_id'  => Role::orderByDesc('value')->first()->id,
+            $group->users()->attach(auth()->id(), [
+                'role_id' => Role::first()->id,
                 'created_at' => now(),
-                'updated_at' => now(),
-            ];
+                'updated_at' => now()
+            ]);
 
-            // Add the Members
             if (!empty($data['users_ids'])) {
                 foreach ($data['users_ids'] as $userId) {
-                    $memberships[] = [
-                        'group_id' => $group->id,
-                        'user_id'  => $userId,
-                        'role_id'  => Role::orderBy('value')->first()->id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
+                    if ($userId != auth()->id()) {
+                        $group->users()->attach($userId, [
+                            'role_id' => Role::first()->id,
+                            'created_at' => now(),
+                            'updated_at' => now()
+                        ]);
+                    }
                 }
             }
 
-            Membership::insert($memberships);
-
-            return back()->with('success', 'Group created successfully!');
+            return response()->json(['message' => 'Created'], 201);
         });
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Group $group)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Group $group)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Group $group): RedirectResponse
+    public function update(Request $request, Group $group)
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:128'],
-            'description' => ['nullable', 'string'],
-        ]);
+        return DB::transaction(function () use ($request, $group) {
+            $data = $request->validate([
+                'name' => ['required', 'string', 'max:128'],
+                'description' => ['nullable', 'string'],
+                'users_ids' => ['nullable', 'array'],
+            ]);
 
-        $group->update($data);
+            $group->update([
+                'name' => $data['name'],
+                'description' => $data['description']
+            ]);
 
-        // Placeholder response
-        return back();
-    }
+            $newMembers = $data['users_ids'] ?? [];
+            if (!in_array(auth()->id(), $newMembers)) {
+                $newMembers[] = auth()->id();
+            }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Group $group)
-    {
-        //
+            $syncData = [];
+            foreach ($newMembers as $id) {
+                $syncData[$id] = ['role_id' => Role::first()->id];
+            }
+            $group->users()->sync($syncData);
+
+            return response()->json(['message' => 'Updated']);
+        });
     }
 }

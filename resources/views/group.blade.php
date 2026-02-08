@@ -17,20 +17,33 @@
     <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
         <div class="container-fluid">
             <div class="d-flex justify-content-center justify-content-md-start mb-5">
-                <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0" data-bs-toggle="modal" data-bs-target="#groupModal">
+                <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0"
+                        data-bs-toggle="modal"
+                        data-bs-target="#groupModal"
+                        id="createNewGroupBtn">
                     <span class="fs-4 lh-1 text-white">+</span>
                     <span>Create New Group</span>
                 </button>
             </div>
 
             <div class="row g-4">
-                @foreach(range(1, 12) as $index)
+                @forelse($groups as $group)
+                    @php
+                        $existingMembers = $group->users->where('id', '!=', auth()->id())->map(function($u) {
+                            return ['id' => $u->id, 'email' => $u->email];
+                        })->values();
+                    @endphp
                     <div class="col-6 col-md-4 col-lg-3 col-xl-2">
-                        <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 bg-white" data-bs-toggle="modal" data-bs-target="#groupModal" role="button">
-                            <span class="fw-bold text-secondary fs-6">Group {{ $index }}</span>
+                        <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 bg-white group-card" role="button" data-bs-toggle="modal" data-bs-target="#groupModal" data-id="{{ $group->id }}" data-name="{{ $group->name }}" data-description="{{ $group->description }}" data-is-creator="true" data-members="{{ json_encode($existingMembers) }}">
+                            <span class="fw-bold text-secondary fs-6">{{ $group->name }}</span>
+                            <div class="mt-2">
+                                <span class="badge bg-light text-primary rounded-pill">Member</span>
+                            </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-center text-muted">No groups yet.</div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -38,53 +51,47 @@
 
 <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 rounded-4 shadow-lg p-3">
-            <div class="modal-header border-0 pb-0">
-                <h2 class="h4 fw-bold mb-0 text-dark opacity-75" id="groupModalLabel"><input type="text" placeholder="Name of group"></h2>
-                <button type="button" class="btn p-0 ms-auto shadow-none">
-                    <img src="{{ Vite::asset('resources/svg/edit.svg') }}" alt="Edit" class="opacity-50" width="20" height="20">
-                </button>
+        <div class="modal-content border-0 rounded-4 shadow-lg p-4">
+            <div class="mb-3">
+                <h5 class="fw-bold text-secondary mb-3" id="modalTitle">Create New Group</h5>
+                <input type="text" id="titleInput" class="form-control rounded-pill border-secondary-subtle px-4 py-2" placeholder="Group name">
+                <textarea id="descriptionInput" class="form-control rounded-4 border-secondary-subtle px-4 py-2 mt-2" placeholder="Description" rows="2"></textarea>
             </div>
 
-            <div class="modal-body">
-                <div class="position-relative mb-4">
+            <div id="searchSection">
+                <div class="position-relative mb-1">
                     <input type="text" id="searchInput" class="form-control rounded-pill border-secondary-subtle px-4 py-2" placeholder="Search for a person">
                     <span class="position-absolute end-0 top-50 translate-middle-y me-3">
                         <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="" class="opacity-50" width="20" height="20">
                     </span>
                 </div>
-                <div id="userBulletList" class="d-flex flex=column gap-2 mb-4"></div>
-                <div class="d-flex flex-column gap-2 mb-4">
-                    <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm">
+                <div id="userBulletList" class="d-flex flex-column gap-1 mb-2"></div>
+            </div>
+
+            <div class="mt-3">
+                <label class="small fw-bold text-muted mb-2 ms-2">Members</label>
+                <div class="d-flex flex-column gap-2">
+                    <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm bg-light">
                         <div class="d-flex align-items-center">
-                            <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
-                                <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="">
+                            <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2" style="width: 32px; height: 32px;">
+                                <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100" alt="">
                             </div>
                             <div class="small flex-grow-1">
-                                <span class="fw-bold text-primary me-1">Creator</span>
-                                <span class="text-muted d-none d-sm-inline"><strong>- {{ auth()->user()->email }}</strong></span>
+                                <span class="fw-bold text-primary">Creator</span>
+                                <span class="text-muted d-none d-sm-inline"> - {{ auth()->user()->email }}</span>
                             </div>
                         </div>
                     </div>
-                    <!--@foreach(range(1, 3) as $i)
-                        <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm">
-                            <div class="d-flex align-items-center">
-                                <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
-                                    <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-100" alt="">
-                                </div>
-                                <div class="small flex-grow-1">
-                                    <span class="fw-bold text-success me-1">Member</span>
-                                    <span class="text-muted d-none d-sm-inline">- john.doe@gmail.com</span>
-                                </div>
-                                <div class="text-danger small fw-bold px-1" role="button">✕</div>
-                            </div>
-                        </div>
-                    @endforeach-->
+                    <div id="addedMembers"></div>
                 </div>
             </div>
-            <div class="modal-footer border-0 pt-0">
-                <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold">Save Group</button>
+
+            <div class="border-0 pt-4 d-flex flex-column gap-2">
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4 flex-grow-1" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="saveGroup" class="btn btn-primary rounded-pill px-4 fw-bold flex-grow-1">Save Group</button>
+                </div>
+                <div id="errorHandler" class="text-danger small text-center"></div>
             </div>
         </div>
     </div>

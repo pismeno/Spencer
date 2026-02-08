@@ -7,25 +7,21 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-})->middleware('auth');;
+Route::get('/', [GroupController::class, 'index'])->middleware('auth')->name('group.index');
 
 Route::get('/event', function () {
     return view('event');
-})->middleware('auth');;
+})->middleware('auth');
 
-Route::get('/group', function () {
-    return view('group');
-})->middleware('auth');;
+Route::get('/group', [GroupController::class, 'index'])->middleware('auth')->name('group.index');
 
 Route::get('/notifications', function () {
     return view('notifications');
-})->middleware('auth');;
+})->middleware('auth');
 
 Route::get('/settings', function () {
     return view('settings');
-})->middleware('auth');;
+})->middleware('auth');
 
 
 // AUTHENTICATION ROUTES
@@ -47,8 +43,8 @@ Route::get('/group/create', [GroupController::class, 'create'])
 
 Route::post('/group/create', [GroupController::class, 'store'])
     ->middleware('auth')->name('group.store');
-Route::post('/group/edit', [GroupController::class, 'update'])
-    ->middleware('auth');
+Route::post('/group/edit/{group}', [GroupController::class, 'update'])
+    ->middleware('auth')->name('group.update');
 
 // EVENT ROUTES
 Route::get('/event/create', [EventController::class, 'create'])
