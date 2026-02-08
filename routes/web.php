@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,3 +71,12 @@ Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])
 // Mark all notifications as read
 Route::post('/notifications/readall', [NotificationController::class, 'readAll'])
     ->name('notifications.readAll')->middleware('auth');
+
+
+// Setting routes
+
+Route::get('/test/testsettings', [SettingController::class, 'list'])->name('settings.list')
+    ->middleware('auth');
+
+Route::post('/test/testsettings', [SettingController::class, 'update'])->name('settings.update')
+    ->middleware('auth');

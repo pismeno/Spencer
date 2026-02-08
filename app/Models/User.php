@@ -59,4 +59,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Membership::class);
     }
+
+
+    // settings
+    public function settings() {
+        return $this->belongsToMany(SettingOption::class, 'user_settings', 'user_id', 'option_id')->withTimestamps(); // timestampy
+    }
 }
