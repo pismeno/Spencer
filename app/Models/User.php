@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
@@ -60,9 +61,15 @@ class User extends Authenticatable
         return $this->hasMany(Membership::class);
     }
 
-
-    // settings
     public function settings() {
-        return $this->belongsToMany(SettingOption::class, 'user_settings', 'user_id', 'option_id')->withTimestamps(); // timestampy
+        return $this->belongsToMany(SettingOption::class, 'user_settings', 'user_id', 'option_id')->withTimestamps();
+    }
+
+    /**
+     * Vztah pro načítání skupin uživatele
+     */
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(Group::class, 'memberships', 'user_id', 'group_id');
     }
 }
