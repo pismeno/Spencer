@@ -5,7 +5,7 @@
         </div>
         <div class="d-flex d-md-none w-100 justify-content-between align-items-center h-100">
             <h1 class="mb-0 fw-bold text-primary">Spencer</h1>
-            <div class="d-flex align-items-center gap-3" id="mobile-header-icons">
+            <div class="d-flex align-items-center gap-4" id="mobile-header-icons">
                 <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="Search" class="icon-custom">
 
                 <div class="position-relative">

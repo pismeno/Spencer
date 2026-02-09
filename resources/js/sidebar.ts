@@ -56,6 +56,7 @@ function toggleSidebar(): void {
     }
 }
 
+
 // Export funkcí pro globální použití
 (window as any).toggleEventSubmenu = toggleEventSubmenu;
 (window as any).toggleMobileEventMenu = toggleMobileEventMenu;
