@@ -24,7 +24,10 @@ class UserController extends Controller
             return response()->json($this->relatedUsers($requester));
         }
 
-        $users = User::whereLike('email', '%' . $request->email . '%')->limit(10)->get();
+        $users = User::whereLike('email', '%' . $request->email . '%')
+            ->where('id', '!=', $requester->id)
+            ->limit(10)
+            ->get();
 
         return response()->json($users);
     }
