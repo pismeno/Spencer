@@ -4,6 +4,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "esnext",
     "target": "esnext",
+    "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
         "@/*": ["resources/js/*"]
