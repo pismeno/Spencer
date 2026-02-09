@@ -7,7 +7,7 @@
             <span class="ms-3 text-secondary fw-medium sidebar-text">Home</span>
         </a>
 
-        <div class="event-submenu-wrapper bg-hover">
+        <div class="event-submenu-wrapper">
             <button type="button" 
                     class="btn border-0 d-flex align-items-center p-2 w-100 shadow-none hover-bg text-start bg-transparent"
                     onclick="toggleEventSubmenu()"
