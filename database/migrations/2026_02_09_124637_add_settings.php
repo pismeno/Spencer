@@ -13,15 +13,13 @@ return new class extends Migration
     public function up(): void
     {
        $themeId = DB::table('settings')->insertGetId([
-            'name' => 'theme',
-            'created_at' => now(),
-            'updated_at' => now()
+            'name' => 'theme'
         ]);
 
 
         DB::table('setting_options')->insert([
-            ['setting_id' => $themeId, 'option_data' => 'light', 'created_at' => now()],
-            ['setting_id' => $themeId, 'option_data' => 'dark', 'created_at' => now()],
+            ['setting_id' => $themeId, 'option_data' => 'light'],
+            ['setting_id' => $themeId, 'option_data' => 'dark'],
         ]);
     }
 
