@@ -3,39 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Services\SearchService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected SearchService $searchService;
+
+    public function __construct(SearchService $userService)
+    {
+        $this->searchService = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function list(Request $request): JsonResponse
     {
-        $request->validate([
-            'email' => ['nullable', 'string', 'min:1'],
-        ]);
-
-        $requester = auth()->user();
-
-        if (!$request->filled('email')) {
-            return response()->json($this->relatedUsers($requester));
-        }
-
-        $users = User::whereLike('email', '%' . $request->email . '%')
-            ->where('id', '!=', $requester->id)
-            ->limit(10)
-            ->get();
-
-        return response()->json($users);
-    }
-
-    //TODO: implement actual logic
-    private function relatedUsers(Authenticatable $user): array
-    {
-        return [];
+        return response()->json($this->searchService->users($request));
     }
 
     /**

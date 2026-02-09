@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Services\SearchService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,24 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EventController extends Controller
 {
+    protected SearchService $searchService;
+
+    public function __construct(SearchService $userService)
+    {
+        $this->searchService = $userService;
+    }
+
+    /**
+     * Search for both Users and Groups in one request, used for event assignment
+     */
+    public function listUsersAndGroups(Request $request) : JsonResponse
+    {
+        return response()->json([
+            'users'  => $this->searchService->users($request),
+            'groups' => $this->searchService->groups($request),
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +47,7 @@ class EventController extends Controller
 
         $events = Event::whereLike('title', '%' . $request->title . '%')
             ->get();
-        
+
         return response()->json($events);
     }
     public function relatedEvents(Authenticatable $user)
@@ -44,7 +63,7 @@ class EventController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.       
+     * Store a newly created resource in storage.
      */
     public function store(Request $request): RedirectResponse
     {
