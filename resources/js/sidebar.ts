@@ -2,6 +2,12 @@ const sidebarToggle = localStorage.getItem("sidebarCollapse");
     if (sidebarToggle === "true") {
         document.getElementById("main-sidebar")?.classList.toggle("collapsed");
     }
+const eventSubmenu = localStorage.getItem("EventSubmenuToggle");
+if (eventSubmenu === "true" && document.getElementById("event-chevron")) {
+    document.getElementById("event-submenu")?.classList.remove("d-none");
+    document.getElementById("event-chevron")!.style.transform = "rotate(180deg)";
+    document.getElementById("event-menu-btn")?.setAttribute("aria-expanded", "true");
+}
 function toggleEventSubmenu(): void {
     const submenu = document.getElementById("event-submenu");
     const chevron = document.getElementById("event-chevron");
@@ -9,13 +15,16 @@ function toggleEventSubmenu(): void {
     
     if (submenu && chevron && btn) {
         const isHidden = submenu.classList.contains("d-none");
+        const localStorageSubmenuStatus:string = localStorage.getItem("EventSubmenuToggle")?? "false";
         
         if (isHidden) {
             submenu.classList.remove("d-none");
+            localStorage.setItem("EventSubmenuToggle", "true");
             chevron.style.transform = "rotate(180deg)";
             btn.setAttribute("aria-expanded", "true");
         } else {
             submenu.classList.add("d-none");
+            localStorage.setItem("EventSubmenuToggle", "false");
             chevron.style.transform = "rotate(0deg)";
             btn.setAttribute("aria-expanded", "false");
         }
@@ -53,7 +62,6 @@ function toggleSidebar(): void {
         } else if (localStorageCollapseStatus === "false"){
             localStorage.setItem("sidebarCollapse", "true");
         }
-        // Rotace ikony
         if (sidebar.classList.contains("collapsed")) {
             collapseIcon.style.transform = "rotate(180deg)";
         } else {
