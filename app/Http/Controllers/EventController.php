@@ -37,7 +37,7 @@ class EventController extends Controller
     public function list(Request $request): JsonResponse
     {
         $request->validate([
-            'title' => ['nullable', 'string', 'min:2']
+            'title' => ['nullable', 'string', 'min:1']
         ]);
         $requester = auth()->user();
 

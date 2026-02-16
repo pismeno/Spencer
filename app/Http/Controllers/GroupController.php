@@ -4,12 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\Role;
+use Illuminate\Http\JsonResponse;
+use App\Services\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class GroupController extends Controller
 {
+    protected SearchService $searchService;
+
+    public function __construct(SearchService $groupService)
+    {
+        $this->searchService = $groupService;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function list(Request $request): JsonResponse
+    {
+        return response()->json($this->searchService->groups($request));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Group $user)
+    {
+        //
+    }
+
     /**
      * Display a listing of the resource.
      */
