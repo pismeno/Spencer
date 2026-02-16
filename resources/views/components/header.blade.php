@@ -1,3 +1,4 @@
+@vite(['resources/js/searchMenu.ts'])
 <header class="navbar navbar-light bg-white shadow position-sticky top-0 z-1">
     <div class="container-fluid">
         <div class="d-none d-md-flex" id="logo">
