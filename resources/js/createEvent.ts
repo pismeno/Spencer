@@ -1,4 +1,4 @@
-import api from '@/bootstrap';
+import api from './bootstrap';
 const title = document.getElementById("input-title") as HTMLInputElement;
 const description = document.getElementById("input-description") as HTMLTextAreaElement;
 const deadline = document.getElementById("input-deadline") as HTMLInputElement;

@@ -27,8 +27,9 @@
 
         <div class="d-none d-md-flex position-absolute start-50 translate-middle-x align-items-center" id="search">
             <div class="position-relative w-100">
-                <input type="search" class="form-control rounded-pill border-secondary-subtle py-2 fs-5 px-4">
+                <input type="search" id="searchUserGroup" class="form-control rounded-pill border-secondary-subtle py-2 fs-5 px-4" autocomplete="off">
                 <img src="{{ Vite::asset('resources/svg/search-input.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3">
+                <div id="searchResult" class="position-absolute bg-white w-100 shadow-sm p-1" style="z-index: 1000; max-height: 300px; overflow-y: auto;"></div>
             </div>
         </div>
 

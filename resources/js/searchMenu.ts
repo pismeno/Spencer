@@ -1,4 +1,4 @@
-import api from '@/bootstrap';
+import api from './bootstrap';
 
 document.addEventListener('DOMContentLoaded', (event: Event) => {
     const searchInput = document.getElementById("searchUserGroup") as HTMLInputElement | null;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event: Event) => {
         try {
             const response = await api.post("/listusers", { email: query });
             const users = response.data;
-            users.forEach((user: string) => {
+            users.forEach((user :any) => {
                 searchResult.innerHTML += "<div>" + user["email"] +"</div><br>";
             })
         } catch (error) {
@@ -23,6 +23,11 @@ document.addEventListener('DOMContentLoaded', (event: Event) => {
 
     searchInput.addEventListener('input', () => {
         const query = searchInput.value;
-        performSearch(query);
+        if (searchResult.innerHTML.length > 0) {
+            searchResult.innerHTML = "";
+            performSearch(query);
+        } else {
+            performSearch(query);
+        }
     });
 });

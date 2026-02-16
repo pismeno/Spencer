@@ -1,5 +1,5 @@
-import api from '@/bootstrap';
-import type { User } from '@/models';
+import api from './bootstrap';
+import type { User } from './models';
 
 let timeout: ReturnType<typeof setTimeout>;
 let selectedUserIds: number[] = [];
