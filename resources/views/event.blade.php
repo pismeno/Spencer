@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <!-- <div class="col-lg-4" id="attendance-panel">
+                <div class="col-lg-4" id="attendance-panel">
                     <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
                         <h2 class="h4 text-center fw-bold mb-4 text-secondary">Attendance</h2>
 
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-            </div> -->
+            </div>
         </div>
     </div>
 </main>
