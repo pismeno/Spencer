@@ -8,7 +8,9 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [GroupController::class, 'index'])->middleware('auth')->name('group.index');
+Route::get('/', function() {
+    return view('index');
+})->middleware('auth');
 
 Route::get('/event', function () {
     return view('event');

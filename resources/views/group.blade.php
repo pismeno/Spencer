@@ -33,7 +33,7 @@
                             return ['id' => $u->id, 'email' => $u->email];
                         })->values();
                     @endphp
-                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                         <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 bg-white group-card" role="button" data-bs-toggle="modal" data-bs-target="#groupModal" data-id="{{ $group->id }}" data-name="{{ $group->name }}" data-description="{{ $group->description }}" data-is-creator="true" data-members="{{ json_encode($existingMembers) }}">
                             <span class="fw-bold text-secondary fs-6">{{ $group->name }}</span>
                             <div class="mt-2">

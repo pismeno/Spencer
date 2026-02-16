@@ -78,8 +78,14 @@ const addMemberToGroup = (user: User, canDelete: boolean = true) => {
             <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
                 <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 profile-pic" alt="acc">
             </div>
-            <div class="small flex-grow-1">
-                <span class="fw-bold text-success me-1">Member</span>
+            <div class="small">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                </div>
                 <span class="text-muted d-none d-sm-inline">${user.email}</span>
             </div>
             ${canDelete ? '<div class="remove-user-btn text-danger small fw-bold px-1" role="button">✕</div>' : ''}
