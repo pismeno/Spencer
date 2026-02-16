@@ -21,9 +21,9 @@
                 <div class="col-12 col-lg-10">
                     <div class="row align-items-center mb-5 g-4">
                         <div class="col-12 col-md-4 d-flex justify-content-center">
-                            <div class="ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border border-4 border-white d-flex justify-content-center align-items-center">
+                            <div class="ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border-white d-flex justify-content-center align-items-center">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <img src="{{ Vite::asset('resources/svg/user.svg') }}" class="w-50 opacity-25" alt="User Avatar">
+                                    <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100 rounded-circle border" alt="profile picture">
                                 </div>
                             </div>
                         </div>
@@ -63,18 +63,40 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
                                     <span class="fw-medium text-dark">Theme Level</span>
-                                    <div class="btn-group btn-group-sm rounded-pill overflow-hidden border" role="group">
-                                        <input type="radio" class="btn-check" name="level" id="l1" checked>
-                                        <label class="btn btn-primary border-0 px-3" for="l1">1</label>
-
-                                        <input type="radio" class="btn-check" name="level" id="l2">
-                                        <label class="btn btn-primary border-0 px-3" for="l2">2</label>
-
-                                        <input type="radio" class="btn-check" name="level" id="l3">
-                                        <label class="btn btn-primary border-0 px-3" for="l3">3</label>
+                                    <div class="form-check form-switch fs-4">
+                                        <input class="form-check-input" type="checkbox" role="switch">
                                     </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <span class="fw-medium text-dark">Hide profile pictures</span>
+                                    <div class="form-check form-switch fs-4">
+                                        <input class="form-check-input" type="checkbox" role="switch">
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <span class="fw-medium text-dark">Choose language</span>
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">English</a></li>
+                                            <li><a class="dropdown-item" href="#">Deutsch</a></li>
+                                            <li><a class="dropdown-item" href="#">Čeština</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <span class="fw-medium text-dark">Change password</span>
+                                    <a href="#" class="link-underline link-underline-opacity-0 link-primary link-underline-opacity-0-hover">Reset password <img src="{{ Vite::asset('resources/svg/edit-2.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <span class="fw-medium text-dark">Delete account</span>
+                                    <a href="#" class="link-underline link-underline-opacity-0 link-danger link-underline-opacity-0-hover">Delete account <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
                                 </div>
                             </div>
                         </div>
