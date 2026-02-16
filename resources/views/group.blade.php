@@ -17,10 +17,7 @@
     <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
         <div class="container-fluid">
             <div class="d-flex justify-content-center justify-content-md-start mb-5">
-                <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0"
-                        data-bs-toggle="modal"
-                        data-bs-target="#groupModal"
-                        id="createNewGroupBtn">
+                <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0" data-bs-toggle="modal" data-bs-target="#groupModal" id="createNewGroupBtn">
                     <span class="fs-4 lh-1 text-white">+</span>
                     <span>Create New Group</span>
                 </button>
@@ -96,7 +93,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -8,21 +8,21 @@
         </a>
 
         <div class="event-submenu-wrapper">
-            <button type="button" 
+            <button type="button"
                     class="btn border-0 d-flex align-items-center p-2 w-100 shadow-none hover-bg text-start bg-transparent"
                     onclick="toggleEventSubmenu()"
                     aria-expanded="false"
                     id="event-menu-btn">
                 <img src="{{ Vite::asset('resources/svg/plus-circle.svg') }}" alt="Event" width="24" height="24">
                 <span class="ms-3 text-secondary fw-medium sidebar-text">Event</span>
-                <img src="{{ Vite::asset('resources/svg/chevron-down.svg') }}" 
-                     alt="Toggle" 
-                     width="16" 
-                     height="16" 
+                <img src="{{ Vite::asset('resources/svg/chevron-down.svg') }}"
+                     alt="Toggle"
+                     width="16"
+                     height="16"
                      class="ms-auto transition-rotate"
                      id="event-chevron">
             </button>
-            
+
             <div id="event-submenu" class="d-none ps-4 mt-1">
                 <a href="/event/create" class="text-decoration-none d-flex align-items-center p-2 rounded hover-bg">
                     <img src="{{ Vite::asset('resources/svg/plus.svg') }}" alt="Create" width="20" height="20">
@@ -68,18 +68,14 @@
                 <img src="{{ Vite::asset('resources/svg/home.svg') }}" alt="Home" height="20">
                 <div class="small text-muted">Home</div>
             </a>
-            
+
             <div class="flex-grow-1 position-relative">
-                <button type="button" 
-                        class="btn border-0 p-0 w-100 text-center bg-transparent"
-                        onclick="toggleMobileEventMenu()"
-                        id="mobile-event-btn">
+                <button type="button" class="btn border-0 p-0 w-100 text-center bg-transparent" onclick="toggleMobileEventMenu()" id="mobile-event-btn">
                     <img src="{{ Vite::asset('resources/svg/plus-circle.svg') }}" alt="Event" height="20">
                     <div class="small text-muted">Event</div>
                 </button>
-                <div id="mobile-event-dropdown" 
-                     class="d-none position-absolute bottom-100 start-50 translate-middle-x mb-2 bg-white border rounded shadow p-2"
-                     style="min-width: 140px;">
+                <div id="mobile-event-dropdown"
+                     class="d-none position-absolute bottom-100 start-50 translate-middle-x mb-2 bg-white border rounded shadow p-2" style="min-width: 140px;">
                     <a href="/event/create" class="d-flex align-items-center gap-2 p-2 text-decoration-none text-dark hover-bg rounded">
                         <img src="{{ Vite::asset('resources/svg/plus.svg') }}" alt="Create" width="16" height="16">
                         <span class="small">Create</span>
@@ -90,7 +86,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <a href="/group" class="text-center text-decoration-none flex-grow-1">
                 <img src="{{ Vite::asset('resources/svg/users.svg') }}" alt="Groups" height="20">
                 <div class="small text-muted">Groups</div>
