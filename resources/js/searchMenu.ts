@@ -26,7 +26,14 @@ document.addEventListener('DOMContentLoaded', (event: Event) => {
 
             searchResult.innerHTML += "<div class='fw-bold'>Users</div><br>";
             users.forEach((user: any) => {
-                searchResult.innerHTML += "<div>" + user["email"] + "</div><br>";
+                searchResult.innerHTML += `
+                    <div class="d-flex align-items-center gap-2 mb-2 p-1">
+                        <div class="rounded-circle overflow-hidden border border-secondary-subtle profile-pic">
+                            <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100"style=" object-fit: cover;" alt="acc">
+                        </div>
+                        <div class="fw-medium">${user["email"]}</div>
+                    </div>
+                `;
             });
             searchResult.innerHTML += "<div class='fw-bold'>Groups</div><br>";
             groups.forEach((group: any) => {
