@@ -58,9 +58,11 @@ Route::post('/event/create', [EventController::class, 'store'])
 Route::post('/event/edit', [EventController::class, 'update'])
     ->middleware('auth')->name('event.update');
 // List events
-Route::get('/listevents', [EventController::class, 'list'])->name('event.list');
+Route::post('/listevents', [EventController::class, 'list'])->name('event.list');
 // List users
 Route::post('/listusers', [UserController::class, 'list'])->name('user.list');
+// List groups
+Route::post('/listgroups', [GroupController::class, 'list'])->name('group.list');
 
 // NOTIFICATION ROUTES
 // Mark one notification as read
