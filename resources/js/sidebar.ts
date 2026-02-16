@@ -1,6 +1,7 @@
 const sidebarToggle = localStorage.getItem("sidebarCollapse");
     if (sidebarToggle === "true") {
         document.getElementById("main-sidebar")?.classList.toggle("collapsed");
+        document.getElementById('event-submenu')?.classList.toggle("ps-4");
     }
 const eventSubmenu = localStorage.getItem("EventSubmenuToggle");
 if (eventSubmenu === "true" && document.getElementById("event-chevron")) {
@@ -54,7 +55,7 @@ document.addEventListener('click', function(event: MouseEvent): void {
 function toggleSidebar(): void {
     const sidebar = document.getElementById('main-sidebar');
     const collapseIcon = document.getElementById('collapse-icon');
-    let groupIcons = document.getElementById('event-submenu');
+    const groupIcons = document.getElementById('event-submenu');
 
     if (sidebar && collapseIcon) {
         sidebar.classList.toggle('collapsed');
