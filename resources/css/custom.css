@@ -101,3 +101,6 @@ aside.sticky-top {
 .profile-pic{
     height: 32px;
 }
+.min-w-100{
+    min-width: 100px;
+}
