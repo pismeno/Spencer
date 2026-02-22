@@ -40,6 +40,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
+Route::delete('/settings/delete-account', [AuthController::class, 'deleteAccount'])
+    ->name('profile.delete')
+    ->middleware('auth');
+
 // GROUPS ROUTES
 Route::get('/group/create', [GroupController::class, 'create'])
     ->middleware('auth')->name('group.create');
@@ -72,11 +76,13 @@ Route::post('/notifications/{id}/read', [NotificationController::class, 'read'])
 Route::post('/notifications/readall', [NotificationController::class, 'readAll'])
     ->name('notifications.readAll')->middleware('auth');
 
-
 // Setting routes
 
-Route::get('/test/testsettings', [SettingController::class, 'list'])->name('settings.list')
+Route::get('/settings', [SettingController::class, 'list'])->name('settings.list')
     ->middleware('auth');
 
-Route::post('/test/testsettings', [SettingController::class, 'update'])->name('settings.update')
+Route::post('/settings/options', [SettingController::class, 'update'])->name('settings.update')
+    ->middleware('auth');
+
+Route::post('/settings/profile', [AuthController::class, 'updateProfile'])->name('profile.update')
     ->middleware('auth');
