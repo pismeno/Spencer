@@ -1,4 +1,4 @@
-import api from '@/bootstrap';
+import api from './bootstrap';
 
 document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("register") as HTMLFormElement;
