@@ -71,18 +71,24 @@ class EventController extends Controller
             'title' => ['required', 'string', 'max:256'],
             'description' => ['required', 'string'],
             'deadline' => ['nullable', 'date'],
-            'starts_at' => ['required', 'date'],
-            'ends_at' => ['required', 'date'],
-            'group_id' => ['required', 'integer']
+            'from' => ['required', 'date'],
+            'to' => ['required', 'date'],
+            'group_id' => ['required', 'integer'],
+            'img' => ['nullable', 'image', 'max:4096']
         ]);
+        $imgPath = null;
+        if ($request->hasFile('img')) {
+            $imgPath = $request->file('img')->store('thumbnails', 'public');
+        }
 
         $event = Event::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'deadline' => $data['deadline'],
-            'starts_at' => $data['starts_at'],
-            'ends_at' => $data['ends_at'],
-            'group_id' => $data['group_id']
+            'starts_at' => $data['from'],
+            'ends_at' => $data['to'],
+            'group_id' => $data['group_id'],
+            'thumbnail_path' => $imgPath
         ]);
 
         return back(); // zatim nic

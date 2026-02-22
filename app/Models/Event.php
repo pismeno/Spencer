@@ -22,7 +22,8 @@ class Event extends Model
         'deadline',
         'starts_at',
         'ends_at',
-        'group_id' //TODO Groupy
+        'group_id', //TODO Groupy
+        'img_path'
     ];
 
     protected function casts(): array
