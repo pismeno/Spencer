@@ -18,7 +18,7 @@ class SettingController extends Controller
         
         $currentSelect = Auth::user()->settings()->pluck('setting_options.id')->toArray();
 
-        return view('test/testsettings', compact('allSettings', 'currentSelect'));
+        return view('settings', compact('allSettings', 'currentSelect'));
     }
 
     /**
@@ -59,11 +59,11 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'options' => 'required|array',
+            'options' => 'nullable|array',
             'options.*' => 'exists:setting_options,id',
         ]);
 
-        $optionsID = array_values($request->input('options'));
+        $optionsID = array_values($request->input('options', []));
         
         // sync
 
