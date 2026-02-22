@@ -59,7 +59,7 @@ class EventController extends Controller
      */
     public function create(): View
     {
-         return view('test/createevent');
+         return view('event');
     }
 
     /**
