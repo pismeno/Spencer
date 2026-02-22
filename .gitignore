@@ -23,3 +23,4 @@ artisan
 /storage/framework/sessions/*
 /storage/logs/*
 /vendor
+/storage/app/public/thumbnails/*
