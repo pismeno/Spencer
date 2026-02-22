@@ -36,11 +36,11 @@
                             </div>
                             <div id="from-div" class="col-md-4">
                                 <label class="form-label small text-muted">From</label>
-                                <input type="date" class="form-control rounded-3 border">
+                                <input type="date" class="form-control rounded-3 border" id="input-from">
                             </div>
                             <div id="to-div" class="col-md-4">
                                 <label class="form-label small text-muted">To</label>
-                                <input type="date" class="form-control rounded-3">
+                                <input type="date" class="form-control rounded-3" id="input-to">
                             </div>
                         </div>
                         <div id="img-preview-div" class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-2 position-relative">
@@ -48,9 +48,10 @@
                             <label for="event-image-upload" class="d-flex flex-column justify-content-center align-items-center w-100 h-100" style="cursor: pointer;">
                                 <img id="input-img" src="{{ Vite::asset('resources/svg/file.svg') }}" alt="Upload" class="opacity-50 mb-2" style="width: 80px; height: auto;">
                                 <span class="small text-muted fw-bold">Click to upload event image</span>
-                                <input type="file" id="event-image-upload" class="d-none" accept="image/png image/jpg image/webp image/jpeg">
+                                <input type="file" id="event-image-upload" class="d-none" accept="image/png, image/jpg, image/webp, image/jpeg">
                             </label>
                         </div>
+                        <input type="hidden" id="group-hidden" value='1'>
                         <button id="save-changes" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Save Changes</button>
                     </div>
 
