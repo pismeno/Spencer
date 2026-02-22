@@ -114,15 +114,28 @@ class EventController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Event $event): RedirectResponse
-    {
+    {   
         $data = $request->validate([
-            'title' => ['required', 'string', 'max:256'],
+            'title'       => ['required', 'string', 'max:256'],
             'description' => ['required', 'string'],
-            'deadline' => ['nullable', 'date'],
-            'starts_at' => ['required', 'date'],
-            'ends_at' => ['required', 'date']
+            'deadline'    => ['nullable', 'date'],
+            'from'        => ['required', 'date'], 
+            'to'          => ['required', 'date'],
+            'img'         => ['nullable', 'image', 'max:4096']
         ]);
-        $event->update($data);
+
+        if ($request->hasFile('img')) { // TODO img deletion!!!!!!
+            $data['img_path'] = $request->file('img')->store('thumbnails', 'public');
+        }
+
+        $event->update([
+            'title'       => $data['title'],
+            'description' => $data['description'],
+            'deadline'    => $data['deadline'],
+            'starts_at'   => $data['from'], // Use 'from'
+            'ends_at'     => $data['to'],   // Use 'to'
+            'img_path'    => $data['img_path'] ?? $event->img_path,
+        ]);
 
         // Placeholder response
         return back();
