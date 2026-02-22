@@ -4,11 +4,10 @@ const description = document.getElementById("input-description") as HTMLTextArea
 const deadline = document.getElementById("input-deadline") as HTMLInputElement;
 const from = document.getElementById("input-from") as HTMLInputElement;
 const to = document.getElementById("input-to") as HTMLInputElement;
-const img = document.getElementById("input-img") as HTMLInputElement;
+const img = document.getElementById("event-image-upload") as HTMLInputElement;
 const submitBtn = document.getElementById("save-changes") as HTMLButtonElement;
-
-
-
+const groupID = document.getElementById("group-hidden") as HTMLInputElement;
+console.log(img);
 
 submitBtn.addEventListener("click", async (e)=>{
     e.preventDefault();
@@ -38,12 +37,15 @@ submitBtn.addEventListener("click", async (e)=>{
     formData.append("deadline", deadline.value);
     formData.append("from", from.value);
     formData.append("to", to.value);
+    // temporary
+    formData.append("group_id", groupID.value);
+    // temporary-end
     if (img.files && img.files?.[0]) {
         formData.append("img", img.files?.[0])
     }
     try{
         submitBtn.disabled=true;
-        const response = await api.post("/create", formData);
+        const response = await api.post("/event/create", formData);
         window.location.href="/";
     }catch (error:unknown){
         console.error("Error: "+error);
