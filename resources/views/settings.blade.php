@@ -30,20 +30,23 @@
 
                         <div class="col-12 col-md-8">
                             <div class="card border-0 shadow-sm rounded-4 p-4">
-                                <div class="mb-3">
-                                    <label class="form-label small text-muted ms-1">First Name</label>
-                                    <div class="position-relative">
-                                        <input type="text" class="form-control rounded-3 pe-5" value="John">
-                                        <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-25 w-auto">
+                                <form action="{{ route('profile.update') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label class="form-label small text-muted ms-1">First Name</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->first_name ?? "" }}" name="first_name">
+                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mb-0">
-                                    <label class="form-label small text-muted ms-1">Surname</label>
-                                    <div class="position-relative">
-                                        <input type="text" class="form-control rounded-3 pe-5" value="Doe">
-                                        <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-25 w-auto">
+                                    <div class="mb-0">
+                                        <label class="form-label small text-muted ms-1">Surname</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->last_name ?? "" }}" name="last_name">
+                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto">
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -55,40 +58,54 @@
                                     <span class="h5 fw-bold text-secondary">Settings</span>
                                     <hr class="mt-2 mb-0 opacity-25">
                                 </div>
+                                <form id="settingsForm" action="{{ route('settings.update') }}" method="POST">
+                                    @csrf
+                                    @foreach ($allSettings as $setting)
+                                        @php
+                                             $customLabels = [
+                                                    'czech' => 'Čeština',
+                                                    'english' => 'English',
+                                                    'german' => 'Deutsch',
+                                                    'theme' => 'Dark theme'
+                                                ];
+                                            $settingName = $customLabels[$setting->name] ?? ucfirst($setting->name);
+                                        @endphp
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <span class="fw-medium text-dark">
+                                                {{ ucfirst(str_replace('_', ' ', $settingName)) }}
+                                            </span>
 
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fw-medium text-dark">Email Notifications</span>
-                                    <div class="form-check form-switch fs-4">
-                                        <input class="form-check-input" type="checkbox" role="switch" checked>
-                                    </div>
-                                </div>
+                                            @php
+                                               
+                                                $toggleOption = $setting->options->whereIn('option_data', ['dark', 'show', 'enable'])->first();
+                                                $isToggle = ($setting->options->count() === 2 && $toggleOption);
+                                            @endphp
 
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fw-medium text-dark">Theme Level</span>
-                                    <div class="form-check form-switch fs-4">
-                                        <input class="form-check-input" type="checkbox" role="switch">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fw-medium text-dark">Hide profile pictures</span>
-                                    <div class="form-check form-switch fs-4">
-                                        <input class="form-check-input" type="checkbox" role="switch">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fw-medium text-dark">Choose language</span>
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">English</a></li>
-                                            <li><a class="dropdown-item" href="#">Deutsch</a></li>
-                                            <li><a class="dropdown-item" href="#">Čeština</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
+                                            @if ($isToggle)
+                                                <div class="form-check form-switch fs-4">
+                                                    <input class="form-check-input" type="checkbox" role="switch" 
+                                                        name="options[{{ $setting->id }}]" 
+                                                        value="{{ $toggleOption->id }}"
+                                                        {{ in_array($toggleOption->id, $currentSelect) ? 'checked' : '' }}>
+                                                </div>
+                                            @else
+                                                <div class="dropdown">
+                                                    <select name="options[{{ $setting->id }}]" class="form-select form-select-sm setting-input border-primary text-primary fw-bold">
+                                                        @foreach ($setting->options as $option)
+                                                            @php
+                                                                $dName = $customLabels[$option->option_data] ?? ucfirst($option->option_data);
+                                                            @endphp
+                                                            <option value="{{ $option->id }}"
+                                                                {{ in_array($option->id, $currentSelect) ? 'selected' : '' }}>
+                                                                {{ $dName }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </form>
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <span class="fw-medium text-dark">Change password</span>
                                     <a href="#" class="link-underline link-underline-opacity-0 link-primary link-underline-opacity-0-hover">Reset password <img src="{{ Vite::asset('resources/svg/edit-2.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
@@ -96,7 +113,14 @@
 
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <span class="fw-medium text-dark">Delete account</span>
-                                    <a href="#" class="link-underline link-underline-opacity-0 link-danger link-underline-opacity-0-hover">Delete account <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
+                                    <form action="{{ route('profile.delete') }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-link link-danger p-0 text-decoration-none">Delete account
+                                            <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16">
+                                        </button>
+                                    </form>
+                                    {{-- <a href="#" class="link-underline link-underline-opacity-0 link-danger link-underline-opacity-0-hover">Delete account <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a> --}}
                                 </div>
                             </div>
                         </div>
