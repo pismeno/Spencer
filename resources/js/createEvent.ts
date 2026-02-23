@@ -1,4 +1,5 @@
 import api from './bootstrap';
+import ErrorHandlingForm from './errorHandling';
 const title = document.getElementById("input-title") as HTMLInputElement;
 const description = document.getElementById("input-description") as HTMLTextAreaElement;
 const deadline = document.getElementById("input-deadline") as HTMLInputElement;
@@ -12,22 +13,22 @@ console.log(img);
 submitBtn.addEventListener("click", async (e)=>{
     e.preventDefault();
     if (!title?.value.trim()) {
-        console.error("title je povinny");
+        ErrorHandlingForm(title, "titleErrorBlock", "title je povinny");
         title?.focus();
         return;
     }
     if (!deadline?.value) {
-        console.error("deadline je povinny");
+        ErrorHandlingForm(deadline, "deadlineErrorBlock", "deadline je povinny");
         deadline?.focus();
         return;
     }
     if (!from?.value) {
-        console.error("Event musí někdy začít");
+        ErrorHandlingForm(from, "fromErrorBlock", "Event musí někdy začít");
         from?.focus();
         return;
     }
     if (!to?.value) {
-        console.error("Event musi nekdy koncit");
+        ErrorHandlingForm(to, "toErrorBlock", "Event musi nekdy koncit");        
         to?.focus();
         return;
     }

@@ -8,7 +8,7 @@ function ErrorHandlingMessage(id:string, text:string, classD :string = ""):HTMLD
     return errorDivMsg;
 }
 
-function ErrorHandlingForm(idInput:string, idDiv:string, text:string, classD:string =""){
+function ErrorHandlingForm(idInput:any, idDiv:string, text:string, classD:string =""){
     const input = document.getElementById(idInput) as HTMLInputElement;
     input?.classList.add("border", "border-danger", "text-danger");
     const errorDivMessage = ErrorHandlingMessage(idDiv, text, classD);
