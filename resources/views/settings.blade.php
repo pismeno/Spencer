@@ -35,15 +35,15 @@
                                     <div class="mb-3">
                                         <label class="form-label small text-muted ms-1">First Name</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->first_name ?? "" }}" name="first_name">
-                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto">
+                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->first_name ?? "" }}" name="first_name" id="firstName">
+                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto cursor-pointer">
                                         </div>
                                     </div>
                                     <div class="mb-0">
                                         <label class="form-label small text-muted ms-1">Surname</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->last_name ?? "" }}" name="last_name">
-                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto">
+                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->last_name ?? "" }}" name="last_name" id="lastName">
+                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto cursor-pointer">
                                         </div>
                                     </div>
                                 </form>
