@@ -97,16 +97,23 @@ class AuthController extends Controller
         return redirect('/login');
     }
 
-    public function updateProfile(Request $request): RedirectResponse
+    public function updateProfile(Request $request)
     {
         $data = $request->validate([
-            'first_name' => 'sometimes|required|string|max:255',
-            'last_name'    => 'sometimes|required|string|max:255',
+            'first_name' => 'sometimes|nullable|string|max:255',
+            'last_name'    => 'sometimes|nullable|string|max:255',
         ]);
 
         Auth::user()->update($data);
 
-        return back();
+        if($request->expectsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Profile Updated'
+            ]);
+        }
+
+        return back()->with('status', 'profile-updated');
     }
 
     public function deleteAccount(Request $request): RedirectResponse
