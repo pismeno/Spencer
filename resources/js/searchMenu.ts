@@ -1,6 +1,6 @@
 import api from './bootstrap';
 
-document.addEventListener('DOMContentLoaded', (event: Event) => {
+document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById("searchUserGroup") as HTMLInputElement | null;
     const searchResult = document.getElementById("searchResult") as HTMLElement | null;
 
@@ -13,39 +13,74 @@ document.addEventListener('DOMContentLoaded', (event: Event) => {
         }
 
         try {
-            const responseUser = await api.post("/listusers", { email: query });
-            const users = responseUser.data;
+            const [resUser, resGroups, resEvents] = await Promise.all([
+                api.post("/listusers", { email: query }),
+                api.post("/listgroups", { title: query }),
+                api.post("/listevents", { title: query })
+            ]);
 
-            const responseGroups = await api.post("/listgroups", { title: query });
-            const groups = responseGroups.data;
-
-            const responseEvents = await api.post("/listevents", { title: query });
-            const events = responseEvents.data;
+            const users = resUser.data;
+            const groups = resGroups.data;
+            const events = resEvents.data;
 
             searchResult.innerHTML = "";
 
-            searchResult.innerHTML += "<div class='fw-bold'>Users</div><br>";
-            users.forEach((user: any) => {
-                searchResult.innerHTML += `
-                    <div class="d-flex align-items-center gap-2 mb-2 p-1">
-                        <div class="rounded-circle overflow-hidden border border-secondary-subtle profile-pic">
-                            <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100"style=" object-fit: cover;" alt="acc">
-                        </div>
-                        <div class="fw-medium">${user["email"]}</div>
-                    </div>
-                `;
-            });
-            searchResult.innerHTML += "<div class='fw-bold'>Groups</div><br>";
-            groups.forEach((group: any) => {
-                searchResult.innerHTML += "<div>" + group["name"] + "</div><br>";
-            });
-            searchResult.innerHTML += "<div class='fw-bold'>Events</div><br>";
-            events.forEach((event: any) => {
-                searchResult.innerHTML += "<div>" + event["title"] + "</div><br>";
-            });
+            if (users.length > 0) {
+                searchResult.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom">Uživatelé</div>`;
+                users.forEach((user: any) => {
+                    const [short, suffix] = user.email.split("@");
+                    const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
 
-        } catch (error) {
-            console.error("Search failed", error);
+                    searchResult.innerHTML += `
+                    <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
+                        <div>
+                            <div class="rounded-circle overflow-hidden border">
+                                <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100" style="object-fit: cover;">
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold text-dark">${short}</span>
+                                <span class="text-muted small">@${suffix}</span>
+                                ${fullName ? `<span class="text-secondary mt-1">${fullName}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            }
+
+            if (groups.length > 0 || events.length > 0) {
+                searchResult.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom mt-2">Ostatní</div>`;
+
+                groups.forEach((group: any) => {
+                    searchResult.innerHTML += `
+                    <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
+                        <div class="rounded-circle overflow-hidden border">
+                            <img src="https://ui-avatars.com/api/?name=${group.name}&background=198754&color=fff" class="w-100 h-100" style="object-fit: cover;">
+                        </div>
+                        <div class="ms-3">
+                            <div class="fw-bold text-dark">${group.name}</div>
+                            <div class="text-muted small">Skupina</div>
+                        </div>
+                    </div>`;
+                });
+
+                events.forEach((event: any) => {
+                    searchResult.innerHTML += `
+                    <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
+                        <div class="rounded-circle overflow-hidden border">
+                            <img src="https://ui-avatars.com/api/?name=${event.title}&background=198754&color=fff" class="w-100 h-100" style="object-fit: cover;">
+                        </div>
+                        <div class="ms-3">
+                            <div class="fw-bold text-dark">${event.title}</div>
+                            <div class="text-muted small">Událost</div>
+                        </div>
+                    </div>`;
+                });
+            }
+
+        } catch (e) {
+            console.error(e);
         }
     };
 

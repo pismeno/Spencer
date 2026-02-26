@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class SearchService
 {
-    public function users(Request $request): Collection|User
+    public function users(Request $request): Collection|array
     {
         $request->validate([
             'email' => ['nullable', 'string', 'min:1'],
@@ -23,8 +23,14 @@ class SearchService
             return $this->relatedUsers($requester);
         }
 
-        return User::whereLike('email', '%' . $request->email . '%')
-            ->where('id', '!=', $requester->id)
+        $searchTerm = '%' . $request->email . '%';
+
+        return User::where('id', '!=', $requester->id)
+        ->where(function ($query) use ($searchTerm) {
+            $query->whereLike('email', $searchTerm)
+                ->orWhereLike('first_name', $searchTerm)
+                ->orWhereLike('last_name', $searchTerm);
+        })
             ->limit(10)
             ->get();
     }
