@@ -47,4 +47,9 @@ class Event extends Model
     // {
     //     return $this->hasMany(Membership::class, 'group_id', 'group_id');
     // }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

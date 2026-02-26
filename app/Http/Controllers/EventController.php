@@ -45,14 +45,19 @@ class EventController extends Controller
             return response()->json($this->relatedEvents($requester));
         }
 
-        $events = Event::whereLike('title', '%' . $request->title . '%')
-            ->get();
+        $events = Event::with('group')->
+        whereLike('title', '%' . $request->title . '%')
+        ->latest()
+        ->get();
 
         return response()->json($events);
     }
     public function relatedEvents(Authenticatable $user)
     {
-        return Event::where('group_id', $user->current_group_id)->get();
+        return Event::with('group')
+        ->where('group_id', $user->current_group_id)
+        ->latest()
+        ->get();
     }
     /**
      * Show the form for creating a new resource.
