@@ -57,8 +57,8 @@ aside.sticky-top {
 
 
 .auth-container {
-    height: calc(100vh - 5rem);
-    overflow: hidden;
+    height: 80vh;
+    margin-top: 10vh;
 }
 
 #main-sidebar {
