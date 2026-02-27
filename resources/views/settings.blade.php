@@ -12,115 +12,127 @@
     @vite(['resources/css/custom.css', 'resources/js/settingsUser.ts'])
 </head>
 <body class="bg-light">
-<x-header />
-<main class="d-flex">
-    <x-sidebar/>
-    <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-10">
-                    <div class="row align-items-center mb-5 g-4">
-                        <div class="col-12 col-md-4 d-flex justify-content-center">
-                            <div class="ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border-white d-flex justify-content-center align-items-center">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100 rounded-circle border" alt="profile picture">
+<div id="deleteMenu" class="w-100 h-100 d-none position-absolute d-flex align-items-center">
+    <div class="w-100 d-flex justify-content-center">
+        <div class="card z-2 p-5">
+            <h2 class="text-muted">Are you sure you want to delete account?</h2>
+            <form action="{{ route('profile.delete') }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-link link-danger p-0 text-decoration-none">Delete account
+                        <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16">
+                    </button>
+                    <button type="button" id="cancelDelete" class="btn btn-primary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <x-header />
+    <main class="d-flex">
+        <x-sidebar class="z-3 position-absolute"/>
+        <div id="content" class="flex-grow-1 overflow-auto">
+            <div class="container position-releative mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="row align-items-center mb-5 g-4">
+                            <div class="col-12 col-md-4 d-flex justify-content-center">
+                                <div class="ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border-white d-flex justify-content-center align-items-center">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100 rounded-circle border" alt="profile picture">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-8">
+                                <div class="card border-0 shadow-sm rounded-4 p-4">
+                                    <form action="{{ route('profile.update') }}" method="POST">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label class="form-label small text-muted ms-1">First Name</label>
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->first_name ?? "" }}" name="first_name" id="firstName">
+                                                <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto cursor-pointer">
+                                            </div>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label class="form-label small text-muted ms-1">Surname</label>
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->last_name ?? "" }}" name="last_name" id="lastName">
+                                                <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto cursor-pointer">
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-8">
-                            <div class="card border-0 shadow-sm rounded-4 p-4">
-                                <form action="{{ route('profile.update') }}" method="POST">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label class="form-label small text-muted ms-1">First Name</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->first_name ?? "" }}" name="first_name" id="firstName">
-                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto cursor-pointer">
-                                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-8 col-lg-6">
+                                <div class="card border-0 shadow-sm rounded-4 p-4">
+                                    <div class="text-center mb-4">
+                                        <span class="h5 fw-bold text-secondary">Settings</span>
+                                        <hr class="mt-2 mb-0 opacity-25">
                                     </div>
-                                    <div class="mb-0">
-                                        <label class="form-label small text-muted ms-1">Surname</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control rounded-3 pe-5" value="{{ auth()->user()->last_name ?? "" }}" name="last_name" id="lastName">
-                                            <img src="{{ Vite::asset('resources/svg/edit.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3 opacity-50 h-50 w-auto cursor-pointer">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-md-8 col-lg-6">
-                            <div class="card border-0 shadow-sm rounded-4 p-4">
-                                <div class="text-center mb-4">
-                                    <span class="h5 fw-bold text-secondary">Settings</span>
-                                    <hr class="mt-2 mb-0 opacity-25">
-                                </div>
-                                <form id="settingsForm" action="{{ route('settings.update') }}" method="POST">
-                                    @csrf
-                                    @foreach ($allSettings as $setting)
-                                        @php
-                                             $customLabels = [
-                                                    'czech' => 'Čeština',
-                                                    'english' => 'English',
-                                                    'german' => 'Deutsch',
-                                                    'theme' => 'Dark theme'
-                                                ];
-                                            $settingName = $customLabels[$setting->name] ?? ucfirst($setting->name);
-                                        @endphp
-                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <form id="settingsForm" action="{{ route('settings.update') }}" method="POST">
+                                        @csrf
+                                        @foreach ($allSettings as $setting)
+                                            @php
+                                                $customLabels = [
+                                                       'czech' => 'Čeština',
+                                                       'english' => 'English',
+                                                       'german' => 'Deutsch',
+                                                       'theme' => 'Dark theme'
+                                                   ];
+                                               $settingName = $customLabels[$setting->name] ?? ucfirst($setting->name);
+                                            @endphp
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
                                             <span class="fw-medium text-dark">
                                                 {{ ucfirst(str_replace('_', ' ', $settingName)) }}
                                             </span>
 
-                                            @php
-                                               
-                                                $toggleOption = $setting->options->whereIn('option_data', ['dark', 'show', 'enable'])->first();
-                                                $isToggle = ($setting->options->count() === 2 && $toggleOption);
-                                            @endphp
+                                                @php
 
-                                            @if ($isToggle)
-                                                <div class="form-check form-switch fs-4">
-                                                    <input class="form-check-input" type="checkbox" role="switch" 
-                                                        name="options[{{ $setting->id }}]" 
-                                                        value="{{ $toggleOption->id }}"
-                                                        {{ in_array($toggleOption->id, $currentSelect) ? 'checked' : '' }}>
-                                                </div>
-                                            @else
-                                                <div class="dropdown">
-                                                    <select name="options[{{ $setting->id }}]" class="form-select form-select-sm setting-input border-primary text-primary fw-bold">
-                                                        @foreach ($setting->options as $option)
-                                                            @php
-                                                                $dName = $customLabels[$option->option_data] ?? ucfirst($option->option_data);
-                                                            @endphp
-                                                            <option value="{{ $option->id }}"
-                                                                {{ in_array($option->id, $currentSelect) ? 'selected' : '' }}>
-                                                                {{ $dName }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </form>
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fw-medium text-dark">Change password</span>
-                                    <a href="#" class="link-underline link-underline-opacity-0 link-primary link-underline-opacity-0-hover">Reset password <img src="{{ Vite::asset('resources/svg/edit-2.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
-                                </div>
+                                                    $toggleOption = $setting->options->whereIn('option_data', ['dark', 'show', 'enable'])->first();
+                                                    $isToggle = ($setting->options->count() === 2 && $toggleOption);
+                                                @endphp
 
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fw-medium text-dark">Delete account</span>
-                                    <form action="{{ route('profile.delete') }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-link link-danger p-0 text-decoration-none">Delete account
-                                            <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16">
-                                        </button>
+                                                @if ($isToggle)
+                                                    <div class="form-check form-switch fs-4">
+                                                        <input class="form-check-input" type="checkbox" role="switch"
+                                                               name="options[{{ $setting->id }}]"
+                                                               value="{{ $toggleOption->id }}"
+                                                            {{ in_array($toggleOption->id, $currentSelect) ? 'checked' : '' }}>
+                                                    </div>
+                                                @else
+                                                    <div class="dropdown">
+                                                        <select name="options[{{ $setting->id }}]" class="form-select form-select-sm setting-input border-primary text-primary fw-bold">
+                                                            @foreach ($setting->options as $option)
+                                                                @php
+                                                                    $dName = $customLabels[$option->option_data] ?? ucfirst($option->option_data);
+                                                                @endphp
+                                                                <option value="{{ $option->id }}"
+                                                                    {{ in_array($option->id, $currentSelect) ? 'selected' : '' }}>
+                                                                    {{ $dName }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
                                     </form>
-                                    {{-- <a href="#" class="link-underline link-underline-opacity-0 link-danger link-underline-opacity-0-hover">Delete account <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a> --}}
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="fw-medium text-dark">Change password</span>
+                                        <a href="#" class="link-underline link-underline-opacity-0 link-primary link-underline-opacity-0-hover">Reset password <img src="{{ Vite::asset('resources/svg/edit-2.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="fw-medium text-dark">Delete account</span>
+                                        <a href="#" id="openDeleteDialog" class="link-underline link-underline-opacity-0 link-danger link-underline-opacity-0-hover">Delete account <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="trashIcon" width="16" height="16"></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -128,8 +140,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

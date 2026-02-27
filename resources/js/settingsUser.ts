@@ -36,4 +36,40 @@ addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    const openDeleteDialog = document.getElementById("openDeleteDialog");
+    const deleteMenu = document.getElementById("deleteMenu") as HTMLElement;
+    const cancelDelete = document.getElementById("cancelDelete");
+    const submitDelete = deleteMenu?.querySelector('button[type="submit"]') as HTMLButtonElement;
+    let interval: number = 10
+
+    openDeleteDialog?.addEventListener("click", (e) => {
+        e.preventDefault();
+        deleteMenu.classList.remove("d-none");
+
+        let count = 10;
+        submitDelete.disabled = true;
+        submitDelete.innerText = `Wait ${count}s`;
+
+        interval = window.setInterval(() => {
+            count--;
+            submitDelete.innerText = `Wait ${count}s`;
+            if (count <= 0) {
+                clearInterval(interval);
+                submitDelete.disabled = false;
+                submitDelete.innerText = "Delete account";
+            }
+        }, 1000);
+    });
+
+    const closeDelete = () => {
+        deleteMenu.classList.add("d-none");
+        clearInterval(interval);
+    };
+
+    cancelDelete?.addEventListener("click", closeDelete);
+
+    deleteMenu?.addEventListener("click", (e) => {
+        if (e.target === deleteMenu) closeDelete();
+    });
 });

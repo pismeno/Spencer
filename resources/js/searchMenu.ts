@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
                         <div>
                             <div class="rounded-circle overflow-hidden border">
-                                <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100" style="object-fit: cover;">
+                                <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100">
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     searchResult.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
                         <div class="rounded-circle overflow-hidden border">
-                            <img src="https://ui-avatars.com/api/?name=${group.name}&background=198754&color=fff" class="w-100 h-100" style="object-fit: cover;">
+                            <img src="https://ui-avatars.com/api/?name=${group.name}&background=198754&color=fff" class="w-100 h-100">
                         </div>
                         <div class="ms-3">
                             <div class="fw-bold text-dark">${group.name}</div>
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     searchResult.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
                         <div class="rounded-circle overflow-hidden border">
-                            <img src="https://ui-avatars.com/api/?name=${event.title}&background=198754&color=fff" class="w-100 h-100" style="object-fit: cover;">
+                            <img src="https://ui-avatars.com/api/?name=${event.title}&background=198754&color=fff" class="w-100 h-100">
                         </div>
                         <div class="ms-3">
                             <div class="fw-bold text-dark">${event.title}</div>
