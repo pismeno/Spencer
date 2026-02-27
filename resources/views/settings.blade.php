@@ -33,7 +33,7 @@
     <x-header />
     <main class="d-flex">
         <x-sidebar class="z-3 position-absolute"/>
-        <div id="content" class="flex-grow-1 overflow-auto">
+        <div id="content" class="flex-grow-1 overflow-auto mb-5">
             <div class="container position-releative mt-5">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-10">

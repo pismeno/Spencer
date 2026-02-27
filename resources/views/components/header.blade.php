@@ -7,7 +7,7 @@
         <div class="d-flex d-md-none w-100 justify-content-between align-items-center h-100">
             <h1 class="mb-0 fw-bold text-primary">Spencer</h1>
             <div class="d-flex align-items-center gap-4" id="mobile-header-icons">
-                <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="Search" class="icon-custom">
+                <img id="mobileTrigger" src="{{ Vite::asset('resources/svg/search.svg') }}" alt="Search" class="icon-custom">
 
                 <div class="position-relative">
                     <a href="/notifications">
@@ -40,3 +40,13 @@
         </div>
     </div>
 </header>
+
+<div id="mobileSearchPopup" class="position-fixed top-0 start-0 z-3 w-100 d-none p-2">
+    <div class="card rounded-pill shadow-sm">
+        <div class="position-relative">
+            <input type="text" id="mobileSearchInput" class="form-control rounded-pill border-secondary-subtle py-2 fs-5 px-4" autocomplete="off" placeholder="Search...">
+            <img src="{{ Vite::asset('resources/svg/search-input.svg') }}" class="position-absolute end-0 top-50 translate-middle-y me-3">
+            <div id="MobilesearchResult" class="position-absolute bg-white w-100 border rounded-3 mt-1" style="max-height: 300px; overflow-y: auto"></div>
+        </div>
+    </div>
+</div>

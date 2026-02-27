@@ -3,12 +3,16 @@ import api from './bootstrap';
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById("searchUserGroup") as HTMLInputElement | null;
     const searchResult = document.getElementById("searchResult") as HTMLElement | null;
+    const mobileTrigger = document.getElementById("mobileTrigger") as HTMLElement | null;
+    const mobileSearchPopup = document.getElementById("mobileSearchPopup") as HTMLElement | null;
+    const mobileInput = document.getElementById("mobileSearchInput") as HTMLInputElement | null;
+    const mobileSearchResult = document.getElementById("MobilesearchResult") as HTMLElement | null;
 
     if (!searchInput || !searchResult) return;
 
-    const performSearch = async (query: string) => {
+    const performSearch = async (query: string, resultContainer: HTMLElement) => {
         if (query.length < 1) {
-            searchResult.innerHTML = '';
+            resultContainer.innerHTML = '';
             return;
         }
 
@@ -23,17 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const groups = resGroups.data;
             const events = resEvents.data;
 
-            searchResult.innerHTML = "";
+            resultContainer.innerHTML = "";
 
             if (users.length > 0) {
-                searchResult.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom">Uživatelé</div>`;
+                resultContainer.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom">Uživatelé</div>`;
                 users.forEach((user: any) => {
                     const [short, suffix] = user.email.split("@");
                     const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
 
-                    searchResult.innerHTML += `
+                    resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
-                        <div>
+                        <div class="w-25">
                             <div class="rounded-circle overflow-hidden border">
                                 <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100">
                             </div>
@@ -50,12 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (groups.length > 0 || events.length > 0) {
-                searchResult.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom mt-2">Ostatní</div>`;
+                resultContainer.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom mt-2">Ostatní</div>`;
 
                 groups.forEach((group: any) => {
-                    searchResult.innerHTML += `
+                    resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
-                        <div class="rounded-circle overflow-hidden border">
+                        <div class="w-25 rounded-circle overflow-hidden border">
                             <img src="https://ui-avatars.com/api/?name=${group.name}&background=198754&color=fff" class="w-100 h-100">
                         </div>
                         <div class="ms-3">
@@ -66,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 events.forEach((event: any) => {
-                    searchResult.innerHTML += `
+                    resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
-                        <div class="rounded-circle overflow-hidden border">
+                        <div class="w-25 rounded-circle overflow-hidden border">
                             <img src="https://ui-avatars.com/api/?name=${event.title}&background=198754&color=fff" class="w-100 h-100">
                         </div>
                         <div class="ms-3">
@@ -78,21 +82,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>`;
                 });
             }
-
         } catch (e) {
             console.error(e);
         }
     };
 
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value;
-        performSearch(query);
+    searchInput.addEventListener('input', () => performSearch(searchInput.value, searchResult));
+    mobileInput?.addEventListener('input', () => performSearch(mobileInput.value, mobileSearchResult!));
+
+    mobileTrigger?.addEventListener('click', () => {
+        mobileSearchPopup?.classList.remove('d-none');
+        mobileInput?.focus();
     });
 
     document.addEventListener('click', (event: Event) => {
         const target = event.target as HTMLElement;
         if (!searchInput.contains(target) && !searchResult.contains(target)) {
             searchResult.innerHTML = '';
+        }
+        if (mobileSearchPopup && !mobileSearchPopup.contains(target) && !mobileTrigger?.contains(target)) {
+            mobileSearchPopup.classList.add('d-none');
         }
     });
 });
