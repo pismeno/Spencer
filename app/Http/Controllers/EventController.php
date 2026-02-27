@@ -39,17 +39,18 @@ class EventController extends Controller
         $request->validate([
             'title' => ['nullable', 'string', 'min:1']
         ]);
-        $requester = auth()->user();
+        // $requester = auth()->user();
 
-        if (!$request->filled('title')) {
-            return response()->json($this->relatedEvents($requester));
-        }
+        // if (!$request->filled('title')) {
+        //     return response()->json($this->relatedEvents($requester));
+        // }
 
-        $events = Event::with('group')->
-        whereLike('title', '%' . $request->title . '%')
-        ->latest()
-        ->get();
+        // $events = Event::with('group')->
+        // whereLike('title', '%' . $request->title . '%')
+        // ->latest()
+        // ->get();
 
+        $events = Event::with('group')->latest()->get();
         return response()->json($events);
     }
     public function relatedEvents(Authenticatable $user)
