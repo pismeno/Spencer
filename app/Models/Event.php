@@ -23,7 +23,7 @@ class Event extends Model
         'starts_at',
         'ends_at',
         'group_id', //TODO Groupy
-        'img_path'
+        'thumbnail_url'
     ];
 
     protected function casts(): array
