@@ -11,7 +11,7 @@ addEventListener("DOMContentLoaded", ()=>{
 async function showEvents() {
     try{
         const response:any = await api.post('/listevents', {});
-        const newestEventsContainer = document?.getElementById("container-events");
+        const newestEventsContainer = document?.getElementById("container-events") as HTMLDivElement;
         const clockIconPath = newestEventsContainer?.getAttribute('data-url')|| "" as string;
 
         if (response.data) {

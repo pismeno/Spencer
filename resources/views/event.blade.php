@@ -55,15 +55,19 @@
                         <button id="save-changes" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Save Changes</button>
                     </div>
 
-                    <div class="position-relative mb-4">
-                        <input type="text" class="form-control rounded-pill py-3 px-4 shadow-sm border-0" placeholder="Search for a person or a group">
-                        <span class="position-absolute end-0 top-50 translate-middle-y me-4">
-                            <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="search" class="h-auto w-auto opacity-50">
-                        </span>
+                    <div class="mb-4">
+                        <div class="position-relative">
+                            <input id="searchInput" type="text" class="form-control rounded-pill py-3 px-4 shadow-sm border-0" placeholder="Search for a person or a group">
+                            <span class="position-absolute end-0 top-50 translate-middle-y me-4">
+                                <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="search" class="h-auto w-auto opacity-50">
+                            </span>
+                        </div>
+                        
+                        <div id="userBulletList" class="d-flex flex-column gap-1 mb-2"></div>
                     </div>
 
                     <div class="d-flex flex-column gap-2">
-                        @foreach(range(1, 4) as $index)
+                        <!-- @foreach(range(1, 4) as $index)
                             <div class="card border-0 shadow-sm rounded-pill px-3 py-2">
                                 <div class="d-flex align-items-center">
                                     <div class="rounded-circle overflow-hidden border border-secondary-subtle me-3 flex-shrink-0" style="width: 35px; height: 35px;">
@@ -79,7 +83,9 @@
                                     <div class="text-danger px-2" role="button">✕</div>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach -->
+                        <div id="addedMembers"></div>
+
                     </div>
 
                     <div class="d-flex gap-3 mt-4">

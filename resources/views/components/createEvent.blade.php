@@ -58,6 +58,7 @@
                         <span class="position-absolute end-0 top-50 translate-middle-y me-4">
                             <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="search" class="h-auto w-auto opacity-50">
                         </span>
+                        <div id="userBulletList" class="d-flex flex-column gap-1 mb-2"></div>
                     </div>
 
                     <div class="d-flex flex-column gap-2">
