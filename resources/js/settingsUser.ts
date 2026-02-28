@@ -4,6 +4,11 @@ addEventListener("DOMContentLoaded", () => {
     const firstName = document.getElementById("firstName") as HTMLInputElement;
     const lastName = document.getElementById("lastName") as HTMLInputElement;
     const checkboxes = document.querySelectorAll('input[name^="options["]');
+    const editFirstBtn = document.getElementById("editFirstName");
+    const editLastBtn = document.getElementById("editLastName");
+    const saveSuccess = document.getElementById("saveSuccess");
+    const profilePicContainer = document.getElementById("profilePicContainer");
+    const profilePicInput = document.getElementById("profilePicInput") as HTMLInputElement;
 
     const saveProfile = async () => {
         try {
@@ -11,13 +16,21 @@ addEventListener("DOMContentLoaded", () => {
                 first_name: firstName.value,
                 last_name: lastName.value
             });
+            saveSuccess?.classList.remove("d-none");
+            setTimeout(() => saveSuccess?.classList.add("d-none"), 2000);
         } catch (e) {
             console.error(e);
         }
     };
 
+    editFirstBtn?.addEventListener("click", () => firstName.focus());
+    editLastBtn?.addEventListener("click", () => lastName.focus());
     firstName?.addEventListener("change", saveProfile);
     lastName?.addEventListener("change", saveProfile);
+    profilePicContainer?.addEventListener("click", () => profilePicInput.click());
+    profilePicInput?.addEventListener("change", () => {
+        if (profilePicInput.files?.[0]);
+    });
 
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("change", async () => {
