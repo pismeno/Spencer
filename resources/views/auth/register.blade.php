@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&family=Trispace:wght@100..800&display=swap" rel="stylesheet">
     @vite(['resources/js/auth.ts', 'resources/css/custom.css'])
 </head>
-<body class="bg-light">
+<body class="bg-light" data-bs-theme="{{ $activeTheme }}">
 <x-basic-header/>
 <main>
     <div class="d-flex justify-content-center align-items-center auth-container">

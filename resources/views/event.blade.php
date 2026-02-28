@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
     @vite(['resources/css/custom.css', 'resources/js/showImg.ts', 'resources/js/createEvent.ts'])
 </head>
-<body class="bg-light">
+<body class="bg-light" data-bs-theme="{{ $activeTheme }}">
 <x-header />
 <main class="d-flex">
     <x-sidebar/>
@@ -62,7 +62,7 @@
                                 <img src="{{ Vite::asset('resources/svg/search.svg') }}" alt="search" class="h-auto w-auto opacity-50">
                             </span>
                         </div>
-                        
+
                         <div id="userBulletList" class="d-flex flex-column gap-1 mb-2"></div>
                     </div>
 

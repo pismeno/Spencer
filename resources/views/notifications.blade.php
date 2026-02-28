@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
     @vite(['resources/css/custom.css'])
 </head>
-<body class="bg-light">
+<body class="bg-light" data-bs-theme="{{ $activeTheme }}">
 <x-header />
 
 <main class="d-flex">

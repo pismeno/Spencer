@@ -29,7 +29,7 @@ addEventListener("DOMContentLoaded", () => {
     lastName?.addEventListener("change", saveProfile);
     profilePicContainer?.addEventListener("click", () => profilePicInput.click());
     profilePicInput?.addEventListener("change", () => {
-        if (profilePicInput.files?.[0]);
+        if (profilePicInput.files?.[0]) console.log("File selected");
     });
 
     checkboxes.forEach(checkbox => {
@@ -44,8 +44,9 @@ addEventListener("DOMContentLoaded", () => {
                 await api.post('/settings/options', {
                     options: selectedIds
                 });
+                window.location.reload();
             } catch (e) {
-                console.log(e);
+                console.error("Chyba při ukládání nastavení:", e);
             }
         });
     });
@@ -54,7 +55,7 @@ addEventListener("DOMContentLoaded", () => {
     const deleteMenu = document.getElementById("deleteMenu") as HTMLElement;
     const cancelDelete = document.getElementById("cancelDelete");
     const submitDelete = deleteMenu?.querySelector('button[type="submit"]') as HTMLButtonElement;
-    let interval: number = 10
+    let interval: number;
 
     openDeleteDialog?.addEventListener("click", (e) => {
         e.preventDefault();
