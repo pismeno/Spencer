@@ -35,28 +35,30 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
     public function list(Request $request): JsonResponse
-    {
+    {   
         $request->validate([
             'title' => ['nullable', 'string', 'min:1']
         ]);
-        // $requester = auth()->user();
 
-        // if (!$request->filled('title')) {
-        //     return response()->json($this->relatedEvents($requester));
-        // }
+        $requester = auth()->user();
+        $groupIDs = $requester->groups()->pluck('groups.id');
 
-        // $events = Event::with('group')->
-        // whereLike('title', '%' . $request->title . '%')
-        // ->latest()
-        // ->get();
+        if (!$request->filled('title')) {
+            return response()->json($this->relatedEvents($requester, $groupIDs));
+        }  
 
-        $events = Event::with('group')->latest()->get();
+        $events = Event::with('group')
+        ->whereIn('group_id', $groupIDs)
+        ->whereLike('title', '%' . $request->title . '%')
+        ->latest()
+        ->get();
+
         return response()->json($events);
     }
-    public function relatedEvents(Authenticatable $user)
-    {
+    public function relatedEvents(Authenticatable $user, $groupIDs)
+    {   
         return Event::with('group')
-        ->where('group_id', $user->current_group_id)
+        ->whereIn('group_id', $groupIDs)
         ->latest()
         ->get();
     }
@@ -94,7 +96,7 @@ class EventController extends Controller
             'starts_at' => $data['from'],
             'ends_at' => $data['to'],
             'group_id' => $data['group_id'],
-            'thumbnail_path' => $imgPath
+            'thumbnail_url' => $imgPath
         ]);
 
         return back(); // zatim nic
@@ -140,7 +142,7 @@ class EventController extends Controller
             'deadline'    => $data['deadline'],
             'starts_at'   => $data['from'], // Use 'from'
             'ends_at'     => $data['to'],   // Use 'to'
-            'img_path'    => $data['img_path'] ?? $event->img_path,
+            'thumbnail_url'    => $data['img_path'] ?? $event->img_path,
         ]);
 
         // Placeholder response
