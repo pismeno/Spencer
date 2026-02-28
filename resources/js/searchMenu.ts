@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const performSearch = async (query: string, resultContainer: HTMLElement) => {
         if (query.length < 1) {
             resultContainer.innerHTML = '';
+            searchResult.classList.add("d-none");
             return;
         }
 
@@ -28,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const events = resEvents.data;
 
             resultContainer.innerHTML = "";
+
+            if (users.length > 0 || groups.length > 0 || events.length > 0) {
+                searchResult.classList.remove("d-none")
+            }
 
             if (users.length > 0) {
                 resultContainer.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom">Uživatelé</div>`;
@@ -81,6 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>`;
                 });
+            }
+
+            if (!searchResult.innerHTML) {
+                searchResult.classList.add("d-none");
             }
         } catch (e) {
             console.error(e);
