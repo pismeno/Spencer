@@ -1,4 +1,4 @@
-<aside id="main-sidebar" class="bg-white d-none d-md-flex flex-column p-3 z-3">
+<aside id="main-sidebar" class="bg-white d-none d-md-flex flex-column p-3 z-2">
     @vite(['resources/js/sidebar.ts', 'resources/js/sidebarToggleProvider.ts'])
 
     <div class="d-md-flex flex-column gap-2">

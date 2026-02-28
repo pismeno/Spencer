@@ -12,9 +12,9 @@
     @vite(['resources/css/custom.css', 'resources/js/settingsUser.ts'])
 </head>
 <body class="bg-light">
-<div id="deleteMenu" class="w-100 h-100 d-none position-absolute d-flex align-items-center">
+<div id="deleteMenu" class="w-100 h-100 d-none position-absolute start-0 top-0 d-flex align-items-center bg-dark bg-opacity-50 z-3">
     <div class="w-100 d-flex justify-content-center">
-        <div class="card z-2 p-5">
+        <div class="card p-5 shadow-lg">
             <h2 class="text-muted">Are you sure you want to delete account?</h2>
             <form action="{{ route('profile.delete') }}" method="POST">
                 @csrf
@@ -40,8 +40,11 @@
                         <div class="row align-items-center mb-5 g-4">
                             <div class="col-12 col-md-4 d-flex justify-content-center">
                                 <div class="ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border-white d-flex justify-content-center align-items-center">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100 rounded-circle border" alt="profile picture">
+                                    <div class="d-flex justify-content-center align-items-center ">
+                                        <form action="">
+                                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100 rounded-circle border" alt="profile picture">
+                                            <input type="image" src="" alt="">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
