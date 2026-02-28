@@ -9,13 +9,26 @@ addEventListener("DOMContentLoaded", () => {
     const saveSuccess = document.getElementById("saveSuccess");
     const profilePicContainer = document.getElementById("profilePicContainer");
     const profilePicInput = document.getElementById("profilePicInput") as HTMLInputElement;
+    const avatarDisplay = document.getElementById("avatarDisplay") as HTMLImageElement;
 
     const saveProfile = async () => {
+        const formData = new FormData();
+        formData.append('first_name', firstName.value);
+        formData.append('last_name', lastName.value);
+
+        if (profilePicInput.files?.[0]) {
+            formData.append('profile_picture', profilePicInput.files[0]);
+        }
+
         try {
-            await api.post('/settings/profile', {
-                first_name: firstName.value,
-                last_name: lastName.value
+            const response = await api.post('/settings/profile', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
+
+            if (response.data.path && avatarDisplay) {
+                avatarDisplay.src = `/storage/${response.data.path}?t=${new Date().getTime()}`;
+            }
+
             saveSuccess?.classList.remove("d-none");
             setTimeout(() => saveSuccess?.classList.add("d-none"), 2000);
         } catch (e) {
@@ -29,7 +42,14 @@ addEventListener("DOMContentLoaded", () => {
     lastName?.addEventListener("change", saveProfile);
     profilePicContainer?.addEventListener("click", () => profilePicInput.click());
     profilePicInput?.addEventListener("change", () => {
-        if (profilePicInput.files?.[0]) console.log("File selected");
+        if (profilePicInput.files && profilePicInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (avatarDisplay) avatarDisplay.src = e.target?.result as string;
+            };
+            reader.readAsDataURL(profilePicInput.files[0]);
+            saveProfile();
+        }
     });
 
     checkboxes.forEach(checkbox => {
