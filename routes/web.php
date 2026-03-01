@@ -57,6 +57,8 @@ Route::post('/group/create', [GroupController::class, 'store'])
 Route::post('/group/edit/{group}', [GroupController::class, 'update'])
     ->middleware('auth')->name('group.update');
 
+Route::delete('/group/delete/{group}', [App\Http\Controllers\GroupController::class, 'destroy']);
+
 // EVENT ROUTES
 Route::get('/event/create', [EventController::class, 'create'])
     ->middleware('auth')->name('event.create');

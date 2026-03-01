@@ -19,43 +19,17 @@ class GroupController extends Controller
         $this->searchService = $groupService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function list(Request $request): JsonResponse
     {
         return response()->json($this->searchService->groups($request));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Group $user)
-    {
-        //
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
         $groups = auth()->user()->groups()->with('users')->get();
-
         return view('group', compact('groups'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
-        return view('test/creategroup');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         return DB::transaction(function () use ($request) {
@@ -92,9 +66,6 @@ class GroupController extends Controller
         });
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Group $group)
     {
         return DB::transaction(function () use ($request, $group) {
@@ -122,5 +93,11 @@ class GroupController extends Controller
 
             return response()->json(['message' => 'Updated']);
         });
+    }
+
+    public function destroy(Group $group)
+    {
+        $group->delete();
+        return response()->json(['message' => 'Deleted']);
     }
 }

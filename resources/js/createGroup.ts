@@ -8,6 +8,7 @@ const modalList = document.getElementById('userBulletList') as HTMLElement | nul
 const addedMembersContainer = document.getElementById('addedMembers') as HTMLDivElement | null;
 const titleInput = document.getElementById('titleInput') as HTMLInputElement | null;
 const saveBtn = document.getElementById('saveGroup') as HTMLButtonElement | null;
+const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement | null;
 const searchInput = document.getElementById("searchInput") as HTMLInputElement | null;
 const descriptionInput = document.getElementById("descriptionInput") as HTMLTextAreaElement | null;
 const errorHandler = document.getElementById("errorHandler") as HTMLDivElement | null;
@@ -21,6 +22,7 @@ const resetModal = () => {
     if (addedMembersContainer) addedMembersContainer.innerHTML = '';
     if (modalList) modalList.innerHTML = '';
     if (errorHandler) errorHandler.innerHTML = '';
+    if (deleteBtn) deleteBtn.classList.add('d-none');
     if (saveBtn) {
         saveBtn.innerText = "Save Group";
         saveBtn.disabled = false;
@@ -52,6 +54,7 @@ groupModal?.addEventListener('show.bs.modal', (event: any) => {
             searchInput?.parentElement?.classList.add('d-none');
         } else {
             if (saveBtn) saveBtn.innerText = "Update Group";
+            if (currentGroupId) deleteBtn?.classList.remove('d-none');
         }
     }
 });
@@ -103,7 +106,6 @@ const performSearch = async (query: string) => {
 
         users.filter((u: any) => !selectedUserIds.includes(u.id)).forEach((user: any) => {
             const [short, suffix] = user.email.split("@");
-            const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
             const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff&size=128`;
             const hasLocalAvatar = user.avatar_url && user.avatar_url !== '' && !user.avatar_url.startsWith('http');
             const profilePic = hasLocalAvatar ? `/storage/${user.avatar_url}` : fallbackAvatar;
@@ -163,5 +165,15 @@ saveBtn?.addEventListener("click", async () => {
         saveBtn.disabled = false;
         saveBtn.innerText = currentGroupId ? "Update Group" : "Save Group";
         errorHandler.innerHTML = error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join('<br>') : "Error saving group.";
+    }
+});
+
+deleteBtn?.addEventListener("click", async () => {
+    if (!currentGroupId || !confirm("Are you sure?")) return;
+    try {
+        await api.delete(`/group/delete/${currentGroupId}`);
+        window.location.reload();
+    } catch (e) {
+        if (errorHandler) errorHandler.innerHTML = "Error deleting group.";
     }
 });
