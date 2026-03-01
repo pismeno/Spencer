@@ -17,7 +17,7 @@
     <div id="content" class="flex-grow-1 p-3 p-md-5 mb-sm-5 mb-md-0 overflow-auto">
         <div class="container-fluid d-flex gap-4 flex-md-row flex-column">
             <div class="column g-4 col-md-6">
-                <h2 id="newest-event-title" class="mb-4">Newest Events</h2>
+                <h2 id="newest-event-title" class="mb-4">Latest Events</h2>
                 <div id="container-events" data-url="{{ Vite::asset('resources/svg/clock.svg') }}">
 
                 </div>
@@ -45,7 +45,7 @@
                 @endforeach -->
             </div>
             <div class="col-md-6 column g-4">
-                <h2 class="mb-4">Newest Groups</h2>
+                <h2 class="mb-4">Recent Groups</h2>
                 <div class="row g-2">
                     @foreach(range(1, 6) as $index)
                     <div class="col-12 col-md-6 col-lg-4 max-w-100">
