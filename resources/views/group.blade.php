@@ -51,9 +51,7 @@
         <div class="modal-content border-0 rounded-4 shadow-lg p-4">
             <div class="mb-3 d-flex justify-content-between align-items-start">
                 <h5 class="fw-bold text-secondary mb-3" id="modalTitle">Create New Group</h5>
-                <button type="button" id="deleteBtn" class="btn btn-outline-danger btn-sm rounded-circle d-none" title="Delete Group">
-                    ✕
-                </button>
+                <img id="deleteBtn" class="cursor-pointer" src="{{ Vite::asset('resources/svg/trash.svg') }}" alt="delete" width="20" height="20">
             </div>
             <div class="mb-3">
                 <input type="text" id="titleInput" class="form-control rounded-pill border-secondary-subtle px-4 py-2" placeholder="Group name">

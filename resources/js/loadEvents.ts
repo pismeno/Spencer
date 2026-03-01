@@ -47,7 +47,7 @@ async function showEvents(pageType:boolean) {
                                         </div>
                                     </div>
                                 </div>`
-                    
+
                 }
                 return neco;
             };

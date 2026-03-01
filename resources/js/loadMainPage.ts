@@ -1,4 +1,5 @@
 import api from './bootstrap';
+import './loadGroup';
 
 interface EventData {
     title: string;
@@ -36,7 +37,7 @@ async function showEvents(pageType:boolean) {
                                         </div>
                                     </div>
                                 </div>`
-                    
+
                 }
                 return neco;
             };
