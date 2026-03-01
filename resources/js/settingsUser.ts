@@ -106,4 +106,18 @@ addEventListener("DOMContentLoaded", () => {
     deleteMenu?.addEventListener("click", (e) => {
         if (e.target === deleteMenu) closeDelete();
     });
+
+    const deletePfpBtn = document.getElementById("DeletePFP");
+    deletePfpBtn?.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if (!confirm("Smazat profilovku?")) return;
+        try {
+            const response = await api.post('/settings/profile', { delete_avatar: true });
+            if (response.data.status === 'success') {
+                window.location.reload();
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    });
 });

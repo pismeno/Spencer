@@ -129,6 +129,11 @@
                                         @endforeach
                                     </form>
                                     <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="fw-medium text-dark">Delete PFP</span>
+                                        <a href="#" id="DeletePFP" class="link-underline link-underline-opacity-0 link-danger link-underline-opacity-0-hover">Delete PFP <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="trashIcon" width="16" height="16"></a>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
                                         <span class="fw-medium text-dark">Change password</span>
                                         <a href="#" class="link-underline link-underline-opacity-0 link-primary link-underline-opacity-0-hover">Reset password <img src="{{ Vite::asset('resources/svg/edit-2.svg') }}" class="mb-1" alt="Event" width="16" height="16"></a>
                                     </div>

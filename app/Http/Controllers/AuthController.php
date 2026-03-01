@@ -99,6 +99,11 @@ class AuthController extends Controller
 
     public function updateProfile(Request $request)
     {
+        if ($request->has('delete_avatar')) {
+            auth()->user()->update(['avatar_url' => null]);
+            return response()->json(['status' => 'success', 'path' => null]);
+        }
+
         $data = $request->validate([
             'first_name' => 'sometimes|nullable|string|max:255',
             'last_name'    => 'sometimes|nullable|string|max:255',
