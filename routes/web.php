@@ -26,6 +26,10 @@ Route::get('/settings', function () {
     return view('settings');
 })->middleware('auth');
 
+Route::get('/showEvent', function () {
+    return view('showEvent');
+})->middleware('auth');
+
 
 // AUTHENTICATION ROUTES
 Route::get('/register', function () {
