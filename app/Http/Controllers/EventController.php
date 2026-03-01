@@ -24,11 +24,22 @@ class EventController extends Controller
      * Search for both Users and Groups in one request, used for event assignment
      */
     public function listUsersAndGroups(Request $request) : JsonResponse
-    {
+    {   
+        $groupIDs = auth()->user()->groups()->pluck('groups.id');
+        $users = $this->searchService->users($request);
+        $groups = $this->searchService->groups($request)
+        ->whereIn('id', $groupIDs)
+        ->values();
+
         return response()->json([
-            'users'  => $this->searchService->users($request),
-            'groups' => $this->searchService->groups($request),
+            'users' => $users,
+            'groups' => $groups,
         ]);
+
+        // return response()->json([   
+        //     'users'  => $this->searchService->users($request),
+        //     'groups' => $this->searchService->groups($request)->whereIn('group_id', $groupIDs),
+        // ]);
     }
 
     /**

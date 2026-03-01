@@ -13,7 +13,7 @@
 <body class="bg-light" data-bs-theme="{{ $activeTheme }}">
 <x-basic-header/>
 <main>
-    <div class="d-flex justify-content-center align-items-center auth-container">
+    <div class="d-flex justify-content-center align-items-center auth-container flex-column vh-100 auth-container">
         <div class="card shadow-sm p-4">
             <div id="login-box">
                 <h2 class="text-center mb-4">Login</h2>

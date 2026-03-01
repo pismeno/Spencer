@@ -39,9 +39,12 @@
                     <div class="col-12 col-lg-10">
                         <div class="row align-items-center mb-5 g-4">
                             <div class="col-12 col-md-4 d-flex justify-content-center">
-                                <div id="profilePicContainer" class="cursor-pointer ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border-white d-flex justify-content-center align-items-center">
-                                    <div class="d-flex justify-content-center align-items-center ">
-                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100 rounded-circle border" alt="profile picture">
+                                <div id="profilePicContainer" class="cursor-pointer ratio ratio-1x1 w-75 bg-white rounded-circle shadow-sm border-white d-flex justify-content-center align-items-center overflow-hidden">
+                                    <div class="d-flex justify-content-center align-items-center w-100 h-100">
+                                        @php
+                                            $profilePic = auth()->user()->avatar_url ? asset('storage/' . auth()->user()->avatar_url) : 'https://ui-avatars.com/api/?name=' . auth()->user()->email . '&background=198754&color=fff';
+                                        @endphp
+                                        <img id="avatarDisplay" src="{{ $profilePic }}" class="w-100 h-100 rounded-circle border object-fit-cover" alt="profile picture">
                                     </div>
                                     <input type="file" id="profilePicInput" class="d-none" accept="image/*">
                                 </div>
@@ -50,8 +53,7 @@
                             <div class="col-12 col-md-8">
                                 <div class="card border-0 shadow-sm rounded-4 p-4">
                                     <div id="saveSuccess" class="alert alert-success d-none py-1 small mb-2">Saved!</div>
-                                    <form action="{{ route('profile.update') }}" method="POST">
-                                        @csrf
+                                    <form id="profileForm">
                                         <div class="mb-3">
                                             <label class="form-label small text-muted ms-1">First Name</label>
                                             <div class="position-relative">

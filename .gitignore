@@ -24,3 +24,4 @@ artisan
 /storage/logs/*
 /vendor
 /storage/app/public/thumbnails/*
+/storage/app/public/avatars/*

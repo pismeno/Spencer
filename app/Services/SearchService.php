@@ -41,7 +41,7 @@ class SearchService
         return [];
     }
 
-    public function groups(Request $request): Collection|Group
+    public function groups(Request $request): Collection|array
     {
         $request->validate([
             'title' => ['nullable', 'string', 'min:1'],
@@ -52,16 +52,19 @@ class SearchService
         if (!$request->filled('title')) {
             return $this->relatedGroups($requester);
         }
-
-        return Group::whereLike('name', '%' . $request->title . '%')
+        return $requester->groups()
+            ->whereLike('name', '%' . $request->title . '%')
             ->limit(10)
             ->get();
     }
 
     //TODO: implement actual logic
-    private function relatedGroups(Authenticatable $user): array
+    private function relatedGroups(Authenticatable $user): Collection|array
     {
-        return [];
+        return $user->groups()
+            ->latest()
+            ->limit(10)
+            ->get();
     }
 
     public function events(Request $request): Collection|Event

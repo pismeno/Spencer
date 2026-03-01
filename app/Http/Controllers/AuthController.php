@@ -102,14 +102,22 @@ class AuthController extends Controller
         $data = $request->validate([
             'first_name' => 'sometimes|nullable|string|max:255',
             'last_name'    => 'sometimes|nullable|string|max:255',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('avatars', 'public');
+            $data['avatar_url'] = $path;
+            unset($data['profile_picture']);
+        }
 
         Auth::user()->update($data);
 
         if($request->expectsJson()) {
             return response()->json([
                 'status' => 'success',
-                'message' => 'Profile Updated'
+                'message' => 'Profile Updated',
+                'path' => Auth::user()->avatar_url
             ]);
         }
 

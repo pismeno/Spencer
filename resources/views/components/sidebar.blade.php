@@ -28,7 +28,7 @@
                     <img src="{{ Vite::asset('resources/svg/plus.svg') }}" alt="Create" width="20" height="20">
                     <span class="ms-3 text-secondary sidebar-text">Create Event</span>
                 </a>
-                <a href="/event" class="text-decoration-none d-flex align-items-center p-2 rounded hover-bg">
+                <a href="/showEvent" class="text-decoration-none d-flex align-items-center p-2 rounded hover-bg">
                     <img src="{{ Vite::asset('resources/svg/list.svg') }}" alt="Show" width="20" height="20">
                     <span class="ms-3 text-secondary sidebar-text">Show Event</span>
                 </a>

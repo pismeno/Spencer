@@ -1,11 +1,10 @@
 import api from './bootstrap';
-import type { User } from './models';
 
 let timeout: ReturnType<typeof setTimeout>;
 let selectedUserIds: number[] = [];
 let currentGroupId: string | null = null;
 
-const modalList = document.getElementById('userBulletList');
+const modalList = document.getElementById('userBulletList') as HTMLElement | null;
 const addedMembersContainer = document.getElementById('addedMembers') as HTMLDivElement | null;
 const titleInput = document.getElementById('titleInput') as HTMLInputElement | null;
 const saveBtn = document.getElementById('saveGroup') as HTMLButtonElement | null;
@@ -17,14 +16,8 @@ const groupModal = document.getElementById('groupModal');
 const resetModal = () => {
     currentGroupId = null;
     selectedUserIds = [];
-    if (titleInput) {
-        titleInput.value = '';
-        titleInput.disabled = false;
-    }
-    if (descriptionInput) {
-        descriptionInput.value = '';
-        descriptionInput.disabled = false;
-    }
+    if (titleInput) { titleInput.value = ''; titleInput.disabled = false; }
+    if (descriptionInput) { descriptionInput.value = ''; descriptionInput.disabled = false; }
     if (addedMembersContainer) addedMembersContainer.innerHTML = '';
     if (modalList) modalList.innerHTML = '';
     if (errorHandler) errorHandler.innerHTML = '';
@@ -50,9 +43,7 @@ groupModal?.addEventListener('show.bs.modal', (event: any) => {
         if (titleInput) titleInput.value = button.getAttribute('data-name') || '';
         if (descriptionInput) descriptionInput.value = button.getAttribute('data-description') || '';
         const membersData = JSON.parse(button.getAttribute('data-members') || '[]');
-        membersData.forEach((user: User) => {
-            addMemberToGroup(user, isCreator);
-        });
+        membersData.forEach((user: any) => addMemberToGroup(user, isCreator));
 
         if (!isCreator) {
             titleInput?.setAttribute('disabled', 'true');
@@ -65,28 +56,26 @@ groupModal?.addEventListener('show.bs.modal', (event: any) => {
     }
 });
 
-const addMemberToGroup = (user: User, canDelete: boolean = true) => {
+const addMemberToGroup = (user: any, canDelete: boolean = true) => {
     if (!addedMembersContainer) return;
     if (selectedUserIds.includes(user.id)) return;
 
     selectedUserIds.push(user.id);
+    const [short] = user.email.split("@");
+    const hasAvatar = user.hasOwnProperty('avatar_url') && user.avatar_url !== null && user.avatar_url !== '';
+    const profilePic = hasAvatar ? `/storage/${user.avatar_url}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff`;
 
     const card = document.createElement('div');
     card.className = "card border border-light-subtle rounded-pill px-3 py-2 mb-1 w-100";
     card.innerHTML = `
         <div class="d-flex align-items-center">
-            <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
-                <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 profile-pic" alt="acc">
-            </div>
-            <div class="small">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                    </ul>
+            <div class="flex-shrink-0" style="width: 32px;">
+                <div class="ratio ratio-1x1 rounded-circle overflow-hidden border">
+                    <img src="${profilePic}" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff';">
                 </div>
-                <span class="text-muted d-none d-sm-inline">${user.email}</span>
+            </div>
+            <div class="flex-grow-1 ms-2 small text-truncate">
+                <span class="text-muted">${user.email}</span>
             </div>
             ${canDelete ? '<div class="remove-user-btn text-danger small fw-bold px-1" role="button">✕</div>' : ''}
         </div>`;
@@ -97,66 +86,65 @@ const addMemberToGroup = (user: User, canDelete: boolean = true) => {
             card.remove();
         });
     }
-
     addedMembersContainer.appendChild(card);
-    if (modalList) modalList.innerHTML = '';
-    if (searchInput) searchInput.value = '';
 };
 
-const createUserCard = (user: User) => {
-    const email = user.email ?? '';
-    const card = document.createElement('div');
-    card.className = "card border border-light-subtle rounded-pill px-3 py-2 w-100";
-    card.innerHTML = `
-        <div class="d-flex align-items-center">
-            <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2">
-                <img src="https://ui-avatars.com/api/?name=${email}&background=E9ECEF&color=6C757D" class="w-100 profile-pic" alt="acc">
-            </div>
-            <div class="small flex-grow-1">
-                <span class="text-muted"><strong>${email}</strong></span>
-            </div>
-            <div class="add-user-btn fw-bold text-primary px-2" role="button">+</div>
-        </div>`;
-    card.querySelector('.add-user-btn')?.addEventListener('click', () => {
-        addMemberToGroup(user);
-        card.remove();
-    });
-    return card;
-};
-
-const searchAndLog = async (search: string) => {
-    try {
-        const response = await api.post('/listusers', { email: search });
-        const users: User[] = response.data;
-        if (!modalList) return;
+const performSearch = async (query: string) => {
+    if (!modalList) return;
+    if (query.length < 1) {
         modalList.innerHTML = '';
-        const filteredUsers = users.filter(u => !selectedUserIds.includes(u.id));
-        if (filteredUsers.length === 0) return;
-        const container = document.createElement('div');
-        container.className = "d-flex flex-column gap-2 w-100";
-        filteredUsers.forEach(user => container.appendChild(createUserCard(user)));
-        modalList.appendChild(container);
-    } catch (error) {
-        console.error(error);
+        return;
+    }
+
+    try {
+        const response = await api.post("/listusers", { email: query });
+        const users = response.data;
+        modalList.innerHTML = "";
+
+        users.filter((u: any) => !selectedUserIds.includes(u.id)).forEach((user: any) => {
+            const [short, suffix] = user.email.split("@");
+            const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
+            const hasAvatar = user.hasOwnProperty('avatar_url') && user.avatar_url !== null && user.avatar_url !== '';
+            const profilePic = hasAvatar ? `/storage/${user.avatar_url}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff`;
+
+            const item = document.createElement('div');
+            item.className = "d-flex align-items-center p-2 border-bottom shadow-sm-hover cursor-pointer rounded-4 mb-1 bg-white";
+            item.role = "button";
+            item.innerHTML = `
+                <div class="flex-shrink-0" style="width: 40px;">
+                    <div class="ratio ratio-1x1 rounded-circle overflow-hidden border">
+                        <img src="${profilePic}" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff';">
+                    </div>
+                </div>
+                <div class="flex-grow-1 ms-3 overflow-hidden">
+                    <div class="d-flex flex-column">
+                        <span class="fw-bold text-dark small">${short}</span>
+                        <span class="text-muted">@${suffix}</span>
+                    </div>
+                </div>
+                <div class="text-primary fw-bold px-2">+</div>`;
+
+            item.addEventListener('click', () => {
+                addMemberToGroup(user);
+                item.remove();
+            });
+            modalList.appendChild(item);
+        });
+    } catch (e) {
+        console.error(e);
     }
 };
 
-searchInput?.addEventListener("input", (e) => {
+searchInput?.addEventListener('input', (e) => {
     const val = (e.target as HTMLInputElement).value;
     clearTimeout(timeout);
-    timeout = setTimeout(() => {
-        if (val.length > 0) searchAndLog(val);
-        else if (modalList) modalList.innerHTML = '';
-    }, 300);
+    timeout = setTimeout(() => performSearch(val), 300);
 });
 
 saveBtn?.addEventListener("click", async () => {
     if (!errorHandler || !titleInput) return;
     const titleValue = titleInput.value.trim();
-    if (!titleValue) {
-        errorHandler.innerHTML = "Title is required";
-        return;
-    }
+    if (!titleValue) { errorHandler.innerHTML = "Title is required"; return; }
 
     const data = {
         name: titleValue,
@@ -173,10 +161,6 @@ saveBtn?.addEventListener("click", async () => {
     } catch (error: any) {
         saveBtn.disabled = false;
         saveBtn.innerText = currentGroupId ? "Update Group" : "Save Group";
-        if (error.response?.data?.errors) {
-            errorHandler.innerHTML = Object.values(error.response.data.errors).flat().join('<br>');
-        } else {
-            errorHandler.innerHTML = "Error saving group.";
-        }
+        errorHandler.innerHTML = error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join('<br>') : "Error saving group.";
     }
 });

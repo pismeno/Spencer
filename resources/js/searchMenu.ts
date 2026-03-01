@@ -37,21 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (users.length > 0) {
                 resultContainer.innerHTML += `<div class="px-3 py-2 small text-uppercase fw-bold text-muted border-bottom">Uživatelé</div>`;
                 users.forEach((user: any) => {
-                    const [short, suffix] = user.email.split("@");
+                    const email = user.email || 'User';
+                    const [short, suffix] = email.split("@");
                     const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
+                    const hasAvatar = user.hasOwnProperty('avatar_url') && user.avatar_url !== null && user.avatar_url !== '';
+                    const profilePic = hasAvatar ? `/storage/${user.avatar_url}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff`;
 
                     resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
-                        <div class="w-25">
-                            <div class="rounded-circle overflow-hidden border">
-                                <img src="https://ui-avatars.com/api/?name=${user.email}&background=198754&color=fff" class="w-100 h-100">
+                        <div class="flex-shrink-0" style="width: 45px;">
+                            <div class="ratio ratio-1x1 rounded-circle overflow-hidden border">
+                                <img src="${profilePic}" class="w-100 h-100 object-fit-cover" onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff';">
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
                             <div class="d-flex flex-column">
                                 <span class="fw-bold text-dark">${short}</span>
                                 <span class="text-muted small">@${suffix}</span>
-                                ${fullName ? `<span class="text-secondary mt-1">${fullName}</span>` : ''}
+                                ${fullName ? `<span class="text-secondary mt-1 small">${fullName}</span>` : ''}
                             </div>
                         </div>
                     </div>`;
@@ -64,8 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 groups.forEach((group: any) => {
                     resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
-                        <div class="w-25 rounded-circle overflow-hidden border">
-                            <img src="https://ui-avatars.com/api/?name=${group.name}&background=198754&color=fff" class="w-100 h-100">
+                        <div class="flex-shrink-0" style="width: 45px;">
+                            <div class="ratio ratio-1x1 rounded-circle overflow-hidden border">
+                                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(group.name)}&background=198754&color=fff" class="w-100 h-100 object-fit-cover">
+                            </div>
                         </div>
                         <div class="ms-3">
                             <div class="fw-bold text-dark">${group.name}</div>
@@ -77,8 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 events.forEach((event: any) => {
                     resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">
-                        <div class="w-25 rounded-circle overflow-hidden border">
-                            <img src="https://ui-avatars.com/api/?name=${event.title}&background=198754&color=fff" class="w-100 h-100">
+                        <div class="flex-shrink-0" style="width: 45px;">
+                            <div class="ratio ratio-1x1 rounded-circle overflow-hidden border">
+                                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(event.title)}&background=198754&color=fff" class="w-100 h-100 object-fit-cover">
+                            </div>
                         </div>
                         <div class="ms-3">
                             <div class="fw-bold text-dark">${event.title}</div>
@@ -87,8 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>`;
                 });
             }
-
-            if (!searchResult.innerHTML) {
+            if (!resultContainer.innerHTML) {
                 searchResult.classList.add("d-none");
             }
         } catch (e) {
@@ -108,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = event.target as HTMLElement;
         if (!searchInput.contains(target) && !searchResult.contains(target)) {
             searchResult.innerHTML = '';
+            searchResult.classList.add("d-none");
         }
         if (mobileSearchPopup && !mobileSearchPopup.contains(target) && !mobileTrigger?.contains(target)) {
             mobileSearchPopup.classList.add('d-none');
