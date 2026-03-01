@@ -8,7 +8,6 @@ const from = document.getElementById("input-from") as HTMLInputElement;
 const to = document.getElementById("input-to") as HTMLInputElement;
 const img = document.getElementById("event-image-upload") as HTMLInputElement;
 const submitBtn = document.getElementById("save-changes") as HTMLButtonElement;
-const groupID = document.getElementById("group-hidden") as HTMLInputElement;
 const addedMembersContainer = document.getElementById('addedMembers') as HTMLDivElement | null;
 const searchInput = document.getElementById("searchInput") as HTMLInputElement | null;
 
@@ -45,9 +44,11 @@ submitBtn.addEventListener("click", async (e)=>{
     formData.append("deadline", deadline.value);
     formData.append("from", from.value);
     formData.append("to", to.value);
-    // temporary
-    formData.append("group_id", groupID.value);
-    // temporary-end
+    // Only one group
+    if (selectedGroupsIds.length > 0) {
+        formData.append("group_id", selectedGroupsIds[0]!.toString());
+    }
+
     if (img.files && img.files?.[0]) {
         formData.append("img", img.files?.[0])
     }
@@ -103,7 +104,8 @@ const addMemberToGroup = (group: Group, canDelete: boolean = true) => {
     if (!addedMembersContainer) return;
     if (selectedGroupsIds.includes(group.id)) return;
 
-    selectedGroupsIds.push(group.id);
+    // selectedGroupsIds.push(group.id);
+    selectedGroupsIds = [group.id];
 
     const card = document.createElement('div');
     card.className = "card border border-light-subtle rounded-pill px-3 py-2 mb-1 w-100";

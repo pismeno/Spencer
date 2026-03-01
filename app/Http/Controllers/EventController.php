@@ -92,7 +92,7 @@ class EventController extends Controller
             'deadline' => ['nullable', 'date'],
             'from' => ['required', 'date'],
             'to' => ['required', 'date'],
-            'group_id' => ['required', 'integer'],
+            'group_id' => ['required', 'integer', 'exists:groups,id'],
             'img' => ['nullable', 'image', 'max:4096']
         ]);
         $imgPath = null;
