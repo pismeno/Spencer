@@ -64,7 +64,7 @@ const modalList = document.getElementById('userBulletList');
 
 const searchAndLog = async (search: string) => {
     try {
-        const response = await api.post('/listgroups', { group: search });
+        const response = await api.post('/listgroups', { title: search });
         console.log(response)
         const groups: Group[] = response.data;
         if (!modalList) return;
