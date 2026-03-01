@@ -62,9 +62,9 @@ const addMemberToGroup = (user: any, canDelete: boolean = true) => {
 
     selectedUserIds.push(user.id);
     const [short] = user.email.split("@");
-    const hasAvatar = user.hasOwnProperty('avatar_url') && user.avatar_url !== null && user.avatar_url !== '';
-    const profilePic = hasAvatar ? `/storage/${user.avatar_url}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff`;
-
+    const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff&size=128`;
+    const hasLocalAvatar = user.avatar_url && user.avatar_url !== '' && !user.avatar_url.startsWith('http');
+    const profilePic = hasLocalAvatar ? `/storage/${user.avatar_url}` : fallbackAvatar;
     const card = document.createElement('div');
     card.className = "card border border-light-subtle rounded-pill px-3 py-2 mb-1 w-100";
     card.innerHTML = `
@@ -104,8 +104,9 @@ const performSearch = async (query: string) => {
         users.filter((u: any) => !selectedUserIds.includes(u.id)).forEach((user: any) => {
             const [short, suffix] = user.email.split("@");
             const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
-            const hasAvatar = user.hasOwnProperty('avatar_url') && user.avatar_url !== null && user.avatar_url !== '';
-            const profilePic = hasAvatar ? `/storage/${user.avatar_url}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff`;
+            const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff&size=128`;
+            const hasLocalAvatar = user.avatar_url && user.avatar_url !== '' && !user.avatar_url.startsWith('http');
+            const profilePic = hasLocalAvatar ? `/storage/${user.avatar_url}` : fallbackAvatar;
 
             const item = document.createElement('div');
             item.className = "d-flex align-items-center p-2 border-bottom shadow-sm-hover cursor-pointer rounded-4 mb-1 bg-white";

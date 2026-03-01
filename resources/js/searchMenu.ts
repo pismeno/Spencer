@@ -40,8 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const email = user.email || 'User';
                     const [short, suffix] = email.split("@");
                     const fullName = `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim();
-                    const hasAvatar = user.hasOwnProperty('avatar_url') && user.avatar_url !== null && user.avatar_url !== '';
-                    const profilePic = hasAvatar ? `/storage/${user.avatar_url}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff`;
+                    const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(short)}&background=198754&color=fff&size=128`;
+                    const hasLocalAvatar = user.avatar_url && user.avatar_url !== '' && !user.avatar_url.startsWith('http');
+                    const profilePic = hasLocalAvatar ? `/storage/${user.avatar_url}` : fallbackAvatar;
 
                     resultContainer.innerHTML += `
                     <div class="d-flex align-items-center p-3 border-bottom shadow-sm-hover">

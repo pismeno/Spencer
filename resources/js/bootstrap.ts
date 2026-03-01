@@ -5,7 +5,8 @@ const api = axios.create({
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         // 'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content
     },
 });
 

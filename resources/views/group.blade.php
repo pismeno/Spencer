@@ -70,12 +70,19 @@
                 <div class="d-flex flex-column gap-2">
                     <div class="card border border-light-subtle rounded-pill px-3 py-2 shadow-sm bg-light">
                         <div class="d-flex align-items-center">
-                            <div class="rounded-circle overflow-hidden border border-secondary-subtle me-2" style="width: 32px; height: 32px;">
-                                <img src="https://ui-avatars.com/api/?name={{ auth()->user()->email }}&background=198754&color=fff" class="w-100 h-100" alt="">
+                            <div class="ratio ratio-1x1 rounded-circle overflow-hidden border border-secondary-subtle me-2" style="width: 32px;">
+                                @php
+                                    $user = auth()->user();
+                                    $short = explode('@', $user->email)[0];
+                                    $fallback = "https://ui-avatars.com/api/?name=" . urlencode($short) . "&background=198754&color=fff";
+                                    $hasLocalAvatar = $user->avatar_url && !str_starts_with($user->avatar_url, 'http');
+                                    $profilePic = $hasLocalAvatar ? asset('storage/' . $user->avatar_url) : $fallback;
+                                @endphp
+                                <img src="{{ $profilePic }}" class="w-100 h-100 rounded-circle object-fit-cover" onerror="this.onerror=null;this.src='{{ $fallback }}';" alt="">
                             </div>
                             <div class="small flex-grow-1">
                                 <span class="fw-bold text-primary">Creator</span>
-                                <span class="text-muted d-none d-sm-inline"> - {{ auth()->user()->email }}</span>
+                                <span class="text-muted d-none d-sm-inline"> - {{ $user->email }}</span>
                             </div>
                         </div>
                     </div>
