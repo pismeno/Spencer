@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div id="img-preview-div" class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-2 position-relative">
-                            <img id="img-preview" class="w-100 h-100 d-none top-0 start-0, rounded-4 z-1" style="object-fit: cover; pointer-events: none" alt="img-preview">
+                            <img id="img-preview" class="w-100 h-100 d-none top-0 start-0 rounded-4 z-1" style="object-fit: cover; pointer-events: none" alt="img-preview">
                             <label for="event-image-upload" class="d-flex flex-column justify-content-center align-items-center w-100 h-100" style="cursor: pointer;">
                                 <img id="input-img" src="{{ Vite::asset('resources/svg/file.svg') }}" alt="Upload" class="opacity-50 mb-2" style="width: 80px; height: auto;">
                                 <span class="small text-muted fw-bold">Click to upload event image</span>
