@@ -67,6 +67,8 @@ Route::post('/event/create', [EventController::class, 'store'])
     ->middleware('auth')->name('event.store');
 Route::post('/event/edit', [EventController::class, 'update'])
     ->middleware('auth')->name('event.update');
+Route::get('/showEvent/{event?}', [EventController::class, 'show'])
+    ->middleware('auth')->name('event.show');
 // List events
 Route::post('/listevents', [EventController::class, 'list'])->name('event.list');
 // List users

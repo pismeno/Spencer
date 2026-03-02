@@ -28,7 +28,9 @@ async function showEvents(pageType:boolean) {
                     const formattedStart = new Date(response?.data[index]?.starts_at).toLocaleDateString('cs-CZ');
                     const formattedEnd = new Date(response?.data[index]?.ends_at).toLocaleDateString('cs-CZ');
                     const element = response.data[index];
-                    neco += `<div class="col-12 col-md-12 mb-3">
+                    neco += `
+                            <a href="/showEvent/${element.id}">
+                                <div class="col-12 col-md-12 mb-3">
                                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                                         <div class="card-header bg-white border-0 py-3 px-3">
                                             <h5 class="mb-0 text-dark fw-bold text-truncate">${element?.title}</h5>
@@ -45,7 +47,8 @@ async function showEvents(pageType:boolean) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>`
+                                </div>
+                            </a>`
 
                 }
                 return neco;

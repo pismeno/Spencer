@@ -114,11 +114,18 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show
      */
     public function show(Event $event)
     {
-        //
+        $user = auth()->user();
+
+        if (!$user->groups->contains($event->group_id)) {
+            return back();
+        }
+
+        return view('detail', compact('event'));
+
     }
 
     /**
