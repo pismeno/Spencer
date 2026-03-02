@@ -7,7 +7,6 @@ interface EventData {
     starts_at: string;
     ends_at: string;
 }
-
 addEventListener("DOMContentLoaded", ()=>{
     showEvents(false);
 })
