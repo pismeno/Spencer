@@ -11,15 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
-/**
- * @property int $user_id
- * @property string $email
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * * @method static Builder|static query()
- * @method static Builder|static create(array $attributes = [])
- * @method static whereLike(string $string, string $string1)
- */
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

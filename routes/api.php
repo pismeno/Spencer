@@ -42,6 +42,11 @@ Route::post('/event/{event}/set-attends', [EventController::class, 'setAttendanc
     ->name('event.setAttendance');
 
 // GROUP ROUTES
+// get
+Route::get('/groups', [GroupController::class, 'search'])
+    ->middleware('auth')
+    ->name('group.search'); // List groups
+
 // post
 Route::post('/group/create', [GroupController::class, 'store'])
     ->middleware('auth')
@@ -49,14 +54,17 @@ Route::post('/group/create', [GroupController::class, 'store'])
 Route::post('/group/{group}/edit', [GroupController::class, 'update'])
     ->middleware('auth')
     ->name('group.update');
+Route::post('/group/{group}/members/add', [GroupController::class, 'addMembers'])
+    ->middleware('auth')
+    ->name('group.members.add');
 
 // delete
 Route::delete('/group/{group}/delete', [GroupController::class, 'destroy'])
     ->middleware('auth')
     ->name('group.delete');
-Route::get('/groups', [GroupController::class, 'search'])
+Route::delete('/group/{group}/members', [GroupController::class, 'destroyMembers'])
     ->middleware('auth')
-    ->name('group.search'); // List groups
+    ->name('group.members.destroy');
 
 // NOTIFICATION ROUTES
 // post
