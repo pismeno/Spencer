@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
@@ -106,7 +105,7 @@ class AuthController extends Controller
 
         $data = $request->validate([
             'first_name' => 'sometimes|nullable|string|max:255',
-            'last_name'    => 'sometimes|nullable|string|max:255',
+            'last_name' => 'sometimes|nullable|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -118,7 +117,7 @@ class AuthController extends Controller
 
         Auth::user()->update($data);
 
-        if($request->expectsJson()) {
+        if ($request->expectsJson()) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Profile Updated',
@@ -127,19 +126,5 @@ class AuthController extends Controller
         }
 
         return back()->with('status', 'profile-updated');
-    }
-
-    public function deleteAccount(Request $request): RedirectResponse
-    {
-        $user = Auth::user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
     }
 }

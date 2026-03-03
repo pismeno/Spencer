@@ -19,7 +19,7 @@ class GroupController extends Controller
         $this->searchService = $groupService;
     }
 
-    public function list(Request $request): JsonResponse
+    public function search(Request $request): JsonResponse
     {
         return response()->json($this->searchService->groups($request));
     }

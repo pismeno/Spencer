@@ -15,8 +15,9 @@ Route::post('/user/register', [AuthController::class, 'register'])
 Route::post('/user/login', [AuthController::class, 'login'])
     ->name('user.login');
 
+// USER ROUTES
 //delete
-Route::delete('/user/delete', [AuthController::class, 'deleteAccount'])
+Route::delete('/user/delete', [UserController::class, 'deleteAccount'])
     ->name('user.delete')
     ->middleware('auth');
 

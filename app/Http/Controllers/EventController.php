@@ -42,7 +42,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): JsonResponse
+    public function search(Request $request): JsonResponse
     {
         $data = $request->validate([
             'title' => ['nullable', 'string', 'min:1']
