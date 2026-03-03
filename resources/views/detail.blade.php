@@ -19,36 +19,36 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-8">
                     <div class="card shadow-sm border-0 rounded-4 p-4 mb-4">
-                        <h2 class="h3 fw-bold mb-4 text-secondary">Event</h2>
+                        <h2 class="h3 fw-bold mb-4 text-secondary">ShowEvent</h2>
                         <div id="title-div" class="mb-3">
                             <label class="form-label small text-muted">Title</label>
-                            <input id="input-title" type="text" class="form-control rounded-3" placeholder="Enter event title">
+                            <p>{{ $event->title }}</p>
+                            <p>{{ $event }}</p>
                         </div>
 
                         <div id="description-div" class="mb-3">
                             <label class="form-label small text-muted">Description</label>
-                            <textarea class="form-control rounded-3" rows="3" placeholder="Describe your event" id="input-description"></textarea>
+                            <p>{{ $event->description }}</p>
                         </div>
                         <div class="row g-3 mb-4">
                             <div id="deadline-div" class="col-md-4">
                                 <label class="form-label small text-muted">Deadline</label>
-                                <input type="date" class="form-control rounded-3" id="input-deadline">
+                                <p>{{ date('d.m.Y', strtotime($event->deadline))}}</p>
                             </div>
                             <div id="from-div" class="col-md-4">
                                 <label class="form-label small text-muted">From</label>
-                                <input type="date" class="form-control rounded-3 border" id="input-from">
+                                <p>{{ date('d.m.Y', strtotime($event->starts_at))}}</p>
                             </div>
                             <div id="to-div" class="col-md-4">
                                 <label class="form-label small text-muted">To</label>
-                                <input type="date" class="form-control rounded-3" id="input-to">
+                                <p>{{ date('d.m.Y', strtotime($event->ends_at))}}</p>
                             </div>
                         </div>
                         <div id="img-preview-div" class="ratio ratio-21x9 bg-light rounded-4 border border-secondary border-opacity-25 mb-2 position-relative">
-                            <img id="img-preview" class="w-100 h-100 d-none top-0 start-0 rounded-4 z-1" style="object-fit: cover; pointer-events: none" alt="img-preview">
-                            <label for="event-image-upload" class="d-flex flex-column justify-content-center align-items-center w-100 h-100" style="cursor: pointer;">
+                            {{$pathwayImg = $event->thumbnail_url}}
+                            <img id="img-preview" src="{{  asset('storage/'.$pathwayImg)}}" class="w-100 h-100 top-0 start-0 rounded-4 z-1" style="object-fit: cover; pointer-events: none" alt="img-preview">
+                            <label for="event-image-upload" class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
                                 <img id="input-img" src="{{ Vite::asset('resources/svg/file.svg') }}" alt="Upload" class="opacity-50 mb-2" style="width: 80px; height: auto;">
-                                <span class="small text-muted fw-bold">Click to upload event image</span>
-                                <input type="file" id="event-image-upload" class="d-none" accept="image/png, image/jpg, image/webp, image/jpeg">
                             </label>
                         </div>
                         <input type="hidden" id="group-hidden" value='1'>

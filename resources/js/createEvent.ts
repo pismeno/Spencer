@@ -54,6 +54,7 @@ submitBtn.addEventListener("click", async (e)=>{
     }
     try{
         submitBtn.disabled=true;
+        console.log(formData);
         const response = await api.post("/event/create", formData);
         window.location.href="/";
     }catch (error:unknown){

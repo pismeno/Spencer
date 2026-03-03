@@ -29,7 +29,7 @@ async function showEvents(pageType:boolean) {
                     const formattedEnd = new Date(response?.data[index]?.ends_at).toLocaleDateString('cs-CZ');
                     const element = response.data[index];
                     neco += `
-                            <a href="/showEvent/${element.id}">
+                            <a href="/showEvent/${element.id}" class="text-decoration-none">
                                 <div class="col-12 col-md-12 mb-3">
                                     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                                         <div class="card-header bg-white border-0 py-3 px-3">

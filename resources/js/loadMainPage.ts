@@ -44,7 +44,7 @@ async function showEvents(pageType:boolean) {
             const Events = renderEvents(clockIconPath);
             newestEventsContainer!.innerHTML = Events
         } else{
-            '<p class="text-muted">Žádné nadcházející události.</p>';
+            return '<p class="text-muted">Žádné nadcházející události.</p>';
         }
 
     } catch(error){
