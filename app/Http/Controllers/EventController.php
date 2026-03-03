@@ -9,8 +9,6 @@ use App\Services\SearchService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -26,7 +24,7 @@ class EventController extends Controller
     /**
      * Search for both Users and Groups in one request, used for event assignment
      */
-    public function listUsersAndGroups(Request $request) : JsonResponse
+    public function searchUsersAndGroups(Request $request) : JsonResponse
     {
         $groupIDs = auth()->user()->groups()->pluck('groups.id');
         $users = $this->searchService->users($request);
@@ -35,9 +33,10 @@ class EventController extends Controller
         ->values();
 
         return response()->json([
+            'message' => 'Search was successful',
             'users' => $users,
             'groups' => $groups,
-        ]);
+        ], 200);
     }
 
     /**
@@ -62,9 +61,12 @@ class EventController extends Controller
         ->latest()
         ->get();
 
-        return response()->json($events);
+        return response()->json([
+            'message' => 'Search was successful',
+            'events' => $events
+        ], 200);
     }
-    public function relatedEvents(Authenticatable $user, $groupIDs): Collection
+    private function relatedEvents(Authenticatable $user, $groupIDs): Collection
     {
         return Event::with('group')
         ->whereIn('group_id', $groupIDs)
@@ -82,7 +84,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
             'title' => ['required', 'string', 'max:256'],
@@ -120,7 +122,9 @@ class EventController extends Controller
             ]);
         }
 
-        return back();
+        return response()->json([
+            'message' => 'Event created successfully'
+        ], 201);
     }
 
     /**
@@ -135,7 +139,6 @@ class EventController extends Controller
         }
 
         return view('detail', compact('event'));
-
     }
 
     /**
@@ -149,7 +152,7 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event): RedirectResponse
+    public function update(Request $request, Event $event): JsonResponse
     {
         $data = $request->validate([
             'title'       => ['required', 'string', 'max:256'],
@@ -173,8 +176,7 @@ class EventController extends Controller
             'thumbnail_url'    => $data['img_path'] ?? $event->img_path,
         ]);
 
-        // Placeholder response
-        return back();
+        return response()->json(['message' => 'Event updated successfully'], 200);
     }
 
     /**
@@ -188,7 +190,7 @@ class EventController extends Controller
     /**
      * Set attendance of user for event
      */
-    public function setAttendance(Request $request, Event $event): RedirectResponse
+    public function setAttendance(Request $request, Event $event): JsonResponse
     {
         $data = $request->validate([
             'user_id' => ['required', 'integer', 'exists:users,id'],
@@ -200,7 +202,7 @@ class EventController extends Controller
             ->first();
 
         if (!$membership) {
-            return back()->withErrors(['user_id' => 'User is not a member of this group.']);
+            return response()->json(['message' => 'User is not a member of this group.',], 401);
         }
 
         $attendance = Attendance::where('event_id', $event->id)
@@ -212,6 +214,6 @@ class EventController extends Controller
             $attendance->save();
         }
 
-        return back();
+        return response()->json(['message' => 'Attendance updated successfully'], 200);
     }
 }

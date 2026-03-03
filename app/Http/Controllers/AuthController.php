@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -16,9 +15,9 @@ class AuthController extends Controller
      * Registers new user and logs them in.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function register(Request $request): RedirectResponse
+    public function register(Request $request): JsonResponse
     {
         $data = $request->validate([
             'email' => [
@@ -43,17 +42,16 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect()->intended('/');
+        return response()->json(['message' => 'Created'], 201);
     }
 
     /**
      * Responds to login requests, if valid credentials are passed in $request, it logs the user in.
      *
      * @param Request $request
-     * @return RedirectResponse
-     * @throws ValidationException when the provided credentials do not match any registered account.
+     * @return JsonResponse
      */
-    public function login(Request $request): RedirectResponse
+    public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
             'email' => [
@@ -72,31 +70,43 @@ class AuthController extends Controller
 
         if ($attempt) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+
+            $user = auth()->user();
+
+            return response()->json([
+                'message' => 'Přihlášení proběhlo úspěšně',
+                'user' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'avatar_url' => $user->avatar_url,
+                ]
+            ], 200);
         }
 
-        throw ValidationException::withMessages([
-            'email' => 'No account matches these credentials.',
-        ]);
+        return response()->json([
+            'message' => 'No account matches with the given credentials.'
+        ], 401);
     }
 
     /**
      * Logs out the currently authenticated user.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request): JsonResponse
     {
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return response()->json(['message' => 'Logged out'], 200);
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request): JsonResponse
     {
         if ($request->has('delete_avatar')) {
             auth()->user()->update(['avatar_url' => null]);
@@ -117,14 +127,10 @@ class AuthController extends Controller
 
         Auth::user()->update($data);
 
-        if ($request->expectsJson()) {
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Profile Updated',
-                'path' => Auth::user()->avatar_url
-            ]);
-        }
-
-        return back()->with('status', 'profile-updated');
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Profile Updated',
+            'path' => Auth::user()->avatar_url
+        ]);
     }
 }
