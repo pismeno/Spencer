@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Event;
+use App\Models\Membership;
 use App\Services\SearchService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
@@ -24,7 +26,7 @@ class EventController extends Controller
      * Search for both Users and Groups in one request, used for event assignment
      */
     public function listUsersAndGroups(Request $request) : JsonResponse
-    {   
+    {
         $groupIDs = auth()->user()->groups()->pluck('groups.id');
         $users = $this->searchService->users($request);
         $groups = $this->searchService->groups($request)
@@ -35,18 +37,13 @@ class EventController extends Controller
             'users' => $users,
             'groups' => $groups,
         ]);
-
-        // return response()->json([   
-        //     'users'  => $this->searchService->users($request),
-        //     'groups' => $this->searchService->groups($request)->whereIn('group_id', $groupIDs),
-        // ]);
     }
 
     /**
      * Display a listing of the resource.
      */
     public function list(Request $request): JsonResponse
-    {   
+    {
         $request->validate([
             'title' => ['nullable', 'string', 'min:1']
         ]);
@@ -56,7 +53,7 @@ class EventController extends Controller
 
         if (!$request->filled('title')) {
             return response()->json($this->relatedEvents($requester, $groupIDs));
-        }  
+        }
 
         $events = Event::with('group')
         ->whereIn('group_id', $groupIDs)
@@ -67,7 +64,7 @@ class EventController extends Controller
         return response()->json($events);
     }
     public function relatedEvents(Authenticatable $user, $groupIDs)
-    {   
+    {
         return Event::with('group')
         ->whereIn('group_id', $groupIDs)
         ->latest()
@@ -110,7 +107,19 @@ class EventController extends Controller
             'thumbnail_url' => $imgPath
         ]);
 
-        return back(); // zatim nic
+        $memberships = $event->group->memberships;
+
+        foreach ($memberships as $membership) {
+            Attendance::create([
+                'membership_id'  => $membership->id,
+                'event_id' => $event->id,
+                'attends' => false,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
+
+        return back();
     }
 
     /**
@@ -140,12 +149,12 @@ class EventController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Event $event): RedirectResponse
-    {   
+    {
         $data = $request->validate([
             'title'       => ['required', 'string', 'max:256'],
             'description' => ['required', 'string'],
             'deadline'    => ['nullable', 'date'],
-            'from'        => ['required', 'date'], 
+            'from'        => ['required', 'date'],
             'to'          => ['required', 'date'],
             'img'         => ['nullable', 'image', 'max:4096']
         ]);
@@ -173,5 +182,35 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    /**
+     * Set attendance of user for event
+     */
+    public function setAttendance(Request $request, Event $event): RedirectResponse
+    {
+        $data = $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'attends' => ['required', 'boolean']
+        ]);
+
+        $membership = Membership::where('user_id', $data['user_id'])
+            ->where('group_id', $event->group_id)
+            ->first();
+
+        if (!$membership) {
+            return back()->withErrors(['user_id' => 'User is not a member of this group.']);
+        }
+
+        $attendance = Attendance::where('event_id', $event->id)
+            ->where('membership_id', $membership->id)
+            ->first();
+
+        if ($attendance) {
+            $attendance->attends = $data['attends'];
+            $attendance->save();
+        }
+
+        return back();
     }
 }

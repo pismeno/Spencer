@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -41,14 +42,14 @@ class Event extends Model
     /**
      * Get the memberships of users for this group.
      *
-     * @return HasMany
+     * @return BelongsTo
      */
     // public function memberships(): HasMany
     // {
     //     return $this->hasMany(Membership::class, 'group_id', 'group_id');
     // }
 
-    public function group()
+    public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class);
     }
