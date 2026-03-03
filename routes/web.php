@@ -33,10 +33,12 @@ Route::get('/settings', function () {
 // GROUPS ROUTES
 // get
 Route::get('/groups', [GroupController::class, 'index'])
-    ->middleware('auth')->name('group.index');
+    ->middleware('auth')
+    ->name('group.index');
 
 Route::get('/group/create', [GroupController::class, 'create'])
-    ->middleware('auth')->name('group.create');
+    ->middleware('auth')
+    ->name('group.create');
 
 // EVENT ROUTES
 // get
@@ -45,10 +47,12 @@ Route::get('/events', function () {
 })->middleware('auth');
 
 Route::get('/event/{event}', [EventController::class, 'show'])
-    ->middleware('auth')->name('event.show');
+    ->middleware('auth')
+    ->name('event.show');
 
 Route::get('/event/create', [EventController::class, 'create'])
-    ->middleware('auth')->name('event.create');
+    ->middleware('auth')
+    ->name('event.create');
 
 // NOTIFICATION ROUTES
 // views
