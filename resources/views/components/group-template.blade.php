@@ -1,50 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Spencer - Groups</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap" rel="stylesheet">
-    @vite(['resources/css/custom.css', 'resources/js/createGroup.ts'])
-</head>
-<body class="bg-light" data-bs-theme="{{ $activeTheme }}">
-<x-header />
-<main class="d-flex">
-    <x-sidebar/>
-    <div id="content" class="flex-grow-1 p-3 p-md-5 overflow-auto">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-center justify-content-md-start mb-5">
-                <button class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg d-flex align-items-center gap-2 border-0" data-bs-toggle="modal" data-bs-target="#groupModal" id="createNewGroupBtn">
-                    <span class="fs-4 lh-1 text-white">+</span>
-                    <span>Create New Group</span>
-                </button>
-            </div>
-
-            <div class="row g-4">
-                @forelse($groups as $group)
-                    @php
-                        $existingMembers = $group->users->where('id', '!=', auth()->id())->map(function($u) {
-                            return ['id' => $u->id, 'email' => $u->email];
-                        })->values();
-                    @endphp
-                    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card border-0 shadow-sm rounded-4 text-center p-4 h-100 bg-white group-card" role="button" data-bs-toggle="modal" data-bs-target="#groupModal" data-id="{{ $group->id }}" data-name="{{ $group->name }}" data-description="{{ $group->description }}" data-is-creator="true" data-members="{{ json_encode($existingMembers) }}">
-                            <span class="fw-bold text-secondary fs-6">{{ $group->name }}</span>
-                            <div class="mt-2">
-                                <span class="badge bg-light text-primary rounded-pill">Member</span>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-12 text-center text-muted">No groups yet.</div>
-                @endforelse
-            </div>
-        </div>
-    </div>
-</main>
 <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow-lg p-4">
@@ -112,6 +65,3 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
