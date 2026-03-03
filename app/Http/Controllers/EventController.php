@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Membership;
 use App\Services\SearchService;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
@@ -63,7 +64,7 @@ class EventController extends Controller
 
         return response()->json($events);
     }
-    public function relatedEvents(Authenticatable $user, $groupIDs)
+    public function relatedEvents(Authenticatable $user, $groupIDs): Collection
     {
         return Event::with('group')
         ->whereIn('group_id', $groupIDs)
