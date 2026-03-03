@@ -47,4 +47,32 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function updateProfile(Request $request): JsonResponse
+    {
+        if ($request->has('delete_avatar')) {
+            auth()->user()->update(['avatar_url' => null]);
+            return response()->json(['status' => 'success', 'path' => null]);
+        }
+
+        $data = $request->validate([
+            'first_name' => 'sometimes|nullable|string|max:255',
+            'last_name' => 'sometimes|nullable|string|max:255',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('avatars', 'public');
+            $data['avatar_url'] = $path;
+            unset($data['profile_picture']);
+        }
+
+        Auth::user()->update($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Profile Updated',
+            'path' => Auth::user()->avatar_url
+        ]);
+    }
 }

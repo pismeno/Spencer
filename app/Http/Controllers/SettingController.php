@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
@@ -10,12 +12,12 @@ use Illuminate\Support\Arr;
 class SettingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get a view of this resource's index.
      */
-    public function list()
+    public function showSettings(): Factory|View
     {
         $allSettings = Setting::with('options')->get();
-        
+
         $currentSelect = Auth::user()->settings()->pluck('setting_options.id')->toArray();
 
         return view('settings', compact('allSettings', 'currentSelect'));
@@ -64,7 +66,7 @@ class SettingController extends Controller
         ]);
 
         $optionsID = array_values($request->input('options', []));
-        
+
         // sync
 
         Auth::user()->settings()->sync($optionsID);

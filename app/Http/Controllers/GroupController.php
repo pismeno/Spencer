@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Membership;
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use App\Services\SearchService;
@@ -22,17 +21,26 @@ class GroupController extends Controller
         $this->searchService = $groupService;
     }
 
-    public function search(Request $request): JsonResponse
-    {
-        return response()->json($this->searchService->groups($request));
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index(): View
     {
         $groups = auth()->user()->groups()->with('users')->get();
         return view('group', compact('groups'));
     }
 
+    /**
+     * Search in this resource
+     */
+    public function search(Request $request): JsonResponse
+    {
+        return response()->json($this->searchService->groups($request));
+    }
+
+    /**
+     * Store new resource.
+     */
     public function store(Request $request): JsonResponse
     {
         return DB::transaction(function () use ($request) {
@@ -68,6 +76,9 @@ class GroupController extends Controller
         });
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, Group $group): JsonResponse
     {
         $request->validate([
@@ -86,6 +97,9 @@ class GroupController extends Controller
         return response()->json(['message' => 'Updated'], 200);
     }
 
+    /**
+     * Add members to the specified group.
+     */
     public function addMembers(Request $request, Group $group): JsonResponse
     {
         $data = $request->validate([
@@ -111,6 +125,9 @@ class GroupController extends Controller
         return response()->json(['message' => 'Members added'], 200);
     }
 
+    /**
+     * Remove members from the specified group.
+     */
     public function destroyMembers(Request $request, Group $group): JsonResponse
     {
         $data = $request->validate([
@@ -129,12 +146,16 @@ class GroupController extends Controller
         return response()->json(['message' => 'Deleted'], 200);
     }
 
+    /**
+     * Delete the specified group.
+     */
     public function destroy(Group $group): JsonResponse
     {
         $group->delete();
         return response()->json(['message' => 'Deleted'], 200);
     }
 
+    // HELPER FUNCTIONS
     private function hasRole(Authenticatable $user, Group $group, string $roleName): bool
     {
         $membership = $this->userMembership($user, $group);

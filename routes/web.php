@@ -3,48 +3,41 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 // MAIN ROUTES`
 // views
-Route::get('/', function() {
-    return view('index');
-})->middleware('auth');
+Route::get('/', function() { return view('index'); })
+    ->middleware('auth')
+    ->name('index');
 
 // AUTHENTICATION ROUTES
 // views
-Route::get('/register', function () {
-    return view('auth/register');
-})->name('register');
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])
+    ->name('register');
 
-Route::get('/login', function () {
-    return view('auth/login');
-})->name('login');
-
-Route::get('/logout', [AuthController::class, 'logout'])
-    ->middleware('auth');
+Route::get('/login', [AuthController::class, 'showLoginForm'])
+    ->name('login');
 
 // SETTINGS ROUTES
 // views
-Route::get('/settings', function () {
-    return view('settings');
-})->middleware('auth');
+Route::get('/settings', [SettingController::class, 'showSettings'])
+    ->middleware('auth')
+    ->name('settings');
 
 // GROUPS ROUTES
-// get
+// views
 Route::get('/groups', [GroupController::class, 'index'])
     ->middleware('auth')
-    ->name('group.index');
-
-Route::get('/group/create', [GroupController::class, 'create'])
-    ->middleware('auth')
-    ->name('group.create');
+    ->name('groups.index');
 
 // EVENT ROUTES
 // get
-Route::get('/events', function () {
-    return view('showEvent');
-})->middleware('auth');
+Route::get('/events', [EventController::class, 'index'])
+    ->middleware('auth')
+    ->name('events.index');
 
 Route::get('/event/{event}', [EventController::class, 'show'])
     ->middleware('auth')
@@ -56,6 +49,12 @@ Route::get('/event/create', [EventController::class, 'create'])
 
 // NOTIFICATION ROUTES
 // views
-Route::get('/notifications', function () {
-    return view('notifications');
-})->middleware('auth');
+Route::get('/notifications', [NotificationController::class, 'index'])
+    ->middleware('auth')
+    ->name('notifications.index');
+
+// SETTINGS ROUTES
+// views
+Route::get('/settings', [SettingController::class, 'search'])
+    ->name('settings.index')
+    ->middleware('auth');

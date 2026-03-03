@@ -22,6 +22,36 @@ class EventController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function index(): View
+    {
+        return view('events/index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        return view('event');
+    }
+
+    /**
+     * Show detail of specific event
+     */
+    public function show(Event $event): View
+    {
+        $user = auth()->user();
+
+        if (!$user->groups->contains($event->group_id)) {
+            return back();
+        }
+
+        return view('detail', compact('event'));
+    }
+
+    /**
      * Search for both Users and Groups in one request, used for event assignment
      */
     public function searchUsersAndGroups(Request $request) : JsonResponse
@@ -73,13 +103,6 @@ class EventController extends Controller
         ->latest()
         ->get();
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
-         return view('event');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -125,20 +148,6 @@ class EventController extends Controller
         return response()->json([
             'message' => 'Event created successfully'
         ], 201);
-    }
-
-    /**
-     * Show
-     */
-    public function show(Event $event)
-    {
-        $user = auth()->user();
-
-        if (!$user->groups->contains($event->group_id)) {
-            return back();
-        }
-
-        return view('detail', compact('event'));
     }
 
     /**

@@ -10,83 +10,82 @@ use Illuminate\Support\Facades\Route;
 
 // AUTHENTICATION ROUTES
 // post
-Route::post('/user/register', [AuthController::class, 'register'])
-    ->name('user.register');
-Route::post('/user/login', [AuthController::class, 'login'])
-    ->name('user.login');
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('api.register');
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('api.login');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth:sanctum')
+    ->name('api.logout');
 
 // USER ROUTES
+// patch
+Route::patch('/user/profile', [AuthController::class, 'updateProfile'])
+    ->name('api.user.profile.update')
+    ->middleware('auth:sanctum');
+Route::patch('/user/settings', [SettingController::class, 'update']) // TODO change deceiving method names
+    ->name('api.user.settings.update')
+    ->middleware('auth:sanctum');
+
 // get
 Route::get('/users', [UserController::class, 'search'])
-    ->name('user.search'); // List users
+    ->name('api.user.search'); // List users
 
 //delete
-Route::delete('/user/delete', [UserController::class, 'deleteAccount'])
-    ->middleware('auth')
-    ->name('user.delete');
+Route::delete('/user', [UserController::class, 'deleteAccount'])
+    ->middleware('auth:sanctum')
+    ->name('api.user.delete');
 
 // EVENT ROUTES
 // get
 Route::get('/events', [EventController::class, 'search'])
-    ->name('event.search'); // List events
+    ->name('api.event.search'); // List events
 
 // post
-Route::post('/event/create', [EventController::class, 'store'])
-    ->middleware('auth')
-    ->name('event.store');
-Route::post('/event/{event}/edit', [EventController::class, 'update'])
-    ->middleware('auth')
-    ->name('event.update');
-Route::post('/event/{event}/set-attends', [EventController::class, 'setAttendance'])
-    ->middleware('auth')
-    ->name('event.setAttendance');
+Route::post('/event', [EventController::class, 'store'])
+    ->middleware('auth:sanctum')
+    ->name('api.event.store');
+
+// patch
+Route::patch('/event/{event}', [EventController::class, 'update'])
+    ->middleware('auth:sanctum')
+    ->name('api.event.update');
+Route::patch('/event/{event}/attendance', [EventController::class, 'setAttendance'])
+    ->middleware('auth:sanctum')
+    ->name('api.event.setAttendance');
 
 // GROUP ROUTES
 // get
 Route::get('/groups', [GroupController::class, 'search'])
-    ->middleware('auth')
-    ->name('group.search'); // List groups
+    ->middleware('auth:sanctum')
+    ->name('api.group.search'); // List groups
 
 // post
-Route::post('/group/create', [GroupController::class, 'store'])
-    ->middleware('auth')
-    ->name('group.store');
-Route::post('/group/{group}/edit', [GroupController::class, 'update'])
-    ->middleware('auth')
-    ->name('group.update');
-Route::post('/group/{group}/members/add', [GroupController::class, 'addMembers'])
-    ->middleware('auth')
-    ->name('group.members.add');
+Route::post('/group', [GroupController::class, 'store'])
+    ->middleware('auth:sanctum')
+    ->name('api.group.store');
+Route::post('/group/{group}/members', [GroupController::class, 'addMembers'])
+    ->middleware('auth:sanctum')
+    ->name('api.group.members.add');
+
+// patch
+Route::patch('/group/{group}', [GroupController::class, 'update'])
+    ->middleware('auth:sanctum')
+    ->name('api.group.update');
 
 // delete
-Route::delete('/group/{group}/delete', [GroupController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('group.delete');
+Route::delete('/group/{group}', [GroupController::class, 'destroy'])
+    ->middleware('auth:sanctum')
+    ->name('api.group.delete');
 Route::delete('/group/{group}/members', [GroupController::class, 'destroyMembers'])
-    ->middleware('auth')
-    ->name('group.members.destroy');
+    ->middleware('auth:sanctum')
+    ->name('api.group.members.destroy');
 
 // NOTIFICATION ROUTES
-// post
-Route::post('/notifications/{id}/read', [NotificationController::class, 'read']) // Mark one notification as read
-    ->middleware('auth')
-    ->name('notifications.read');
-Route::post('/notifications/read-all', [NotificationController::class, 'readAll']) // Mark all notifications as read
-    ->middleware('auth')
-    ->name('notifications.readAll');
-
-// SETTINGS ROUTES
-// get
-Route::get('/settings', [SettingController::class, 'search'])
-    ->name('settings.search')
-    ->middleware('auth');
-
-// post
-// TODO change deceiving method names
-Route::post('/settings/options', [SettingController::class, 'update'])
-    ->name('settings.update')
-    ->middleware('auth');
-
-Route::post('/settings/profile', [AuthController::class, 'updateProfile'])
-    ->name('profile.update')
-    ->middleware('auth');
+// patch
+Route::patch('/notifications/{id}/read', [NotificationController::class, 'read']) // Mark one notification as read
+    ->middleware('auth:sanctum')
+    ->name('api.notifications.read');
+Route::patch('/notifications/read-all', [NotificationController::class, 'readAll']) // Mark all notifications as read
+    ->middleware('auth:sanctum')
+    ->name('api.notifications.readAll');
