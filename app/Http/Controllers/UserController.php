@@ -23,7 +23,12 @@ class UserController extends Controller
      */
     public function search(Request $request): JsonResponse
     {
-        return response()->json($this->searchService->users($request));
+        $users = $this->searchService->users($request);
+
+        return response()->json([
+            'message' => 'Search was successful',
+            'data' => $users
+        ]);
     }
 
     /**
@@ -34,7 +39,7 @@ class UserController extends Controller
         //
     }
 
-    public function delete(Request $request): RedirectResponse
+    public function delete(Request $request): JsonResponse
     {
         $user = Auth::user();
 
@@ -45,13 +50,18 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return response()->json([
+            'message' => 'Account deleted successfully.',
+            'data' => $user->id
+        ]);
     }
 
     public function updateProfile(Request $request): JsonResponse
     {
+        $user = auth()->user();
+
         if ($request->has('delete_avatar')) {
-            auth()->user()->update(['avatar_url' => null]);
+            $user->update(['avatar_url' => null]);
             return response()->json(['status' => 'success', 'path' => null]);
         }
 
@@ -70,9 +80,8 @@ class UserController extends Controller
         Auth::user()->update($data);
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Profile Updated',
-            'path' => Auth::user()->avatar_url
+            'message' => 'Profile Updated successfully.',
+            'data' => $user
         ]);
     }
 }

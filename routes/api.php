@@ -83,9 +83,18 @@ Route::delete('/group/{group}/members', [GroupController::class, 'destroyMembers
 
 // NOTIFICATION ROUTES
 // patch
+Route::get('notifications', [NotificationController::class, 'list'])
+    ->middleware('auth:sanctum')
+    ->name('api.notifications.list');
 Route::patch('/notifications/{id}/read', [NotificationController::class, 'read']) // Mark one notification as read
     ->middleware('auth:sanctum')
     ->name('api.notifications.read');
 Route::patch('/notifications/read-all', [NotificationController::class, 'readAll']) // Mark all notifications as read
     ->middleware('auth:sanctum')
     ->name('api.notifications.readAll');
+
+// GENERAL ROUTES
+// get
+Route::get('/users-and-groups', [EventController::class, 'searchUsersAndGroups'])
+    ->middleware('auth:sanctum')
+    ->name('api.search.users-and-groups');

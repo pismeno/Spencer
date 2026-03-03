@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
@@ -58,7 +59,7 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'options' => 'nullable|array',
@@ -68,9 +69,12 @@ class SettingController extends Controller
         $optionsID = array_values($request->input('options', []));
 
         // sync
-
         Auth::user()->settings()->sync($optionsID);
-        return back();
+
+        return response()->json([
+            'message' => 'Settings updated successfully.'
+            // TODO maybe something should be returned here in 'data'
+        ]);
     }
 
     /**

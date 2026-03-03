@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Membership;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use App\Services\SearchService;
@@ -35,7 +36,12 @@ class GroupController extends Controller
      */
     public function search(Request $request): JsonResponse
     {
-        return response()->json($this->searchService->groups($request));
+        $groups = $this->searchService->groups($request);
+
+        return response()->json([
+            'message' => 'Search was successful',
+            'data' => $groups
+        ]);
     }
 
     /**
@@ -72,7 +78,10 @@ class GroupController extends Controller
                 }
             }
 
-            return response()->json(['message' => 'Created'], 200);
+            return response()->json([
+                'message' => 'Created',
+                'data' => $group
+            ], 200);
         });
     }
 
@@ -94,7 +103,10 @@ class GroupController extends Controller
 
         $group->update($request->only(['name', 'description']));
 
-        return response()->json(['message' => 'Updated'], 200);
+        return response()->json([
+            'message' => 'Updated',
+            'data' => $group
+        ], 200);
     }
 
     /**
@@ -113,16 +125,24 @@ class GroupController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $addedUserIds = [];
+
         if (!empty($data['users_ids'])) {
             foreach ($data['users_ids'] as $userId) {
                 if ($userId == $requester->id) continue;
                 if ($this->isMember($userId, $group)) continue;
 
                 $this->storeMember($userId, $group);
+                $addedUserIds[] = $userId;
             }
         }
 
-        return response()->json(['message' => 'Members added'], 200);
+        $newMembers = User::whereIn('id', $addedUserIds)->get();
+
+        return response()->json([
+            'message' => 'Members added',
+            'data' => $newMembers
+        ], 200);
     }
 
     /**
@@ -139,11 +159,12 @@ class GroupController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        if (!empty($data['users_ids'])) {
-            $group->users()->detach($data['users_ids']);
-        }
+        $group->users()->detach($data['users_ids']);
 
-        return response()->json(['message' => 'Deleted'], 200);
+        return response()->json([
+            'message' => 'Deleted',
+            'data' => array_values($data['users_ids'])
+        ], 200);
     }
 
     /**
@@ -152,7 +173,10 @@ class GroupController extends Controller
     public function destroy(Group $group): JsonResponse
     {
         $group->delete();
-        return response()->json(['message' => 'Deleted'], 200);
+        return response()->json([
+            'message' => 'Deleted',
+            'data' => $group->id
+        ], 200);
     }
 
     // HELPER FUNCTIONS

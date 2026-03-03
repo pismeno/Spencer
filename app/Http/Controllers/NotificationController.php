@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class NotificationController extends Controller
 {
@@ -18,7 +19,10 @@ class NotificationController extends Controller
         return view('notifications');
     }
 
-    public function list(Request $request): JsonResponse
+    /**
+     * get user's notifications.
+     */
+    public function list(Request $request): JsonResponse // TODO maybe this should be standardized?
     {
         return response()->json([
             'unread' => $request->user()->unreadNotifications,
@@ -29,19 +33,32 @@ class NotificationController extends Controller
     /**
      * Mark a notification as read.
      */
-    public function read(Request $request): RedirectResponse
+    public function read(Notification $notification): JsonResponse
     {
-        $data = $request->validate([
-            'id' => ['required', 'integer'],
-        ]);
+        if ($notification->notifiable_id !== auth()->id()) {
+            abort(403, 'Neoprávněná akce.');
+        }
 
-        auth()->user()->unreadNotifications->where('id', $data['id'])->markAsRead();
-        return back();
+        $notification->markAsRead();
+
+        return response()->json([
+                'message' => 'Notification was marked as read successfully.',
+                'data' => $notification
+            ]
+        );
     }
 
-    public function readAll(): RedirectResponse
+    /**
+     * Mark all user's notifications as read.
+     */
+    public function readAll(): JsonResponse
     {
-        auth()->user()->unreadNotifications->markAsRead();
-        return back();
+        $notifications = auth()->user()->unreadNotifications;
+        $notifications->markAsRead();
+
+        return response()->json([
+            'message' => 'All notifications were marked as read successfully.',
+            'data' => $notifications
+        ]);
     }
 }

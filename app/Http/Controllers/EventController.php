@@ -37,6 +37,15 @@ class EventController extends Controller
         return view('event');
     }
 
+    // FIXME this is now the exact same thing as show(Event $event).
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Event $event)
+    {
+        //
+    }
+
     /**
      * Show detail of specific event
      */
@@ -64,8 +73,10 @@ class EventController extends Controller
 
         return response()->json([
             'message' => 'Search was successful',
-            'users' => $users,
-            'groups' => $groups,
+            'data' => [
+                'users' => $users,
+                'groups' => $groups
+            ]
         ], 200);
     }
 
@@ -93,7 +104,7 @@ class EventController extends Controller
 
         return response()->json([
             'message' => 'Search was successful',
-            'events' => $events
+            'data' => $events
         ], 200);
     }
     private function relatedEvents(Authenticatable $user, $groupIDs): Collection
@@ -146,16 +157,9 @@ class EventController extends Controller
         }
 
         return response()->json([
-            'message' => 'Event created successfully'
+            'message' => 'Event created successfully',
+            'data' => $event
         ], 201);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Event $event)
-    {
-        //
     }
 
     /**
@@ -185,7 +189,10 @@ class EventController extends Controller
             'thumbnail_url'    => $data['img_path'] ?? $event->img_path,
         ]);
 
-        return response()->json(['message' => 'Event updated successfully'], 200);
+        return response()->json([
+            'message' => 'Event updated successfully',
+            'data' => $event
+        ], 200);
     }
 
     /**
@@ -223,6 +230,9 @@ class EventController extends Controller
             $attendance->save();
         }
 
-        return response()->json(['message' => 'Attendance updated successfully'], 200);
+        return response()->json([
+            'message' => 'Attendance updated successfully',
+            'data' => $attendance
+        ], 200);
     }
 }

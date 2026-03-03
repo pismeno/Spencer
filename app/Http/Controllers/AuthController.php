@@ -59,7 +59,10 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return response()->json(['message' => 'Created'], 201);
+        return response()->json([
+            'message' => 'Account created successfully.',
+            'data' => $user
+        ], 201);
     }
 
     /**
@@ -91,14 +94,8 @@ class AuthController extends Controller
             $user = auth()->user();
 
             return response()->json([
-                'message' => 'Přihlášení proběhlo úspěšně',
-                'user' => [
-                    'id' => $user->id,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'email' => $user->email,
-                    'avatar_url' => $user->avatar_url,
-                ]
+                'message' => 'Login was successful.',
+                'data' => $user
             ], 200);
         }
 
@@ -120,6 +117,8 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'Logged out'], 200);
+        return response()->json([
+            'message' => 'Logged out successfully.'
+        ], 200);
     }
 }
