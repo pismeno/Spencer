@@ -42,9 +42,9 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function list(Request $request): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => ['nullable', 'string', 'min:1']
         ]);
 
@@ -57,7 +57,7 @@ class EventController extends Controller
 
         $events = Event::with('group')
         ->whereIn('group_id', $groupIDs)
-        ->whereLike('title', '%' . $request->title . '%')
+        ->whereLike('title', '%' . $data['title'] . '%')
         ->latest()
         ->get();
 
