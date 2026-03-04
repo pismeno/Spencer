@@ -55,6 +55,6 @@ Route::get('/notifications', [NotificationController::class, 'index'])
 
 // SETTINGS ROUTES
 // views
-Route::get('/settings', [SettingController::class, 'search'])
+Route::get('/settings', [SettingController::class, 'showSettings'])
     ->name('settings.index')
     ->middleware('auth');

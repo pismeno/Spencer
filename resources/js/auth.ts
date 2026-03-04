@@ -1,10 +1,10 @@
 import api from './bootstrap';
 
 document.addEventListener("DOMContentLoaded", () => {
-    const registerForm = document.getElementById("register") as HTMLFormElement;
-    const loginForm = document.getElementById("login-form") as HTMLFormElement;
-    const emailInput = document.getElementById("email") as HTMLInputElement;
-    const passwordInput = document.getElementById("password") as HTMLInputElement;
+    const registerForm = document.getElementById("register") as HTMLFormElement | null;
+    const loginForm = document.getElementById("login-form") as HTMLFormElement | null;
+    const emailInput = document.getElementById("email") as HTMLInputElement | null;
+    const passwordInput = document.getElementById("password") as HTMLInputElement | null;
 
     function updateStatus(elId: string, isValid: boolean) {
         const el = document.getElementById(elId);
@@ -14,11 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    if (registerForm) {
-        const passwordRepeat = document.getElementById("password_repeat") as HTMLInputElement;
-        const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+    if (registerForm && emailInput && passwordInput) {
+        const passwordRepeat = document.getElementById("password_repeat") as HTMLInputElement | null;
+        const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement | null;
 
         const validateRegister = () => {
+            if (!passwordRepeat || !submitBtn) return;
             const pass = passwordInput.value;
             const repeat = passwordRepeat.value;
 
@@ -41,28 +42,31 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         passwordInput.addEventListener("input", validateRegister);
-        passwordRepeat.addEventListener("input", validateRegister);
+        if (passwordRepeat) passwordRepeat.addEventListener("input", validateRegister);
 
         registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             try {
-                await api.post("/register", {
+                await api.get('/sanctum/csrf-cookie');
+                await api.post("/api/register", {
                     email: emailInput.value,
                     password: passwordInput.value,
-                    password_confirmation: passwordRepeat.value
+                    password_confirmation: passwordRepeat?.value || ""
                 });
                 window.location.href = "/";
-            } catch (error) {
+            } catch (e: any) {
+                console.log(e);
                 alert("Registrace selhala.");
             }
         });
     }
 
-    if (loginForm) {
+    if (loginForm && emailInput && passwordInput) {
         const errorLogger = document.getElementById("errorlogger");
-        const submitBtn = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const submitBtn = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
 
         const validateLogin = () => {
+            if (!submitBtn) return;
             const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
             const isPasswordFilled = passwordInput.value.length > 0;
             const isValid = isEmailValid && isPasswordFilled;
@@ -79,13 +83,17 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             if (errorLogger) errorLogger.innerText = "";
             try {
-                await api.post("/login", {
+                await api.get('/sanctum/csrf-cookie');
+                await api.post("/api/login", {
                     email: emailInput.value,
                     password: passwordInput.value
                 });
-                window.location.href = "/dashboard";
-            } catch (error: any) {
-                if (errorLogger) errorLogger.innerText = "No account matches these info";
+                window.location.href = "/";
+            } catch (e: any) {
+                console.log(e);
+                if (errorLogger) {
+                    errorLogger.innerText = e.response?.data?.message || "No account matches these info";
+                }
             }
         });
     }

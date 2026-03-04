@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Route;
 // AUTHENTICATION ROUTES
 // post
 Route::post('/register', [AuthController::class, 'register'])
+    ->middleware('web')
     ->name('api.register');
 Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('web')
     ->name('api.login');
 Route::post('/logout', [AuthController::class, 'logout'])
-    ->middleware('auth:sanctum')
+    ->middleware(['web', 'auth:sanctum'])
     ->name('api.logout');
 
 // USER ROUTES

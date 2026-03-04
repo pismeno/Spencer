@@ -1,10 +1,14 @@
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
-axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.common['Accept'] = 'application/json';
-const api = axios.create();
+const api = axios.create({
+    baseURL: 'http://localhost',
+    withCredentials: true,
+    withXSRFToken: true,
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+});
 
 export default api;

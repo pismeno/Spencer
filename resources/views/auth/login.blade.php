@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&family=Trispace:wght@100..800&display=swap" rel="stylesheet">
-    @vite(['resources/css/custom.css'])
+    @vite(['resources/css/custom.css', 'resources/js/auth.ts'])
 </head>
 <body class="bg-light" data-bs-theme="{{ $activeTheme }}">
 <x-basic-header/>
@@ -17,7 +17,7 @@
         <div class="card shadow-sm p-4">
             <div id="login-box">
                 <h2 class="text-center mb-4">Login</h2>
-                <form id="login-form" method="POST" action="/login" class="d-flex flex-column gap-3">
+                <form id="login-form" class="d-flex flex-column gap-3">
                     @csrf
                     <div>
                         <label for="email" class="form-label">Email</label>

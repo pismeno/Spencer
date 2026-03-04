@@ -21,7 +21,7 @@ addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await api.post('/settings/profile', formData, {
+            const response = await api.post('/api/settings/profile', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
@@ -61,7 +61,7 @@ addEventListener("DOMContentLoaded", () => {
             });
 
             try {
-                await api.post('/settings/options', {
+                await api.post('/api/settings/options', {
                     options: selectedIds
                 });
                 window.location.reload();
@@ -112,7 +112,7 @@ addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         if (!confirm("Smazat profilovku?")) return;
         try {
-            const response = await api.post('/settings/profile', { delete_avatar: true });
+            const response = await api.post('/api/settings/profile', { delete_avatar: true });
             if (response.data.status === 'success') {
                 window.location.reload();
             }
