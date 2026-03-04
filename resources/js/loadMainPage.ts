@@ -11,6 +11,7 @@ addEventListener("DOMContentLoaded", ()=>{
 })
 async function showEvents(pageType:boolean) {
     try{
+        await api.get('/sanctum/csrf-cookie');
         const response:any = await api.get('/api/events', {});
         const newestEventsContainer = document?.getElementById("container-events") as HTMLDivElement;
         const clockIconPath = newestEventsContainer?.getAttribute('data-url')|| "" as string;
