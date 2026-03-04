@@ -1,18 +1,10 @@
 import axios from 'axios';
 
-const api = axios.create({
-    withCredentials: true,
-    headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        // 'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content
-    },
-});
-
-const token = document.head?.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-if (token) {
-    api.defaults.headers.common['X-CSRF-TOKEN'] = token;
-}
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Accept'] = 'application/json';
+const api = axios.create();
 
 export default api;
