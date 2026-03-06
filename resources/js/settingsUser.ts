@@ -10,6 +10,21 @@ addEventListener("DOMContentLoaded", () => {
     const profilePicContainer = document.getElementById("profilePicContainer");
     const profilePicInput = document.getElementById("profilePicInput") as HTMLInputElement;
     const avatarDisplay = document.getElementById("avatarDisplay") as HTMLImageElement;
+    const deleteAccountForm = document.getElementById("deleteAccountForm") as HTMLInputElement;
+
+    if (deleteAccountForm) {
+        deleteAccountForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                await api.get('/sanctum/csrf-cookie');
+                await api.delete('/api/user');
+                window.location.href = "/login";
+            } catch (e) {
+                console.error(e);
+                alert("Nepodařilo se smazat účet.");
+            }
+        });
+    }
 
     const saveProfile = async () => {
         const formData = new FormData();

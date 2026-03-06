@@ -17,7 +17,7 @@ Route::post('/login', [AuthController::class, 'login'])
     ->middleware('web')
     ->name('api.login');
 Route::post('/logout', [AuthController::class, 'logout'])
-    ->middleware(['web', 'auth:sanctum'])
+    ->middleware('web')
     ->name('api.logout');
 
 // USER ROUTES
@@ -34,8 +34,8 @@ Route::get('/users', [UserController::class, 'search'])
     ->name('api.user.search'); // List users
 
 //delete
-Route::delete('/user', [UserController::class, 'deleteAccount'])
-    ->middleware('auth:sanctum')
+Route::delete('/user', [UserController::class, 'delete'])
+    ->middleware(['web', 'auth:sanctum'])
     ->name('api.user.delete');
 
 // EVENT ROUTES

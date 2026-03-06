@@ -47,14 +47,13 @@
     </div>
 
     <div class="mt-auto d-flex flex-column gap-2 pt-3">
-        <div class="d-flex align-items-center p-2 rounded cursor-pointer" onclick="toggleSidebar()">
+        <div class="d-flex align-items-center p-2 rounded cursor-pointer hover-bg" onclick="toggleSidebar()">
             <img id="collapse-icon" src="{{ Vite::asset('resources/svg/arrow-left.svg') }}" alt="Collapse">
             <span class="ms-3 text-secondary fw-medium sidebar-text">Collapse menu</span>
         </div>
-        <form action="/logout" method="POST" class="m-0">
-            @csrf
-            <button type="submit" class="btn border-0 d-flex align-items-center p-2">
-                <img src="{{ Vite::asset('resources/svg/log-out.svg') }}" alt="Logout">
+        <form id="logout" class="w-100">
+            <button type="submit" class="btn border-0 bg-transparent w-100 text-start d-flex align-items-center p-2 rounded shadow-none hover-bg">
+                <img src="{{ Vite::asset('resources/svg/log-out.svg') }}" alt="Logout" width="24" height="24">
                 <span class="ms-3 text-secondary fw-medium sidebar-text">Logout</span>
             </button>
         </form>

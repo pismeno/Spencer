@@ -16,11 +16,10 @@
     <div class="w-100 d-flex justify-content-center">
         <div class="card p-5 shadow-lg">
             <h2 class="text-muted">Are you sure you want to delete account?</h2>
-            <form action="{{ route('profile.delete') }}" method="POST">
-                @csrf
-                @method('DELETE')
+            <form id="deleteAccountForm">
                 <div class="d-flex justify-content-between align-items-center">
-                    <button type="submit" class="btn btn-link link-danger p-0 text-decoration-none">Delete account
+                    <button type="submit" id="submitDeleteBtn" class="btn btn-link link-danger p-0 text-decoration-none">
+                        Delete account
                         <img src="{{ Vite::asset('resources/svg/trash.svg') }}" class="mb-1" alt="Event" width="16" height="16">
                     </button>
                     <button type="button" id="cancelDelete" class="btn btn-primary">Cancel</button>
@@ -80,7 +79,7 @@
                                         <span class="h5 fw-bold text-secondary">Settings</span>
                                         <hr class="mt-2 mb-0 opacity-25">
                                     </div>
-                                    <form id="settingsForm" action="{{ route('settings.update') }}" method="POST">
+                                    <form id="settingsForm">
                                         @csrf
                                         @foreach ($allSettings as $setting)
                                             @php

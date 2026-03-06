@@ -1,3 +1,5 @@
+import api from "./bootstrap";
+
 function toggleEventSubmenu(): void {
     const submenu = document.getElementById('event-submenu');
     const chevron = document.getElementById('event-chevron');
@@ -69,3 +71,18 @@ function toggleSidebar(): void {
 (window as any).toggleEventSubmenu = toggleEventSubmenu;
 (window as any).toggleMobileEventMenu = toggleMobileEventMenu;
 (window as any).toggleSidebar = toggleSidebar;
+
+addEventListener("DOMContentLoaded", () => {
+    const logOut = document.getElementById('logout');
+    if (logOut) {
+        logOut.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                await api.post('/api/logout');
+                window.location.href = "/login";
+            } catch (e) {
+                console.log(e)
+            }
+        });
+    }
+})
