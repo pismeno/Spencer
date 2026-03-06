@@ -39,13 +39,14 @@ Route::get('/events', [EventController::class, 'index'])
     ->middleware('auth')
     ->name('events.index');
 
-Route::get('/event/{event}', [EventController::class, 'show'])
-    ->middleware('auth')
-    ->name('event.show');
-
 Route::get('/event/create', [EventController::class, 'create'])
     ->middleware('auth')
     ->name('event.create');
+
+Route::get('/event/{event}', [EventController::class, 'show'])
+    ->middleware('auth')
+    ->where('event', '[0-9]+')
+    ->name('event.show');
 
 // NOTIFICATION ROUTES
 // views
