@@ -143,3 +143,7 @@ aside.sticky-top {
 [data-bs-theme=dark] .hover-bg:hover {
     background-color: rgba(255, 255, 255, 0.05) !important;
 }
+
+.auth-container {
+    height: calc(100vh - 5rem) !important;
+}
