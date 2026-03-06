@@ -66,9 +66,10 @@ const modalList = document.getElementById('userBulletList');
 
 const searchAndLog = async (search: string) => {
     try {
-        const response = await api.post('/listgroups', { title: search });
+        const response = await api.get('/api/groups', { title: search });
         console.log(response)
-        const groups: Group[] = response.data;
+        const groups: Group[] = response.data.data;
+        console.log(response);
         if (!modalList) return;
         modalList.innerHTML = '';
         const filteredGroups = groups.filter(u => !selectedGroupsIds.includes(u.id));

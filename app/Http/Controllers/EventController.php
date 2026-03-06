@@ -57,7 +57,7 @@ class EventController extends Controller
             return back();
         }
 
-        return view('detail', compact('event'));
+        return view('events.show', compact('event'));
     }
 
     /**
