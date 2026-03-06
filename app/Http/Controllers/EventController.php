@@ -34,7 +34,7 @@ class EventController extends Controller
      */
     public function create(): View
     {
-        return view('event');
+        return view('events/create');
     }
 
     // FIXME this is now the exact same thing as show(Event $event).
