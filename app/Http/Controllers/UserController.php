@@ -77,7 +77,7 @@ class UserController extends Controller
             unset($data['profile_picture']);
         }
 
-        Auth::user()->update($data);
+        $user->update($data);
 
         return response()->json([
             'message' => 'Profile Updated successfully.',

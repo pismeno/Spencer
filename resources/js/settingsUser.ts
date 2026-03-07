@@ -31,12 +31,14 @@ addEventListener("DOMContentLoaded", () => {
         formData.append('first_name', firstName.value);
         formData.append('last_name', lastName.value);
 
+        formData.append('_method', 'PATCH'); // spoofs post into patch
+
         if (profilePicInput.files?.[0]) {
             formData.append('profile_picture', profilePicInput.files[0]);
         }
 
         try {
-            const response = await api.post('/api/settings/profile', formData, {
+            const response = await api.post('/api/user/profile', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
@@ -76,7 +78,7 @@ addEventListener("DOMContentLoaded", () => {
             });
 
             try {
-                await api.post('/api/settings/options', {
+                const response = await api.patch('/api/user/settings', {
                     options: selectedIds
                 });
                 window.location.reload();
@@ -127,7 +129,7 @@ addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         if (!confirm("Smazat profilovku?")) return;
         try {
-            const response = await api.post('/api/settings/profile', { delete_avatar: true });
+            const response = await api.patch('/api/user/profile', { delete_avatar: true });
             if (response.data.status === 'success') {
                 window.location.reload();
             }

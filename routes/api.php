@@ -22,7 +22,7 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 // USER ROUTES
 // patch
-Route::patch('/user/profile', [AuthController::class, 'updateProfile'])
+Route::patch('/user/profile', [UserController::class, 'updateProfile'])
     ->name('api.user.profile.update')
     ->middleware('auth:sanctum');
 Route::patch('/user/settings', [SettingController::class, 'update']) // TODO change deceiving method names
