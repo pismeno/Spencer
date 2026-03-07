@@ -67,12 +67,15 @@ class SettingController extends Controller
         ]);
 
         $optionsID = array_values($request->input('options', []));
-
+        $user = Auth::user();
         // sync
-        Auth::user()->settings()->sync($optionsID);
+        $user->settings()->sync($optionsID);
 
+
+        $updatedSettings = $user->settings()->get();
         return response()->json([
-            'message' => 'Settings updated successfully.'
+            'message' => 'Settings updated successfully',
+            'data' => $updatedSettings
             // TODO maybe something should be returned here in 'data'
         ]);
     }

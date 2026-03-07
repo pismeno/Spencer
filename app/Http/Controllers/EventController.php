@@ -184,8 +184,8 @@ class EventController extends Controller
             'title'       => $data['title'],
             'description' => $data['description'],
             'deadline'    => $data['deadline'],
-            'starts_at'   => $data['from'], // Use 'from'
-            'ends_at'     => $data['to'],   // Use 'to'
+            'starts_at'   => $data['from'],
+            'ends_at'     => $data['to'],
             'thumbnail_url'    => $data['img_path'] ?? $event->img_path,
         ]);
 
